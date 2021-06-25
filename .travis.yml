@@ -1,0 +1,17 @@
+language: python
+python: 3.6
+before_install:
+- sudo apt-get install -y binutils libproj-dev gdal-bin
+install: pip install -r requirements.txt
+script: python manage.py test --keepdb
+deploy:
+  provider: heroku
+  api_key:
+    secure: FH2fo4D8AItgQ65UAGgCIn5oCJ8rmmxbJoNhGGkYoX2D484EkU2YssLx+HnOo5HSwmNkjlWrm0IICyI/DUVRFY30D5lSnUZ+xXID7kKFN3ukZ98BOxnu5XRbweQQXvOqX3RcR19r+F90TWAQUi2tOKseE+mw2ySzdMRpBOeQvEVaMuc50aT1rqoL7x6Gzcc5qlKZhqZPjG3B+BgwfQ5Ic32GswsAMCMbbkkOKLBTmxYQwrInNMOUPDMoTJqoLhiF8sJEqoXIxhu+ujsd1PRkQp+93Wv6Tq3j/Wvelv4SzMYaDYLScEoUFSKdqV48i5Wk16Yko5NHbp4+jjNlLwImCtWNyH/PHmQb+hydZXx6d3PcQIKZxKRQaIaPCgLybR7mqBcaU2En0bPjVQBdZjTOJSsMtPaI5tLRnvL/hOdWLhnol4H6Yvg+33QrlHe1hJFxu/22J3mp4YwQU3odL0kS1rD7LPqOBxMiApTorIKX50SVAQMMIueNninm5rM7Pi8kxh8GFzjqd9LK2vaowk/MnjHH0OpBEZDjlJsYy3w9ucmXmBDKY4PJ+TcmWrOfpPC4tA1X38R3ONBUle95qzWL9i+/vxF7aYV//omU+83FSX/4fElzoJi3n2ghlElaX4dB/DOPAAD1d4yQrRQxkdwO38nPBdlT2/tbc0wodKfzFgI=
+  app: testcicddeploy
+  run:
+  - python manage.py makemigrations
+  - python manage.py migrate
+  - heroku ps:scale web=1
+  on: master
+  
