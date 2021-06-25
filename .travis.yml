@@ -14,4 +14,3 @@ deploy:
   - python manage.py migrate
   - heroku ps:scale web=1
   on: master
-  
