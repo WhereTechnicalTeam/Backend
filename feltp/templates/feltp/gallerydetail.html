@@ -1,0 +1,140 @@
+{% extends 'feltp/admin_base.html' %}
+{% load static %}
+
+{% block head %}
+{% block title %} Create Gallery {% endblock title %}
+
+{% endblock %}
+
+
+{% block body %}
+
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          {% if messages %}
+              <ul class="messages">
+                  {% for message in messages %}
+                 <input class="d-none" type="text" id="add" value={{message}}></input>
+                  {% endfor %}
+              </ul>
+              {% endif %}<br>
+          <div class="col-sm-6">
+            <h1> Gallery</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Upload Gallery</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Create Gallery
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <form method="POST" enctype="multipart/form-data" id='gallery'>
+                {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="InputTitle">Title</label>
+                    <input type="text" class="form-control" id="InputTitle" placeholder="Enter Titile" name="title" value="{{obj.title}}">
+                  </div>
+                  
+                  
+            </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">Attach Image</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="exampleInputFile" name="picture" value="{{obj.picture}}">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="type" class="btn btn-primary" id="back">Cancel</button>
+                  <button type="type" class="btn btn-primary" id="edit">Edit</button>
+                  <button type="type" class="btn btn-primary" id="delete">Delete</button>
+                </div>
+              </form>
+              
+            
+          </div>
+        </div>
+        <!-- /.col-->
+      </div>
+      <!-- ./row -->
+      
+      <!-- ./row -->
+    </section>
+    <!-- /.content -->
+  </div>
+ 
+
+
+ <script src="/static/feltp/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+
+if($('#add').val() =='done'){
+    Swal.fire('Saved', 'Gallery has been updated', 'success')
+  }
+
+
+  $("#sub").click(function(e){
+    e.preventDefault()
+    $('#gallery').submit();
+  })
+
+
+ 
+
+
+  if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+
+
+    $('#edit').click(function(e){
+    e.preventDefault();
+    document.location.href = 'edit'
+  });
+
+
+$('#delete').click(function(e){
+     e.preventDefault();
+    document.location.href = 'delete'
+  });
+
+
+$('#back').click(function(e){
+     e.preventDefault();
+    document.location.href = '/feltp/gallerydetail'
+  });
+
+ })
+</script>
+{% endblock %}

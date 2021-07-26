@@ -1,0 +1,191 @@
+{% extends 'feltp/admin_base.html' %}
+{% load static %}
+
+{% block head %}
+{% block title %} GFELTP | Alumni {% endblock title %}
+
+<!-- <style type="text/css">
+.div_before_table {
+    overflow:hidden;
+    overflow-y: scroll;
+    height: 900px;
+}
+</style> -->
+{% endblock %}
+
+
+{% block body %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Manage Alumni</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Alumni List</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Alumni</h3>
+              </div>
+              <!-- /.card-header -->
+              
+            <!-- /.card -->
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Alumni List</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body div_before_table">
+                <table id="example1" class="table table-bordered table-responsive table-striped">
+                  <thead>
+                    <tr>
+                      <th >Title</th>
+                      <th >First Name</th>
+                      <th >Last Name</th>
+                      <th >Sex</th>
+                      <th >Date of Birth</th>
+                      <th >Phone Number 1</th>
+                      <th >Phone Number 2</th>
+                      <th >Undertaken Frontline Training</th>
+                      <th >Frontline Cohort Number</th>
+                      <th >Year Completed Frontline</th>
+                      <th >Institution Enrolled at Frontline</th>
+                      <th >Job Title at Frontline</th>
+                      <th >Undertaken Intermediate Training</th>
+                      <th >Intermediate Cohort Number</th>
+                      <th >Year Completed Intermediate</th>
+                      <th >Institution Enrolled at Intermediate</th>
+                      <th >Job Title at Intermediate</th>
+                      <th >Undertaken Advanced Training</th>
+                      <th >Advanced Cohort Number</th>
+                      <th >Year Completed Advanced</th>
+                      <th >Institution Enrolled at Advanced</th>
+                      <th >Job Title at Advanced</th>
+                      <th >Status</th>
+                      <!-- <th>Date of Birth</th>
+                      <th>Last Name</th>
+                      <th>Sex</th>
+                      <th>Date of Birth</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for ob in obj %}
+                      <tr>
+                          <td>{{ob.title}}</td>
+                          <td>{{ob.firstname}}</td>
+                          <td>{{ob.surname}}</td>
+                          <td>{{ob.sex}}</td>
+                          <td>{{ob.date_of_birth}}</td>
+                          <td>{{ob.phone1}}</td>
+                          <td>{{ob.phone2}}</td>
+                          <td>{{ob.is_trained_frontline}}</td>
+                          <td>{{ob.cohort_number_frontline}}</td>
+                          <td>{{ob.yr_completed_frontline}}</td>
+                          <td>{{ob.institution_enrolled_at_frontline}}</td>
+                          <td>{{ob.job_title_at_enroll_frontline}}</td>
+                          <td>{{ob.is_trained_intermediate}}</td>
+                          <td>{{ob.cohort_number_intermediate}}</td>
+                          <td>{{ob.yr_completed_intermediate}}</td>
+                          <td>{{ob.institution_enrolled_at_intermediate}}</td>
+                          <td>{{ob.job_title_at_enroll_intermediate}}</td>
+                          <td>{{ob.is_trained_advanced}}</td>
+                          <td>{{ob.cohort_number_advanced}}</td>
+                          <td>{{ob.yr_completed_advanced}}</td>
+                          <td>{{ob.institution_enrolled_at_advanced}}</td>
+                          <td>{{ob.job_title_at_enroll_advanced}}</td>
+                          <td>{{ob.status}}</td>
+                         <!--  <td>{{obj.is_trained_advanced}}</td> -->
+                      </tr>
+                     {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+
+
+
+<script src="/static/feltp/plugins/jszip/jszip.min.js"></script>
+<script src="/static/feltp/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/static/feltp/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="/static/feltp/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/static/feltp/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/static/feltp/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/feltp/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/static/feltp/dist/js/demo.js"></script>
+<!-- Page specific script -->
+<!-- <script type="text/javascript">
+  $(document).ready(function() {
+            $('#example1').dataTable({
+            serverSide: true,
+            sAjaxSource: "{% url 'alumnilist' %}",  // new url
+            rowId: function (data) {
+                return data[0];
+            },
+            rowClass: "tbl",
+            columns: [
+                { name: "'title'", data: 1 },
+                { name: "'surname'", data: 2 },
+                { name: "'firstname'", data: 3 },
+                { name: "'sex'", data: 4 },
+                { name: "'date_of_birth'", data: 5 },
+                { name: "'phone1'", data: 6 },
+                { name: "'phone2'", data: 7 },
+                { name: "'is_trained_frontline'", data: 8 },
+                { name: "'cohort_number_frontline'", data:9 },
+                { name: "'yr_completed_frontline'", data: 10 },
+                { name: "'institution_enrolled_at_frontline'", data: 11 },
+                { name: "'job_title_at_enroll_frontline'", data: 12 },
+                { name: "'is_trained_intermediate'", data: 13 },
+                { name: "'cohort_number_intermediate'", data: 14 },
+                { name: "'yr_completed_intermediate'", data: 15 },
+                { name: "'institution_enrolled_at_intermediate'", data: 16 },
+                { name: "'job_title_at_enroll_intermediate'", data: 17 },
+                { name: "'is_trained_advanced'", data: 18 },
+                { name: "'is_trained_frontline'", data: 19 },
+                { name: "'cohort_number_advanced'", data:20 },
+                { name: "'yr_completed_advanced'", data: 21 },
+                { name: "'institution_enrolled_at_advanced'", data: 22 },
+                { name: "'job_title_at_enroll_advanced'", data: 23 },
+                { name: "'status'", data: 24 },
+
+               
+                ],
+        });
+    });
+
+</script> -->
+{% endblock %}

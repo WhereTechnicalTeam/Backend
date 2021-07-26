@@ -1,0 +1,25 @@
+
+Register link
+/api/usercreate
+
+
+Login link
+/api/login
+
+
+Userlist
+/api/userdetail
+
+
+All users information
+/api/alldata
+
+
+Update user profile
+/api/profilecreate
+
+
+All news
+/api/newsdetail
+
+

@@ -1,0 +1,179 @@
+{% extends 'feltp/admin_base.html' %}
+{% load static %}
+
+{% block head %}
+{% block title %} Create News {% endblock title %}
+
+{% endblock %}
+
+
+{% block body %}
+
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1> News</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Post News</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              {% if messages %}
+              <ul class="messages">
+                  {% for message in messages %}
+                 <input class="d-none" type="text" id="add" value={{message}}></input>
+                  {% endfor %}
+              </ul>
+              {% endif %}<br>
+              <h3 class="card-title">
+                Create News
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <form method="POST" enctype="multipart/form-data" id='news'>
+                {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="InputTitle" id="uu">Title</label>
+                    <input type="text" class="form-control" id="InputTitle" placeholder="Enter Titile" name="title" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-12" for="inputDescription">Description</label>
+                    
+                    <textarea class="col-md-12" id="summernote" name="content" placeholder="Place some text here" style="border-radius:5px;" required>
+                      
+                    </textarea>
+                  </div>
+                  
+                </div>
+                  <div class="form-group">
+                    <label for="exampleInputFile">Attach Image</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="pic" name="picture1">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="type" class="btn btn-primary" id="sub">Submit</button>
+                </div>
+              </form>
+              
+            
+          </div>
+        </div>
+        <!-- /.col-->
+      </div>
+      <!-- ./row -->
+      
+      <!-- ./row -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+<script src="/static/feltp/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+
+if($('#add').val() =='done'){
+    Swal.fire('Saved', 'News has been created', 'success')
+  }
+
+
+  $("#sub").click(function(e){
+    e.preventDefault()
+    $('#news').submit();
+  })
+
+
+  $(function () {
+
+
+    // Summernote
+    $('#summernote').summernote()
+
+    // CodeMirror
+    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+      mode: "htmlmixed",
+      theme: "monokai"
+    });
+
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+
+  })
+
+
+  if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+  
+//   var token = '{{csrf_token}}';
+
+//   var data = new FormData($("#news").get(0))
+//   var file = $('#pic').val()
+//   data.append("image", file);
+//   $("#sub").click(function(e){
+//     e.preventDefault();    
+//     alert($('#pic').val())
+//     $.ajax({
+//         url  : '/feltp/admincreatenews',
+//         type : 'POST',
+//         headers: { "X-CSRFToken": token },
+//         processData: false,
+//         contentType: false,
+//         data : data,
+//         success : function(data) {
+//            if(data=="done"){
+
+//                 swal("Saved!", "The record has been successfully saved!", "success")
+//                 .then(function () {
+//                         window.location.href="/login/"
+                    
+//                 })
+
+//             }
+
+//             else {
+
+//                 alert('failed');
+//             }
+            
+//         }
+//     });
+
+//     return false;
+// })
+
+
+ })
+</script>
+{% endblock %}

@@ -1,0 +1,142 @@
+id,title,surname,firstname,sex,date_of_birth,phone1,phone2,is_trained_frontline,cohort_number_frontline,yr_completed_frontline,institution_enrolled_at_frontline,job_title_at_enroll_frontline,is_trained_intermediate,cohort_number_intermediate,yr_completed_intermediate,institution_enrolled_at_intermediate,job_title_at_enroll_intermediate,is_trained_advanced,cohort_number_advanced,yr_completed_advanced,institution_enrolled_at_advanced,job_title_at_enroll_advanced,status,created_at,update,user_id
+1,,Aabalekuu,Simon,Male,1982-03-10,207447446,249580197,No,,,,,Yes,1,2019-12-20,Ghana health service,Public health Officer (Disease control),,,,,,unverified,2020/08/31 5:10:29 PM GMT,,1
+2,,Akowuah,George,Male,1986-12-14,207669398,541480231,No,,,,,Yes,1,2019-12-12,"Regional Health Directorate, Upper East",Health Information,No,,,,,unverified,2020/08/31 5:24:51 PM GMT,,2
+3,,Mahama,Fuseini,Male,1971-01-21,244155009,,Yes,6,2016-09-30,District Health Directorate - Ghana Health Service,District Disease Control Officer,Yes,1,2019-12-12,District Health Directorate - Ghana Health Service,District Disease Control Officer,,,,,,unverified,2020/08/31 8:36:34 PM GMT,,3
+4,,Noora,Charles Lwanga,Male,1986-04-29,208776329,242209316,No,,,,,,,,,,Yes,7,2015-07-31,GHS,Lab. Scientist,unverified,2020/08/31 10:03:20 PM GMT,,4
+5,,Abdul-Rahaman,Abdul-Aziz,Male,1984-03-27,249408602,207979738,Yes,20,2019-12-10,WaterAid Ghana,Environmental Health Officer,Yes,15,2019-12-12,GFELT,Field Epidemiologist,No,,,,,unverified,2020/09/01 9:47:17 AM GMT,,5
+6,,Naada-Kogh,David,Male,1986-12-25,247661201,206727086,Yes,9,2018-05-03,Bawku Municipal Health Directorate/BawkuPresbyterian Hospital (GHS),Disease Control officer,No,,,,,,,,,,unverified,2020/09/01 4:46:51 PM GMT,,6
+7,,Ayichuru,Christiana,Female,1977-12-15,243986495,,Yes,9,2018-05-03,GHS,Ag PHN/HPO,Yes,9,2018-05-03,GHS,Ag PHN/HPO,No,,,,,unverified,2020/09/01 4:49:18 PM GMT,,7
+8,,NUO-IRE,Y VITUS,Male,1976-09-21,205005427,542605214,,,,,,Yes,1,2019-12-11,VSD,District veterinary officer ,,,,,,unverified,2020/09/02 12:38:01 PM GMT,,8
+9,,NUO-IRE,Y VITUS,Male,1976-09-21,205005427,542605214,,,,,,Yes,1,2019-12-11,VSD,District veterinary Officer,,,,,,unverified,2020/09/02 12:55:42 PM GMT,,9
+10,,Tugpiel,Dominic,Male,1975-07-03,208399811,247646875,No,,,,,Yes,1,2019-12-11,Environmental Health Department,Environmental Health Analyst,No,,,,,unverified,2020/09/02 12:58:33 PM GMT,,10
+11,,Boateng,Kwabena,Male,1984-08-28,209283996,243778556,Yes,9,2018-02-19,Ghana Health Service,Health Information Officer,No,9,2018-05-03,,,No,,,,,unverified,2020/09/02 3:17:45 PM GMT,,11
+12,,Boateng,Kwabena,Male,1984-08-28,209283996,243778556,Yes,9,2018-02-19,Ghana Health Service,Health Information Officer,No,9,2018-05-03,,,No,,,,,unverified,2020/09/02 3:18:04 PM GMT,,12
+13,,Amankwaa,Williams Fosu,Male,1984-03-28,242637718,207526304,Yes,9,2018-05-19,Ghana Health Service,Disease control,No,,,,,,,,,,unverified,2020/09/02 3:50:48 PM GMT,,13
+14,,Millu Dekomwine,Doris,Female,1986-05-05,208296075,,Yes,9,2018-05-03,Ghana Health Service,Disease Control Officer,No,,,,,No,,,,,unverified,2020/09/02 5:07:17 PM GMT,,14
+15,,Baleri ,Patricia ,Female,1990-10-09,240141196,,Yes,9,2018-05-03,Ghana Health Service ,,,,,,,,,,,,unverified,2020/09/03 9:37:35 AM GMT,,15
+16,,GODSON,JULIUS,Male,1984-04-24,244165545,553352551,Yes,9,2018-05-03,BAWKU PRESBYTERIAN HOSPITAL/ BAWKU MUNICIPAL HEALTH DIRECTORATE (GHS),MEDICAL LABORATORY TECHNICIAN,No,,,,,,,,,,unverified,2020/09/03 5:40:10 PM GMT,,16
+17,,Braimah,Vivian,Female,1961-10-23,243855076,,Yes,9,2018-05-03,Bawku Municipal Verterinary/ Agriculture,Technical officer verterinary,No,,,,,,,,,,unverified,2020/09/03 9:16:52 PM GMT,,17
+18,,MOHAMMED,SHAMIR ALHASSAN,Male,1987-01-04,209728220,,Yes,,,FOOD AND DRUGS AUTHORITY,REGULATORY OFFICER,Yes,1,2019-12-11,FOOD AND DRUGS AUTHORITY,REGULATORY OFFICER,No,,,,,unverified,2020/09/03 9:39:33 PM GMT,,18
+19,,Baba,Awuni,Male,1970-03-13,243924152,207239709,No,,,,,Yes,1,2019-12-12,Ghana Health Service,Regional Disease Surveillance Officer,No,,,,,unverified,2020/09/04 7:36:55 AM GMT,,19
+20,,Boateng ,Ernest,Male,1990-12-15,549272360,506716523,No,,,,,Yes,1,2019-12-12,Veterinary services directorate ,Veterinary Officer ,No,,,,,unverified,2020/09/04 7:58:49 AM GMT,,20
+21,,Anchaba,Faustinus,Male,1977-09-25,246321063,209712924,No,,,,,Yes,1,2019-12-11,"School of public health, Accra-Ghana",Field Epidemiologist ,No,,,,,unverified,2020/09/04 12:07:39 PM GMT,,21
+22,,Alhassan,Sherifa,Female,1985-10-25,248274850,208332336,Yes,6,2016-10-23,,regulatory officer,Yes,1,2019-10-28,food and drugs Authority,regulatory officer,No,,,,,unverified,2020/09/04 4:30:22 PM GMT,,22
+23,,Cheyuo,Gladys,Female,1976-06-12,243077368,206966562,No,,,,,Yes,2,2019-12-12,GHana Health Service,Public Heaelth Nurse,No,,,NA,NA,unverified,2020/09/06 2:03:28 AM GMT,,23
+24,,Hagyirah,Emmanuel,Male,1981-10-31,540749172,,Yes,,,Ghana Health Service,T.O Health Information,Yes,,,,,No,,,,,unverified,2020/09/23 8:39:01 PM GMT,,24
+25,,Hor,Zulkarnein Jnr,Male,1988-01-03,201380681,541582958,Yes,,2018-08-15,"Municipal Health Directorate, Sissala East, Tumu",Municipal Health Information Officer,No,,,,,,,,,,unverified,2020/09/23 8:59:48 PM GMT,,25
+26,,Asiedu,Ernest Konadu,Male,2020-10-04,244461895,208287015,No,,,,,No,,,,,Yes,8,2016-06-30,National Catholic Health Service,"Coordinator, Community and Institutional Care",unverified,2020/09/23 9:20:52 PM GMT,,26
+27,,Noora ,Charles Lwanga ,Male,1986-04-29,242209316,208776329,No,,,,,No,,,,,Yes,7,2015-07-31,University of Ghana ,Laboratorian ,unverified,2020/09/23 9:29:36 PM GMT,,27
+28,,ISSAHAKU GYESI,RAZAK,Male,2020-06-01,243263602,208264569,No,,,,,No,,,,,Yes,9,,Tamale Teaching Hospital,Medical Laboratory Scientist,unverified,2020/09/23 9:35:34 PM GMT,,28
+29,,Asante-Sefa,Solomon,Male,1980-12-17,244979600,,Yes,10,2018-05-16,Ghana Health Service / Laboratory,Principal Biomedical Scientist ,No,,,,,No,,,,,unverified,2020/09/23 9:35:50 PM GMT,,29
+30,,MWINTUMAH ,Benjamin Maanuor ,Male,1989-07-09,204192110,543826251,Yes,14,2019-08-22,Ghana Health Service / Laboratory Development ,Biomedical Scientist ,No,,,,,No,,,,,unverified,2020/09/23 9:36:46 PM GMT,,30
+31,,Fiagbe,Joseph,Male,1980-06-28,243836200,207999429,Yes,10,2018-05-16,University of Ghana,Public Health Officer -Disease Control,No,,,,,No,,,,,unverified,2020/09/23 9:44:10 PM GMT,,31
+32,,Wullar,Oxygen,Male,1975-06-14,243124789,208215406,No,,,,,No,,,,,Yes,11,2019-12-12,University of Ghana ,Senior Public Health Officer,unverified,2020/09/23 10:24:15 PM GMT,,32
+33,,SOYELLEH,JAMES,Male,1974-03-06,543091954,205767684,Yes,12,2018-06-01,VETERINARY SERVICE DEPARTMENT,DISTRICT VETERINARY OFFICER,No,,,,,No,,,,,unverified,2020/09/23 10:24:29 PM GMT,,33
+34,,SEIDU ,PAUL,Male,1989-07-22,245296233,503400788,Yes,,2018-08-15,GHANA HEALTH SERVICE,DISEASE CONTROL OFFICER,No,,,,,No,,,,,unverified,2020/09/24 3:31:17 AM GMT,,34
+35,,Mahama,Fuseini,Male,1971-01-21,244155009,,Yes,6,2016-09-30,Ghana Health Service,District Disease Control Officer,Yes,1,2019-12-12,Ghana Health Service,District Disease Control Officer,,,,,,unverified,2020/09/24 7:55:58 AM GMT,,35
+36,,BERKO,EMMANUEL,Male,1985-06-03,208882878,542639670,Yes,3,2018-11-01,LAWRA MUNICIPAL HOSPITAL,MEDICAL LABORATORY  SCIENTIST,No,,,,,,,,,,unverified,2020/09/24 9:29:33 AM GMT,,36
+37,,Yeboah,Isaac,Male,1984-05-04,246221682,202360472,Yes,15,2019-12-12,Asunafo South Health Directorate,Health Information Officer,No,,,,,,,,,,unverified,2020/09/24 9:39:31 AM GMT,,37
+38,,Arthur,Atta,Male,1979-06-01,243564659,206315433,Yes,15,2019-12-12,Pru District Health Directorate,District Disease Surveillance Officer,,,,,,,,,,,unverified,2020/09/24 9:47:18 AM GMT,,38
+39,,DANSO,EDWARD FENTENG,Male,1968-10-31,540849171,208241094,No,,,,,No,,,,,Yes,1,2009-06-30,"SCHOOL OF PUBLIC HEALTH/EPIDEMIOLOGY DEPARTMENT, LEGON, UNIVERSITY OF GHANA",SENIOR VETERINARY OFFICER,unverified,2020/09/24 10:40:03 AM GMT,,39
+40,,Adjei,Eric,Male,1973-06-20,244418523,,,,,,,,,,,,Yes,7,2015-11-01,"SPH, EPID department",medical laboratory scientist,unverified,2020/09/24 11:36:15 AM GMT,,40
+41,,Mensah,Ebenezer Kofi ,Male,0066-07-16,244528615,244528615,No,,,,,No,,,,,Yes,4,0012-07-31,"Sekondi Public Health Laboratory, Ghana Health Service ",Medical Laboratory Scientist,unverified,2020/09/24 11:43:28 AM GMT,,41
+42,,AGBOFU,NOAH,Male,1990-07-07,240557893,,Yes,,2018-08-08,UNIVERSITY OF GHANA/ SCHOOL OF PUBLIC HEALTH,FIELD EPIDEMIOLOGY ,No,,,,,,,,,,unverified,2020/09/24 12:06:01 PM GMT,,42
+43,,Num,Abraham,Male,1972-10-02,249765847,208598009,Yes,15,2019-12-12,Ghana Health Service/Pru East District Health Directorate,Disease Control Officer,No,,,,,No,,,,,unverified,2020/09/24 12:42:02 PM GMT,,43
+44,,Obeng,Rahman,Male,1984-05-06,207422751,,Yes,,,Sissala West DHA,District Disease Control Officer,No,,,,,No,,,,,unverified,2020/09/24 12:50:17 PM GMT,,44
+45,,OSEI,EMMANUEL KWAME,Male,1984-02-24,249716390,209393448,Yes,15,2019-12-12,"GHANA HEALTH SERVICE, KINTAMPO MUNICIPAL HEALTH DIRECTORATE",AG. PUBLIC HEALTH NURSE,No,,,,,No,,,,,unverified,2020/09/24 1:15:23 PM GMT,,45
+46,,Sieh,Daniel,Male,1984-07-29,242917363,242917363,Yes,15,2019-12-12,Ghana Health Service/Mnistry of Health,Health information officer,No,,,,,No,,,,,unverified,2020/09/24 1:16:39 PM GMT,,46
+47,,Abdullai,Safiatu,Female,1980-11-07,244129644,,No,,,,,No,,,,,Yes,11,2019-07-11,University of Ghana/ GFELTP,Nursing,unverified,2020/09/24 1:23:44 PM GMT,,47
+48,,Sieh,Daniel,Male,1984-07-29,242917363,242917363,Yes,15,2019-12-12,Ghana Health Services/Ministry of Health, Health Information Officer,No,,,Ghana Health Services/Ministry of Health,Health Information Officer,No,,,Ghana Health Services/Ministry of Health,Health Information Officer,unverified,2020/09/24 1:26:41 PM GMT,,48
+49,,KWAKYE  (OWUSU),MICHAEL ,Male,1975-06-10,209406624,557356854,Yes,13,2019-05-16,GHANA HEALTH SERVICE/DISEASE CONTROL UNIT,DISTRICT DISEASE CONTROL OFFICER,No,,,,,No,,,,,unverified,2020/09/24 2:14:46 PM GMT,,49
+50,,OWUSU,JAMES,Male,1980-09-25,249151203,204591529,Yes,15,2019-12-12,KINTAMPO NORTH MUNICIPAL HEALTH DIRECTORATE,DISEASE CONTROL OFFICER,No,,,,,No,,,,,unverified,2020/09/24 2:18:06 PM GMT,,50
+51,,Nanga,Joseph Nyindam,Male,1983-06-09,248977519,201316574,Yes,15,2019-12-12,Kintampo North Municipal Health Directorate,Senior technical Officer (Health Information),No,,,,,No,,,,,unverified,2020/09/24 2:36:52 PM GMT,,51
+52,,Ankomah,Albert,Male,1978-05-12,244470413,207944200,Yes,,,Food and Drugs Authority,Food Regulatory Officer,No,,,,,,,,,,unverified,2020/09/24 2:51:34 PM GMT,,52
+53,,Kankpetinge,Christopher,Male,1984-12-15,548428898,504428898,Yes,11,2018-08-03,Ghana Health Service,Disease Control Officer ,No,,,,,No,,,,,unverified,2020/09/24 4:19:18 PM GMT,,53
+54,,NTI,DANIEL ,Male,1974-12-05,209122506,244724708,Yes,,2019-12-12,Food and Drugs Authority,Senior Regulatory Officer,No,,,,,No,,,,,unverified,2020/09/24 5:08:15 PM GMT,,54
+55,,Mahama,Raymond Razak,Male,1987-03-31,244843539,207862120,,,,,,,,,,,Yes,11,2019-12-01,Tamale Teaching Hospital,Medical Laboratory Scientist,unverified,2020/09/25 1:26:24 AM GMT,,55
+56,,Ofosuhene,Abigail,Female,1981-09-05,261407099,558464625,Yes,,,,,,,,,,Yes,11,2019-07-31,"University of Ghana, School of Public Health",Physician Assistant,unverified,2020/09/25 6:53:54 AM GMT,,56
+57,,Ndego,Abel,Male,1980-01-01,208435770,555347170,Yes,9,2018-05-02,Food and Drugs Authority,Regulatory Officer 1,No,,,,,No,,,,,unverified,2020/09/25 10:35:49 AM GMT,,57
+58,,Adutwum Asare,Richard,Male,1982-07-02,202235841,546818915,Yes,10,2018-05-16,Ghana Health Service ,Technical Officer (Disease Control ),No,,,,,,,,,,unverified,2020/09/25 11:00:58 AM GMT,,58
+59,,Zumuroh,Danyuo Manan,Male,1992-03-07,540632547,209983331,Yes,12,2018-09-15,Ghana Health Service,Technical officer ( Health Information),No,,,,,No,,,,,unverified,2020/09/25 1:42:49 PM GMT,,59
+60,,Zumuroh,Danyuo Manan,Male,1992-03-07,540632547,209983331,Yes,12,2018-09-15,Ghana Health Service,Technical officer ( Health Information),No,,,,,No,,,,,unverified,2020/09/25 1:43:13 PM GMT,,60
+61,,Zumuroh,Danyuo Manan,Male,1992-03-07,540632547,209983331,Yes,12,2018-09-15,Ghana Health Service,Technical officer ( Health Information),No,,,,,No,,,,,unverified,2020/09/25 1:43:24 PM GMT,,61
+62,,Wewugu,Apiu Peter,Male,1976-03-23,203495645,242547146,Yes,14,2019-08-22,Veterinary Services Department - MOFA,Assistant Chief Animal Health Officer,No,,,,,No,,,,,unverified,2020/09/25 3:02:45 PM GMT,,62
+63,,Wewugu,Apiu Peter,Male,1976-03-23,203495645,242547146,Yes,14,2019-08-22,Veterinary Services Department,Assistant Chief Animal Health Officer,No,,,,,No,,,,,unverified,2020/09/25 3:09:45 PM GMT,,63
+64,,Otchere,Godsway Orison,Male,1983-08-09,244907292,246810263,Yes,14,2019-08-22,Ghana Health Service,District Health Information Officer,No,,,,,No,,,,,unverified,2020/09/25 3:33:03 PM GMT,,64
+65,,DZANDU,ELI,Male,1982-04-06,207821719,244016662,No,,,,,No,,,,,Yes,11,2019-07-31,UG-SPH,FIELD EPIDEMIOLOGIST,unverified,2020/09/25 5:10:01 PM GMT,,65
+66,,Ayepah ,Christabel ,Female,1980-11-09,206300443,559620488,,,,,,,,,,,Yes,12,2019-07-31,Shama Health Center,Facility Head,unverified,2020/09/25 6:50:15 PM GMT,,66
+67,,Agudey,Daniel,Male,1970-03-28,208504122,208504122,Yes,2,2016-01-08,Regional Public Health Division,Regional Surveillance Officer,,,,,,Yes,11,2019-07-26,,Regional Malaria Focal Person,unverified,2020/09/26 3:50:53 AM GMT,,67
+68,,Aabalekuu ,Simon,Male,1982-01-10,207447446,249580197,,,,,,Yes,1,2019-12-12,Ghana health service,Public health Officer,,,,,,unverified,2020/09/26 11:33:44 AM GMT,,68
+69,,Amartey,Kenneth Nii,Male,1987-10-18,249881047,,Yes,15,2019-12-12,Pru East Health Directorate,Public Health Nurse,No,,,,,No,,,,,unverified,2020/09/26 2:39:15 PM GMT,,69
+70,,Abubakari,Illiasu,Male,1983-05-06,543318990,594106062,Yes,15,2019-12-14,Veterinary Services Department,Animal Health Officer,No,,,,,No,,,Veterinary Services Department,Animal Health Officer,unverified,2020/09/27 4:53:49 PM GMT,,70
+71,,Agunga,Bruno Gandorg,Male,1979-10-06,246531448,246531448,Yes,14,2019-08-22,"MHD, Nanumba North",MDCO,No,,,,,No,,,,,unverified,2020/09/28 6:25:54 AM GMT,,71
+72,,Kambe,MacJonas,Male,1983-04-04,243639008,505691691,Yes,10,2018-05-16,"Ghana Health Service, Prestea Huni Valley Municipal Health Directorate",Public Health Officer,No,,,,,No,,,,,unverified,2020/09/28 11:04:25 AM GMT,,72
+73,,Abubakari,Aliu,Male,1985-12-13,205338188,557070255,Yes,15,2019-12-12,Ghana Health Service,Technical Officer (Health Information),No,,,,,No,,,,,unverified,2020/09/28 11:49:27 AM GMT,,73
+74,,Tankoruk,Jeremiah,Male,1982-08-13,240775799,203529229,Yes,15,2019-12-13,GHS/ District Health Directorate ,Ag.Comnunity Health nusrse ( Ag PHN),No,,,,,No,,,,,unverified,2020/09/28 12:44:20 PM GMT,,74
+75,,Iddi,Hasana,Female,1992-10-09,545118063,507562133,Yes,14,2019-08-22,Regional Health Directorate/Disease Control and EPI unit ,Health Information Officer,No,,,,,No,,,,,unverified,2020/09/28 12:53:45 PM GMT,,75
+76,,AMANKWAAH,SAMUEL,Male,1989-04-10,541288594,546295331,Yes,13,2019-05-16,GHANA HEALTH DIRECTORATE/ DISTRICT HEALTH DIRECTORATE,HEALTH INFORMATION OFFICER,No,,,,,,,,,,unverified,2020/09/28 2:52:35 PM GMT,,76
+77,,Tugpiel,Dominic,Male,1975-07-03,208399811,247647875,No,,,,Environmental Health Analyst,Yes,1,2019-12-10,,,No,,,,,unverified,2020/09/28 3:56:54 PM GMT,,77
+78,,AKANSIAK,SYLVESTER,Male,1970-08-08,244850212,244850212,Yes,15,2019-12-12,"GFELTP, ",DISTRICT VETERINARY OFFICER,No,,,,,,,,,,unverified,2020/09/28 4:24:52 PM GMT,,78
+79,,DANGBOOR,PAUL AABETERFAA,Male,1994-12-25,541439780,205105851,Yes,,2018-08-15,GHANA HEALTH SERVICE,HEALTH INFORMATION (TECHNICAL ASSISTANT),No,,,,,No,,,,,unverified,2020/09/28 5:32:27 PM GMT,,79
+80,,Banini,Rejoice,Female,1986-03-06,547138966,209433937,Yes,13,2019-05-16,Ghana Health Nurse,Public Health Nurse,No,,,,,No,,,,,unverified,2020/09/29 9:48:30 AM GMT,,80
+81,,DONGDEM,ANTHONY ZUNUO,Male,1969-07-10,506531040,244219733,,,,,,,,,,,Yes,1,2010-12-15,University of Ghana/Department of Epidemiology & Disease Control,Biomedical Scientist,unverified,2020/09/29 11:25:43 AM GMT,,81
+82,,Kye-Duodu,Gideon,Male,1976-09-20,244465259,208632324,No,,,,,No,,,,,Yes,4,2012-07-31,"District Hospital, Begoro",Senior Biomedical Scientist,unverified,2020/09/29 11:54:48 AM GMT,,82
+83,,Amenuvegbe,Gregory,Male,0068-08-09,208163336,593201142,,,,,,,,,,,Yes,10,2018-07-30,UHAS,Asst.Lecturer,unverified,2020/09/29 3:22:20 PM GMT,,83
+84,,Aku,Fortress,Female,1986-01-17,246121421,207984613,No,,,,,No,,,,,Yes,8,2016-06-30,Volta Regional Hospital,Biomedical Scientist,unverified,2020/09/29 5:16:17 PM GMT,,84
+85,,Aleungurah,Douglas,Male,1982-03-27,202862278,249477149,Yes,12,2018-08-15,"District Health Directorate, Lambussie",Public Health Officer (Disease Control),No,,,,,No,,,,,unverified,2020/09/29 5:59:02 PM GMT,,85
+86,,Sakyi,Gordon,Male,1983-03-03,543935274,249014119,Yes,13,2019-05-16,Ghana Health Service,Public Health Officer(Disease Control),No,,,,,No,,,,,unverified,2020/09/29 9:01:22 PM GMT,,86
+87,,Eduah ,Felicia Maame Efua ,Female,1977-09-09,247250678,208758888,Yes,13,2020-05-05,Ahafo Ano South DHD,District Public Health Nurse ,No,,,,,,,,,,unverified,2020/09/30 10:30:57 AM GMT,,87
+88,,Kepah,James,Male,1986-12-07,248085724,,Yes,13,2019-05-16,,,,,,,,,,,,,unverified,2020/09/30 1:38:48 PM GMT,,88
+89,,Kwofie ,Vida Naana ,Female,1973-06-08,277117988,558112811,No,,,,,No,,,NA,NA,Yes,11,2019-11-12,"University of Ghana, School of Public Health ",Midwife ,unverified,2020/09/30 3:08:48 PM GMT,,89
+90,,DEBRAH,SELORM,Male,1975-11-09,208870225,244791991,Yes,10,2018-05-16,VETERINARY SERVICES DEPARTMENT,VETERINARIAN,No,,,,,,,,,,unverified,2020/09/30 3:10:14 PM GMT,,90
+91,,KUMA,GEORGE KHUMALO,Male,1976-06-14,244180430,208217527,,,,,,,,,,,Yes,5,2013-07-30,Ghana Health Service,Medical Laboratory Scientist,unverified,2020/09/30 6:54:04 PM GMT,,91
+92,,Balagumyetime,Phoebe,Female,1968-07-06,243516077,,No,,,,,No,,,,,Yes,5,2017-07-31,Ghana Healrh service,District Director,unverified,2020/09/30 6:55:28 PM GMT,,92
+93,,Agyei,Yaw Fosu,Male,1987-07-23,265101012,544388568,Yes,13,2019-05-16,"Ghana Health Service, Ejisu",Health Information Officer,No,,,,,No,,,,,unverified,2020/09/30 8:23:42 PM GMT,,93
+94,,Amedzro,Irene,Female,1982-06-14,208418471,242084455,Yes,2,2016-01-08,Ghana Health Service/Public Health Laboratory,Biomedical Scientist,No,,,,,Yes,11,2019-11-15,Ghana Health Service/Public Health Laboratory,Biomedical Scientist,unverified,2020/09/30 9:14:33 PM GMT,,94
+95,,Osei-Wusu,Sadick ,Male,1988-10-31,248824943,202449611,Yes,5,2019-12-12,,Health information officer ,No,,,,,No,,,,,unverified,2020/09/30 10:02:47 PM GMT,,95
+96,,Whajah,Alberta Mali ,Female,1985-05-11,208604151,558518781,Yes,10,2018-05-16,Ghana Health Service ,Municipal public health nurse ,No,,,,,No,,,,,unverified,2020/09/30 10:55:33 PM GMT,,96
+97,,Oteng,Gideon,Male,1986-12-30,242208827,200686195,No,,,,,No,,,,,Yes,10,2018-07-31,"University of Ghana, School of Public Health, Department of Epidemiology and Disease Control",Biomedical Scientist,unverified,2020/10/01 7:59:26 AM GMT,,97
+98,,NTERFUL,ROBERT,Male,1981-10-17,246249488,202024939,Yes,10,2018-04-16,,Disease Control Officer,No,,,,,No,,,,,unverified,2020/10/01 8:33:55 AM GMT,,98
+99,,Acquah,Naomi Nayoca,Female,1984-01-28,243446327,,Yes,10,2018-05-16,Ghana Health Service,Public Health Nurse,No,,,,,No,,,,,unverified,2020/10/01 8:50:50 AM GMT,,99
+100,,Achirem Nyarko,Dennis,Male,1986-04-22,545142114,501162149,Yes,15,2019-12-12,Dormaa Municipal Health Directorate,Health Information Officer,No,,,,,No,,,,,unverified,2020/10/01 9:32:40 AM GMT,,100
+101,,Ayiwa,Serwaa,Female,1975-09-19,208190317,544221899,Yes,15,2019-09-12,Municipal Health Directorate,Public Health Nurse,No,,,,,No,,,,,unverified,2020/10/01 10:35:06 AM GMT,,101
+102,,Dsane-Aidoo,Paul Henry,Male,1986-06-28,242141600,,No,,,,,,,,,,Yes,11,2019-12-03,"School of Public Health, GFELTP",Senior Medical Officer,unverified,2020/10/01 1:43:54 PM GMT,,102
+103,,Owusu-Amponsah,Daniel,Male,1979-03-24,550975844,504404900,Yes,15,2019-12-12,Ghana Field Epidemiology and Laboratory Training Program,Public Health Officer,No,,,,,No,,,,,unverified,2020/10/05 11:25:54 AM GMT,,103
+104,,Klenyuie,Wisdom,Male,1981-08-29,242836665,207142936,Yes,11,2018-08-01,Ghana Health Service,Public Health Officer-Disease Control,No,,,,,No,,,,,unverified,2020/10/05 1:11:20 PM GMT,,104
+105,,Amoro,Nelson Ayamga,Male,0085-10-28,540747247,501382117,Yes,15,2019-12-12,Veterinary Services Directorate,Veterinary Officer,No,,,,,No,,,,,unverified,2020/10/05 2:43:52 PM GMT,,105
+106,,DZIKPE ,EMILIA ,Female,1987-05-18,245188660,200288473,Yes,11,2018-08-01,GHS,PUBLIC HEALTH NURSE (AGT),No,,,,,No,,,,,unverified,2020/10/06 10:26:56 AM GMT,,106
+107,,Doogu,Jonas,Male,1984-10-10,244581769,505439065,Yes,14,2019-08-22,District Health Directorate (GHS),Disease Control Officer (TO),No,,,,,No,,,,,unverified,2020/10/09 8:42:02 AM GMT,,107
+108,,Nuvey,Francis,Male,1991-05-15,41715661462,504991496,No,,,,,,,,,,Yes,11,2019-12-12,"Korle Bu Teaching Hospital, Ministry of Health",Nurse,unverified,2020/10/09 2:35:59 PM GMT,,108
+109,,Bawa,Dr. Abdul-Latif Baako,Male,1990-06-27,205781030,544053885,Yes,14,2019-08-22,Ghana Health Service,Medical Laboratory Scientist,No,,,,,No,,,,,unverified,2020/10/09 8:36:38 PM GMT,,109
+110,,Baba,Awuni,Male,1970-03-13,243924152,207239709,,,,,,Yes,1,2019-12-12,"Regional Health Directorate, Ghana Health Service",Regional Disease Surveillance Officer,No,,,,,unverified,2020/10/12 8:34:54 AM GMT,,110
+111,,Asante-Sefa,Solomon,Male,1980-12-17,244979600,,Yes,10,2018-05-16,Ghana Health Service / Laboratory,Principal Biomedical Scientist ,No,,,,,No,,,,,unverified,2020/10/13 7:08:47 AM GMT,,111
+112,,Adam,Gafaru Osman,Male,1986-02-06,207807776,246008457,Yes,14,2019-08-22,"Food and Drugs Authority, Tamale office",Regulatory Officer ,No,,,,,No,,,,,unverified,2020/10/16 1:54:45 PM GMT,,112
+113,,Sarpong,Johnson,Male,1986-02-24,247791534,247791534,Yes,13,2019-05-02,Public Health - Disease Control Unit,Disease Control Officer,No,,,,,No,,,,,unverified,2020/11/04 1:27:51 PM GMT,,113
+114,,Dombadoh ,Alentis Aba-ifaa ,Male,1980-05-16,243466361,205522102,Yes,14,2019-08-27,Uncertainty of Ghana ,Public health Officer ,No,,,,,No,,,,,unverified,2020/11/04 1:31:26 PM GMT,,114
+115,,FIAGBE,JOSEPH W.K,Male,1980-06-28,243836200,207999429,Yes,10,2018-05-15,SUAMAN HEALTH DIRECTORATE,PUBLIC HEALTH OFFICER -DC,No,,,,,,,,,,unverified,2020/11/04 1:39:43 PM GMT,,115
+116,,Tergu,Eric,Male,1983-03-10,207416158,546561222,Yes,3,,3,Veterinarian,Yes,,2018-08-12,Veterinary service Department,Technical officer,No,,,,,unverified,2020/11/04 2:24:10 PM GMT,,116
+117,,KANTON ,ISSAH LURIWIE ,Male,1982-08-10,541107044,205164066,Yes,12,2018-08-15,SISSALA EAST MUNICIPAL HEALTH ADMINISTRATION ,AG. PUBLIC HEALTH NURSE ,No,,,,,No,,,,,unverified,2020/11/04 3:20:25 PM GMT,,117
+118,,KANTON ,ISSAH LURIWIE ,Male,1982-08-10,541107044,205164066,Yes,12,2018-08-15,SISSALA EAST MUNICIPAL HEALTH ADMINISTRATION ,AG. PUBLIC HEALTH NURSE ,No,,,,,No,,,,,unverified,2020/11/04 3:20:40 PM GMT,,118
+119,,KANTON ,ISSAH LURIWIE ,Male,1982-08-10,541107044,205164066,Yes,12,2018-08-15,SISSALA EAST MUNICIPAL HEALTH ADMINISTRATION ,AG. PUBLIC HEALTH NURSE ,No,,,,,No,,,,,unverified,2020/11/04 3:21:12 PM GMT,,119
+120,,Apinyela,Andrews  Akanlebe,Male,1982-10-07,541190805,506016564,Yes,14,2019-08-16,"Nanumba North Municipal Health Directorate,Ghana Health Service",Health Information Officer,No,,,,,,,,,,unverified,2020/11/04 3:21:17 PM GMT,,120
+121,,Asigre,David,Male,1985-08-25,249656290,507256404,Yes,13,2019-04-26,Ghana Health Service,Public health officer,No,,,,,,,,,,unverified,2020/11/04 3:33:52 PM GMT,,121
+122,,Ohene Djan,Prince,Male,1986-12-31,249013088,,Yes,13,2019-05-15,Food and Drugs Authority,Regulatory Officer,No,,,,,,,,,,unverified,2020/11/04 3:37:26 PM GMT,,122
+123,,Gyacham,Henry,Male,1984-11-23,244608080,506414130,Yes,14,2019-08-28,Food and Drugs Authority,Regulatory Officer,No,,,,,,,,,,unverified,2020/11/04 4:19:24 PM GMT,,123
+124,,CUDJOE ,ALFRED,Male,1979-03-26,249741970,249741970,Yes,,2018-05-03,"GHANA HEALTH SERVICE, UPPER EAST REGIONAL HOSPITAL",MEDICAL LABORATORY SCIENTIST,No,,,,,No,,,,,unverified,2020/11/04 4:59:31 PM GMT,,124
+125,,AFUKAAH ,SIMON ,Male,1984-12-20,277324012,202062808,Yes,9,2018-05-03,Ghana health  Service ,Health information  officer ,No,,,,,,,,,,unverified,2020/11/04 8:15:56 PM GMT,,125
+126,,Abuakwah ,Daniel Nanabanyin ,Male,1987-06-06,244486561,200852902,Yes,4,2018-07-15,Tumu Municipal hospital ,Medical laboratory scientist ,No,,,,,No,,,,,unverified,2020/11/04 9:07:01 PM GMT,,126
+127,,Sulemana,Abdul-Rsuf,Male,1989-06-05,245884557,502110683,Yes,14,2019-08-22,Bimbilla Hospital/ Laboratory deparment,Medical Laboratory Scientist ,No,,,,,No,,,,,unverified,2020/11/05 8:09:02 AM GMT,,127
+128,,Sulemana,Abdul-Rsuf,Male,1989-06-05,245884557,502110683,Yes,14,2019-08-22,Bimbilla Hospital/ Laboratory deparment,Medical Laboratory Scientist ,No,,,,,No,,,,,unverified,2020/11/05 8:09:22 AM GMT,,128
+129,,Nyuasun,Saani,Male,1983-03-23,249383515,207290380,Yes,1,2018-08-24,Ghana Health Service,Disease Control Officer,No,,,,,No,,,,,unverified,2020/11/05 9:15:39 AM GMT,,129
+130,,Apetorgbor,Peter,Male,1975-01-07,244946147,,Yes,14,2019-08-22,Ghana Health Service,Disease control ,,,,,,,,,,,unverified,2020/11/05 9:15:41 AM GMT,,130
+131,,Apungu ,Samuel ,Male,1985-05-24,205359221,249611504,Yes,9,2018-05-28,Ghana health service ,Public health nurse,No,,,,,No,,,,,unverified,2020/11/05 11:07:47 AM GMT,,131
+132,,Asumadu,Gyetuah ,Male,1986-01-27,206156039,206156039,Yes,14,2019-08-22,University of Ghana ,Disease Control Officer ,No,,,,,,,,,,unverified,2020/11/05 11:16:47 AM GMT,,132
+133,,AGBO ,TIMOTHY ATTA ,Male,1986-08-11,240646055,205524558,Yes,11,2018-07-29,"University College of Ghana,  Legon",HEALTH INFORMATION OFFICER ,No,,,,,No,,,,,unverified,2020/11/05 4:05:37 PM GMT,,133
+134,,AGBOFU ,NOAH,Male,1990-07-07,240557893,505368577,Yes,11,2018-08-11,UNIVERSITY OF GHANA SCHOOL OF PUBLIC HEALTH ,DISEASE CONTROL ,No,,,,,No,,,,,unverified,2020/11/05 10:27:03 PM GMT,,134
+135,,ADAM,ANAS,Male,1986-12-23,206138785,248859976,Yes,14,2019-08-22,GHANA HEALTH SERVICE,DISTRICT HEALTH INFORMATION OFFICER,No,,,,,,,,,,unverified,2020/11/06 10:16:45 AM GMT,,135
+136,,Duah,Agyemang,Male,1987-12-02,200262072,240134880,Yes,15,2019-12-12,Laboratory,Biomedical scientist,No,,,,,No,,,,,unverified,2020/11/11 2:38:35 PM GMT,,136
+137,,Essel,Joycelyn,Female,1993-02-13,549754562,570283890,Yes,10,2018-05-15,GHS,Ag.PHN,No,,,,,No,,,,,unverified,2020/11/11 2:43:39 PM GMT,,137
+138,,Osei,Gideon ,Male,1991-06-20,546098320,546098320,Yes,15,2019-12-12,Dormaa MHD,Disease Control Officer ,No,,,,,No,,,,,unverified,2020/11/11 4:00:15 PM GMT,,138
+139,,AGYEMANG,KOFI BOATENG,Male,1971-04-02,266762942,201168555,Yes,13,2019-05-16,VETERINARY,ANIMAL HEALTH OFFICER,No,,,,,No,,,,,unverified,2020/11/26 1:18:26 PM GMT,,139
+140,,Abdul Hamid ,Abubakari ,Male,1990-04-04,541111604,506944402,Yes,9,2018-05-03,GHS/Bawku Municipal Health Directorate ,Health Information Officer ,No,9,2018-05-03,,,No,,,,,unverified,2020/12/24 2:42:54 PM GMT,,140
+141,,Anyim ,Clement ,Male,1986-12-13,249535356,200947923,Yes,9,2018-05-03,Food and Drugs Authority ,Regulatory Officer,Yes,1,2019-12-13,Food and Drugs Authority , Regulatory Officer,No,,,,,unverified,2021/04/14 11:00:44 AM GMT,,141
