@@ -3,6 +3,7 @@ from . import views
 from django.contrib.auth.decorators import login_required
 
 # app_name = 'contacts'
+
 urlpatterns = [
 	path('index/', login_required( views.IndexView.as_view() ), name='index'),
 	path('add/', login_required( views.AddView.as_view() ), name='add'),

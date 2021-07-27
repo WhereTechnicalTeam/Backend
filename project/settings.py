@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'corsheaders',
-
 ]
 
 MIDDLEWARE = [
@@ -114,39 +113,29 @@ REST_FRAMEWORK = {
 }
 
 
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'testing',
-#         'USER': 'appuser',
-#         'PASSWORD': 'EwpvKyq8aFse3TJ9',
-#         'HOST': 'wheregeospatial.com',
-#         'PORT': 6432,
-#     }
-# }
-
-
-
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'HOST': 'localhost',
-            'PORT': '5432',
-            'NAME': 'feltptRIAL',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres1234',
-        }
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'feltp',
+        'USER': 'appuser',
+        'PASSWORD': 'EwpvKyq8aFse3TJ9',
+        'HOST': 'wheregeospatial.com',
+        'PORT': 6432,
     }
+}
+
+
+
+# DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'HOST': 'localhost',
+#             'PORT': '5432',
+#             'NAME': 'feltptRIAL',
+#             'USER': 'postgres',
+#             'PASSWORD': 'postgres1234',
+#         }
+#     }
 
     
 
@@ -184,6 +173,7 @@ USE_L10N = True
 USE_TZ = True
 
 
+
 SITE_ID=1
 
 
@@ -192,8 +182,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'wheregeospatialnoreply@gmail.com'
 EMAIL_HOST_PASSWORD = 'WhereIsHere'
 EMAIL_PORT = 587
-
-
 
 
 # Media is for any user upload files(img,pdf,videos etc)

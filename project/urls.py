@@ -3,11 +3,10 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-# from apis.routers import router
+
 
 
 urlpatterns = [
-
     # path('', include('app_homepage.urls')),
     # path('users/', include('app_users.urls')),
     # path('contacts/', include('app_contacts.urls')),
