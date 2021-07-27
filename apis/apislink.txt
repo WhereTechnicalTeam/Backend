@@ -1,18 +1,21 @@
 
 Register link
-/api/usercreate
+/api/userPR
 
 
 Login link
 /api/login
 
 
-Userlist
-/api/userdetail
-
+Update Password
+/api/userdetail/<pk>/edit
 
 All users information
 /api/alldata
+
+
+Retrieve a user info
+/api/alldata/<pk>
 
 
 Update user profile
@@ -23,3 +26,9 @@ All news
 /api/newsdetail
 
 
+Verify verification code
+/api/verifycode
+
+
+Search Email
+/api/verifyemail

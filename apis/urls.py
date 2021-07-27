@@ -63,8 +63,9 @@ urlpatterns = [
     ###       new urls upon update
     path('verifyemail', views.get_profile, name='verifyemail'),
     path('userPR', UserAndProfileCreate.as_view(), name='userPR'),
-    path('useredit/<int:pk>/', UserAndProfileUpdate.as_view(), name='useredit'),
+    path('useredit/<int:pk>/update', UserAndProfileUpdate.as_view(), name='useredit'),
     path('verifycode', views.v_code, name='verifycode'),
+    # path('userdetail/<int:pk>/update', UserAndProfileUpdate.as_view(), name='userupdate'),
     # path('log', CustomAuthToken.as_view(), name='log'),
 
 

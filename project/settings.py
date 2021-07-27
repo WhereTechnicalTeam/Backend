@@ -52,8 +52,8 @@ INSTALLED_APPS = [
     # 'app_users.apps.AppUsersConfig',
     # 'app_contacts.apps.AppContactsConfig',
     'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
     'rest_auth.registration',
     'rest_framework',
     'apis',
@@ -108,7 +108,7 @@ REST_FRAMEWORK = {
     ),
     # Permission Policies
     'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated',
         # 'rest_framework.permissions.IsAdminUser',
     ]
 }
@@ -127,7 +127,7 @@ REST_FRAMEWORK = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'testing',
+#         'NAME': 'feltp',
 #         'USER': 'appuser',
 #         'PASSWORD': 'EwpvKyq8aFse3TJ9',
 #         'HOST': 'wheregeospatial.com',
