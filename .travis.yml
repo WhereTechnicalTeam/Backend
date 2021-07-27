@@ -13,6 +13,4 @@ deploy:
   - python manage.py makemigrations
   - python manage.py migrate
   - heroku ps:scale web=1
-  branches:
-    only:
-    - /.*/
+  on: master
