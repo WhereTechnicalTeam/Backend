@@ -1,0 +1,40 @@
+.art {
+	margin-right: 0;
+    margin-left: auto;
+    /*-ms-flex-direction: row;*/
+    flex-direction: row;
+
+}
+
+.landing {
+
+	width: 100%;
+}
+
+.dd {
+/*	padding: 0 40px;*/
+	/*width: 60%;*/
+}
+
+
+
+/*.dark {
+    display: flex;
+    vertical-align: middle;
+  	display: table-cell;
+  	margin: 0 20px;
+}*/
+
+/*.dds {
+	display: table;
+	margin-right: 0;
+    margin-left: auto;
+    flex-direction: row;
+}
+
+.bbs {
+	display: table;
+	margin-left: 0;
+    margin-right: auto;
+    flex-direction: row;
+}*/
