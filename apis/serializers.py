@@ -289,9 +289,9 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         fields = ('main_user', 'job_to_user', 'news_to_user')
 
     def update(self, instance, validated_data):
-        job_data = validated_data.pop('job_to_user')
+        job_to_user = validated_data.pop('job_to_user')
         main_data = validated_data.pop('main_user')
-        news_data = validated_data.pop('news_to_user')
+        news_to_user = validated_data.pop('news_to_user')
 
         jobs_data1 = (instance.job_data).all()
         news_data1 = (instance.news_data).all()
