@@ -35,8 +35,8 @@ STATUS = (
 
 
 CURRENT = (
-    ("yes", "yes"),
-    ("no", "no")
+    ("Yes", "Yes"),
+    ("No", "No")
     )
 
 
@@ -144,7 +144,7 @@ class JobInfo(models.Model):
     district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
     level_of_health_system = models.ForeignKey(LevelOfHealthSystem, on_delete=models.CASCADE, null=True)
     employment_status = models.CharField(max_length=100, blank=True, null=True)
-    is_current = models.CharField(max_length=5, choices=CURRENT, default="no")
+    is_current = models.CharField(max_length=5, choices=CURRENT, default="No")
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

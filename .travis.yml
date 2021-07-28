@@ -6,11 +6,10 @@ install: pip install -r requirements.txt
 script: python manage.py test --keepdb
 deploy:
   provider: heroku
-  api_key:
-    secure: cgDfiuPDpNjOOPhxY7/RCaKpTNkJGNDEAxiU3NLVyefd2bcvI7sgPTaF/ft1pEA0lnZQ4Ew4zpcWapzaux+meMT52n4p4IDNQTXeUEv9AXGuLseKv0ZUGxKL1VVBk+8E+AqtOpT/q/Pm/LzwMf/gMikHoaU5iey5eHPdDHRALd4oWuEw8u3b/lTzlAk/Wm+6cCWMyHogH9Kq4t4o9RY0gMulfomiSLrpmtu8Bn+eEMz1zttE83AYCr1fsOl4UCNDSI7WKPKNdstPtVrXKAeD1TNeqCZLJ33Thp9Sa9FG8S5aVTkOST8jSclSU54w2TSZy/9t5MPzFEyTozTj/Cn4RbF1boY36YS/o9kZNqKcLtuu+dvL8ywgoaiYHcUxsYKXos+XjY+FXPa99ff7e8o10twPZnYLPF1uTx/CNjP9oVavhh1I2Weg+HVnsgZl9VcRmzrVQ48iR1AFnu8dRxmubUW1c90IkiZysSn8pt2FYCImtH1YaqJisL8yECtiT8SW+FEeAiOINMs77UN/C3diiFIuHfpPxXW+nEKz39+5hh3F+m1a9Vg4UTZKH2P5pszdb/7nql+Ud7yOMowAsv7mq0lkqxsOggQtTWs6D7E8sAnrR9nCAxZiRKEgxpUvOkk6JxUAJsrJrbay61Tu9M7Av9X5FcsI3XJsxR8Pakn62AM=
   app: feltp
   run:
   - python manage.py makemigrations
   - python manage.py migrate
   - heroku ps:scale web=1
   on: master
+  api_key: $HEROKU_AUTH_TOKEN
