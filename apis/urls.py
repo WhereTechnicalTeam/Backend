@@ -11,7 +11,8 @@ from .views import *
 urlpatterns = [
 	#    user profile crud
     path('regions', Region.as_view(), name='regionlist'),
-    path('', UserProfileList.as_view(), name='profilelist'),
+    path('', views.welcome, name='welocome'),
+    path('profilelist', UserProfileList.as_view(), name='profilelist'),
     path('profiledetail/<int:pk>/', UserProfileDetail.as_view(), name='profiledetail'),
     path('profiledetail/<int:pk>/edit', UserProfileUpdate.as_view(), name='profileupdate'),
     path('profiledetail/<int:pk>/delete', UserProfileDelete.as_view(), name='profiledelete'),

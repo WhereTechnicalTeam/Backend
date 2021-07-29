@@ -27,6 +27,45 @@ from rest_framework.views import APIView
 from rest_framework.renderers import (HTMLFormRenderer, JSONRenderer, BrowsableAPIRenderer,)
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
+from django.contrib.auth.models import User
+
+
+
+
+@api_view(["GET"])
+def welcome(request):
+	return Response({'status': status.HTTP_200_OK, 'msg':'Welcome to FELTP APP'})
+
+
+#  this is to delete duplicates from the db
+def dood():
+	for i in range(1, 141):
+		a = User.objects.get(id=i)
+		d = 1+i
+		aa = User.objects.get(id=d)
+		b = a.email
+		bb = aa.email
+		if "@" in b:
+			c = b.split('@')[0]
+			cc = bb.split('@')[0]
+			if c == cc:
+				aa.delete()
+			a.username = c
+			a.save()
+
+	return 'done'
+
+
+
+def updateTbl():
+	aa = User.objects.all()
+	for a in aa:
+		print('statrted')
+		i = a.email.split('@')[0]
+		a.first_name = i
+		a.save()
+	return 'done'
+
 
 
 
@@ -40,7 +79,7 @@ class Region(ListAPIView):
 #         User Profile Apis
 class UserProfileList(ListAPIView):
 	serializer_class = UserProfileSerializer
-	#permission_classes = [IsAuthenticated]
+	permission_classes = [IsAuthenticated]
 	# lookup_field = 'slug'
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('firstname', 'surname', 'status',)
@@ -61,14 +100,14 @@ class UserProfileDetail(RetrieveAPIView):
 	queryset = UserProfile.objects.all()
 	serializer_class = UserProfileSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAuthenticated]
+	permission_classes = [IsAuthenticated]
 
 
 class UserProfileUpdate(RetrieveUpdateAPIView):
 	queryset = UserProfile.objects.all()
 	serializer_class = UserProfileSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+	permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
@@ -78,7 +117,7 @@ class UserProfileDelete(DestroyAPIView):
 	queryset = UserProfile.objects.all()
 	serializer_class = UserProfileSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
 	def perform_delete(self, serializer):
 		serializer.save(user=self.request.user)
@@ -87,7 +126,7 @@ class UserProfileDelete(DestroyAPIView):
 class UserProfileCreate(CreateAPIView):
 	queryset = UserProfile.objects.all()
 	serializer_class = UserProfileSerializer
-	#permission_classes = [IsAuthenticated]
+	permission_classes = [IsAuthenticated]
 
 	def perform_create(self, serializer):
 		serializer.save(user=self.request.user)
@@ -99,7 +138,7 @@ class UserProfileCreate(CreateAPIView):
 class UserList(ListAPIView):
 	authentication_classes = (TokenAuthentication,)
 	serializer_class = UserSerializer
-	#permission_classes = [IsAuthenticated]
+	permission_classes = [IsAuthenticated]
 	# lookup_field = 'slug'
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('username', 'email',)
@@ -127,7 +166,7 @@ class UserUpdate(RetrieveUpdateAPIView):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+	permission_classes = [IsAuthenticatedOrReadOnly, IsUserOrNot]
 
 	# def perform_update(self, serializer):
 	# 	serializer.save(user=self.request.user)
@@ -157,7 +196,7 @@ class UserDelete(DestroyAPIView):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAdminUser]
+	permission_classes = [IsAdminUser]
 
 	def perform_delete(self, serializer):
 		serializer.save(user=self.request.user)
@@ -177,7 +216,7 @@ class UserCreate(CreateAPIView):
 #         Events  Apis
 class EventsList(ListAPIView):
 	serializer_class = EventSerializer
-	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('schedule', 'description', 'title',)
 
@@ -205,7 +244,7 @@ class EventsUpdate(RetrieveUpdateAPIView):
 	queryset = Event.objects.all()
 	serializer_class = EventSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAdminUser]
+	permission_classes = [IsAdminUser]
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
@@ -216,7 +255,7 @@ class EventsDelete(DestroyAPIView):
 	queryset = Event.objects.all()
 	serializer_class = EventSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAdminUser]
+	permission_classes = [IsAdminUser]
 
 	def perform_delete(self, serializer):
 		serializer.save()
@@ -238,7 +277,7 @@ class EventsCreate(CreateAPIView):
 #         News  Apis
 class NewsList(ListAPIView):
 	serializer_class = NewsSerializer
-	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('content', 'title',)
 
@@ -265,7 +304,7 @@ class NewsUpdate(RetrieveUpdateAPIView):
 	queryset = New.objects.all()
 	serializer_class = NewsSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAdminUser]
+	permission_classes = [IsAuthenticated]
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
@@ -276,7 +315,7 @@ class NewsDelete(DestroyAPIView):
 	queryset = New.objects.all()
 	serializer_class = NewsSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAdminUser]
+	permission_classes = [IsAuthenticated]
 
 	def perform_delete(self, serializer):
 		serializer.save(user=self.request.user)
@@ -285,7 +324,7 @@ class NewsDelete(DestroyAPIView):
 class NewCreate(CreateAPIView):
 	queryset = New.objects.all()
 	serializer_class = NewsSerializer
-	#permission_classes = [IsAdminUser]
+	permission_classes = [IsAuthenticated]
 
 	def perform_create(self, serializer):
 		serializer.save(user=self.request.user)
@@ -325,7 +364,7 @@ class JobsUpdate(RetrieveUpdateAPIView):
 	queryset = JobInfo.objects.all()
 	serializer_class = JobInfoSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+	permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
@@ -336,7 +375,7 @@ class JobsDelete(DestroyAPIView):
 	queryset = JobInfo.objects.all()
 	serializer_class = JobInfoSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAuthenticated]
+	permission_classes = [IsAuthenticated]
 
 	def perform_delete(self, serializer):
 		serializer.save(user=self.request.user)
@@ -345,7 +384,7 @@ class JobsDelete(DestroyAPIView):
 class JobsCreate(CreateAPIView):
 	queryset = JobInfo.objects.all()
 	serializer_class = JobInfoSerializer
-	#permission_classes = [IsAuthenticated]
+	permission_classes = [IsAuthenticated]
 
 
 
@@ -357,7 +396,7 @@ class JobsCreate(CreateAPIView):
 #         all data from users to news apis
 class UserDetailViewList(ListAPIView):
 	serializer_class = UserDetailSerializer
-	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('username', 'email',)
 
@@ -415,11 +454,11 @@ def verify_code(request):
 				query.save()
 				# token, created = Token.objects.get_or_create(user=user)
 			# 	return Response({"status": status.HTTP_200_OK, "Token": token.key})
-				return Response("Verification code is valid. You may login.", status=status.HTTP_201_CREATED)
+				return Response("Verification code is valid. You may login.", status=status.HTTP_200_OK)
 			
 			else:
 				# print('here')
-				return Response("Verification code is valid. You may sign up.", status=status.HTTP_201_CREATED)
+				return Response("Verification code is valid. You may sign up.", status=status.HTTP_200_OK)
 
 		else:
 			return Response("This verification code does not exist.", status=status.HTTP_400_BAD_REQUEST)
@@ -445,9 +484,11 @@ def verify_code(request):
 
 
 
+
+
 {
 "username":"aabalekuusimon78",
-"password":"jed123456"
+"password":"user1234"
 }
 
 
@@ -483,16 +524,19 @@ def login(request):
             if prof.status == 'approved' and prof.email_status == 'verified':
                 print ('ver')
                 update_last_login(None, user)
+                user.is_active = True
+                user.save()
                 (token, created) = Token.objects.get_or_create(user=user)
+                dest = {'user':'{}'.format(prof.user_id), 'id':'{}'.format(prof.id), 'id':'{}'.format(prof.id), 'firstname':'{}'.format(prof.firstname), 'lastname':'{}'.format(prof.surname)}
                 return Response({'status': status.HTTP_200_OK,
                                 'Token': token.key,
-                                'user':model_to_dict(prof)})
+                                'user':dest})
             else:
                 return Response({'status': status.HTTP_400_BAD_REQUEST,
                                 'Final Verifcation': 'You have not yet been verified by the admin. You may knidly contact him/her to be verified to be logged in.'
                                 })
         except Exception as e:
-            return Response({'status': status.HTTP_400_BAD_REQUEST})
+            return Response({'status': status.HTTP_500_INTERNAL_SERVER_ERROR})
     return Response({'status': status.HTTP_400_BAD_REQUEST})
 
 
@@ -512,7 +556,7 @@ def get_profile(request):
 	try:
 		print('yes')
 		query = User.objects.get(email__contains=request.data['email'])
-		print(query.password)
+		# print(query.password)
 
 		if query:
 			profile = UserProfile.objects.get(user=query)
@@ -526,13 +570,17 @@ def get_profile(request):
 				try:
 					send_mail('Your Verifcation Code',
 						"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [request.data['email']],)
-					return Response({"email_status": profile.email_status, "code":"A verification code has been sent to your email", "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
+					prof = {'user':'{}'.format(profile.user_id), 'id':'{}'.format(profile.id), 'id':'{}'.format(profile.id), 'firstname':'{}'.format(profile.firstname), 'lastname':'{}'.format(profile.surname)}
+					return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "code":"A verification code has been sent to your email", "user":prof})
+					#return Response({"email_status": profile.email_status, "code":"A verification code has been sent to your email", "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
 				except Exception as e:
 					print(e)
-					return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
+					return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 			else:
 				print('verified')
-				return Response({"email_status": profile.email_status, "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
+				prof = {'user':'{}'.format(profile.user_id), 'id':'{}'.format(profile.id), 'id':'{}'.format(profile.id), 'firstname':'{}'.format(profile.firstname), 'lastname':'{}'.format(profile.surname)}
+				return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "user":prof})
+				#return Response({"email_status": profile.email_status, "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
 
 		else:
 			return Response({"action":"User not found", "status":status.HTTP_400_BAD_REQUEST})
@@ -565,7 +613,7 @@ def v_code(request):
 				print(prof.email_status)
 				# token, created = Token.objects.get_or_create(user=user)
 			# 	return Response({"status": status.HTTP_200_OK, "Token": token.key})
-				return Response("Verification code is valid. You may login.", status=status.HTTP_201_CREATED)
+				return Response("Verification code is valid. You may login.", status=status.HTTP_200_OK)
 			
 		else:
 			return Response("This verification code does not exist.", status=status.HTTP_400_BAD_REQUEST)
@@ -590,8 +638,8 @@ class UserAndProfileCreate(CreateAPIView):
 
 class UserAndProfileUpdate(RetrieveUpdateAPIView):
 	queryset = User.objects.all()
-	serializer_class = UserAndProfileSerializer
-	#permission_classes = [IsAuthenticated, IsUserOrNot]
+	serializer_class = UpdateProfileSerializer
+	permission_classes = [IsAuthenticated, IsUserOrNot]
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
@@ -601,10 +649,3 @@ class UserAndProfileUpdate(RetrieveUpdateAPIView):
 
 
 
-
-# curl -k https://localhost:8000/api/login -X POST -H "Content-Type: application/json" --data "{\"username\":\"aabalekuusimon78\",\"password\":\"jed123456\"}" -c c:\cookiejar.txt
-
-# curl --request GET \
-#   --url https://localhost:8000/api \
-#   --header 'authorization: token' \
-#   --header 'content-type: application/json'

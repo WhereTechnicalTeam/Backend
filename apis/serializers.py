@@ -154,6 +154,27 @@ class VerificationSerializer(serializers.ModelSerializer):
 
 '''We want to ensure that tokens are created when user is created in UserCreate view, so we update the UserSerializer. Change your serializers.py like this'''
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class UserDetailSerializer(serializers.ModelSerializer):
     main_user = UserProfileSerializer(read_only=True)
     job_to_user = JobInfoSerializer(many=True, read_only=True)
@@ -195,16 +216,14 @@ class LoginSerializers(serializers.Serializer):
 
             if not user:
                 msg = _('Unable to log in with provided credentials.')
-                raise serializers.ValidationError(msg, code='authorization')
+                raise serializers.ValidationError({'status':'400', 'msg':'Unable to log in with provided credentials.'})
         else:
-            msg = _('Must include "username" and "password".')
-            raise serializers.ValidationError(msg, code='authorization')
+            msg = _( 'Must include "username" and "password".')
+            raise serializers.ValidationError({'status':'401', 'msg':'You are not authorised yet.'})
+            # raise serializers.ValidationError(msg, code='authorization')
 
         data['user'] = user
         return data
-
-
-
 
 
 
@@ -241,6 +260,11 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         prof = UserProfile.objects.create(**validated_data['main_user'])
         prof.user = user
         prof.save()
+
+        user.first_name = prof.firstname
+        user.last_name = prof.surname
+        user.save()
+
         # Token.objects.create(user=user)
         created = verificationTbl.objects.create(email=validated_data['email'], code=codes())
         try:
@@ -251,3 +275,76 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
             print(e)
             return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
         return (validated_data)
+
+
+
+# ###########     update the profile all
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    job_to_user = JobInfoSerializer(many=True)
+    main_user = UserProfileSerializer()
+    news_to_user = NewsSerializer(many=True)
+
+
+    class Meta:
+        model = User
+        fields = ('main_user', 'job_to_user', 'news_to_user')
+
+    def update(self, instance, validated_data):
+        job = validated_data.pop('job_to_user')
+        main = validated_data.pop('main_user')
+        news = validated_data.pop('news_to_user')
+
+        profile = instance.main_user
+        jobs_data1 = instance.job_to_user.all()
+        news_data1 = instance.news_to_user.all()
+
+        jobs_data1 = list(jobs_data1)
+
+        
+        profile.title = validated_data.get('title', profile.title)
+        profile.surname = validated_data.get('surname', profile.surname)
+        profile.firstname = validated_data.get('firstname', profile.firstname)
+        profile.sex = validated_data.get('sex', profile.sex)
+        profile.date_of_birth = validated_data.get('date_of_birth', profile.date_of_birth)
+        profile.phone1 = validated_data.get('phone1', profile.phone1)
+        profile.phone2 = validated_data.get('phone2', profile.phone2)
+        profile.is_trained_frontline = validated_data.get('is_trained_frontline', profile.is_trained_frontline)
+        profile.cohort_number_frontline = validated_data.get('cohort_number_frontline', profile.cohort_number_frontline)
+        profile.yr_completed_frontline = validated_data.get('yr_completed_frontline', profile.yr_completed_frontline)
+        profile.institution_enrolled_at_frontline = validated_data.get('institution_enrolled_at_frontline', profile.institution_enrolled_at_frontline)
+        profile.job_title_at_enroll_frontline = validated_data.get('job_title_at_enroll_frontline', profile.job_title_at_enroll_frontline)
+        profile.is_trained_intermediate = validated_data.get('is_trained_intermediate', profile.is_trained_intermediate)
+        profile.cohort_number_intermediate = validated_data.get('cohort_number_intermediate', profile.cohort_number_intermediate)
+        profile.yr_completed_intermediate = validated_data.get('yr_completed_intermediate', profile.yr_completed_intermediate)
+        profile.institution_enrolled_at_intermediate = validated_data.get('institution_enrolled_at_intermediate', profile.institution_enrolled_at_intermediate)
+        profile.job_title_at_enroll_intermediate = validated_data.get('job_title_at_enroll_intermediate', profile.job_title_at_enroll_intermediate)
+        profile.is_trained_advanced = validated_data.get('is_trained_advanced', profile.is_trained_advanced)
+        profile.cohort_number_advanced = validated_data.get('cohort_number_advanced', profile.cohort_number_advanced)
+        profile.yr_completed_advanced = validated_data.get('yr_completed_advanced', profile.yr_completed_advanced)
+        profile.institution_enrolled_at_advanced = validated_data.get('institution_enrolled_at_advanced', profile.institution_enrolled_at_advanced)
+        profile.job_title_at_enroll_advanced = validated_data.get('job_title_at_enroll_advanced', profile.job_title_at_enroll_advanced)
+        profile.save()
+
+        for datas in job:
+            jobs = jobs_data1.pop(0)
+            jobs.current_institution = datas.get('current_institution', jobs.current_institution)
+            jobs.job_title = datas.get('job_title', jobs.job_title)
+            jobs.region = datas.get('region', jobs.region)
+            jobs.district = datas.get('district', jobs.district)
+            jobs.level_of_health_system = datas.get('level_of_health_system', jobs.level_of_health_system)
+            jobs.employment_status = datas.get('employment_status', jobs.employment_status)
+            jobs.is_current = datas.get('is_current', jobs.is_current)
+            jobs.longitude = datas.get('longitude', jobs.longitude)
+            jobs.latitude = datas.get('latitude', jobs.latitude)
+            jobs.save()
+
+        for info in news_data1:
+            news1 = news_data1.pop(0)
+            news1.title = info.get('title', news1.title)
+            news1.content = info.get('content', news1.content)
+            news1.picture1 = info.get('picture1', news1.picture1)
+            news1.picture2 = info.get('picture2', news1.picture2)
+            news1.save()
+
+
+        return instance

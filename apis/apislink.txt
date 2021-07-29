@@ -1,6 +1,6 @@
 
 Register link
-/api/usercreate
+/api/userPR
 
 
 Login link
@@ -11,12 +11,24 @@ Userlist
 /api/userdetail
 
 
+Search and Verify enail
+/api/verifyemail
+
+
+Verify verification code
+/api/verifycode
+
+
 All users information
 /api/alldata
 
 
+All data for a specific user
+/api/alldata/<pk>
+
+
 Update user profile
-/api/profilecreate
+/api/useredit/<pk>/
 
 
 All news
