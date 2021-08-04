@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block head %}
-{% block title %} Create Gallery {% endblock title %}
+{% block title %} Detailed Gallery {% endblock title %}
+
 
 {% endblock %}
 
@@ -16,13 +17,13 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          {% if messages %}
+         <!--  {% if messages %}
               <ul class="messages">
                   {% for message in messages %}
                  <input class="d-none" type="text" id="add" value={{message}}></input>
                   {% endfor %}
               </ul>
-              {% endif %}<br>
+              {% endif %}<br> -->
           <div class="col-sm-6">
             <h1> Gallery</h1>
           </div>
@@ -59,14 +60,10 @@
                   
             </div>
                   <div class="form-group">
-                    <label for="exampleInputFile">Attach Image</label>
+                    <label for="exampleInputFile">Image</label>
                     <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="exampleInputFile" name="picture" value="{{obj.picture}}">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                      </div>
-                      <div class="input-group-append">
-                        <span class="input-group-text">Upload</span>
+                      <div class="custom-file" style="width: 600px; height: 300px;">
+                        <img src="/media/{{obj.picture}}" width="350px" height="250px">
                       </div>
                     </div>
                   </div>
@@ -77,7 +74,7 @@
                 <div class="card-footer">
                   <button type="type" class="btn btn-primary" id="back">Cancel</button>
                   <button type="type" class="btn btn-primary" id="edit">Edit</button>
-                  <button type="type" class="btn btn-primary" id="delete">Delete</button>
+                  <button type="type" class="btn btn-danger" id="delete">Delete</button>
                 </div>
               </form>
               
@@ -93,9 +90,10 @@
     <!-- /.content -->
   </div>
  
+{% endblock %}
+{% block js %}
 
 
- <script src="/static/feltp/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
 
@@ -126,7 +124,15 @@ if($('#add').val() =='done'){
 
 $('#delete').click(function(e){
      e.preventDefault();
-    document.location.href = 'delete'
+     $.get('/feltp/gallerydetail/{{obj.id}}/delete', function(data){
+        if (data == 'Deleted'){
+             Swal.fire("Deleted!", 'Data has successfully been deleted.', "success")
+            .then(function () {
+                        window.location.href="/feltp/admingallery"
+                    
+                })
+        }
+    })
   });
 
 

@@ -4,13 +4,17 @@
 {% block head %}
 {% block title %} GFELTP | Alumni {% endblock title %}
 
-<!-- <style type="text/css">
-.div_before_table {
+<style type="text/css">
+/*.div_before_table {
     overflow:hidden;
     overflow-y: scroll;
     height: 900px;
-}
-</style> -->
+}*/
+
+/*#example1_wrapper{
+  overflow-x: auto;
+}*/
+</style>
 {% endblock %}
 
 
@@ -49,7 +53,7 @@
               
             <!-- /.card -->
 
-            <div class="card">
+            <div class="card" style="overflow-x: auto;">
               <div class="card-header">
                 <h3 class="card-title">Alumni List</h3>
               </div>
@@ -58,29 +62,29 @@
                 <table id="example1" class="table table-bordered table-responsive table-striped">
                   <thead>
                     <tr>
-                      <th >Title</th>
-                      <th >First Name</th>
-                      <th >Last Name</th>
-                      <th >Sex</th>
-                      <th >Date of Birth</th>
-                      <th >Phone Number 1</th>
-                      <th >Phone Number 2</th>
-                      <th >Undertaken Frontline Training</th>
-                      <th >Frontline Cohort Number</th>
-                      <th >Year Completed Frontline</th>
-                      <th >Institution Enrolled at Frontline</th>
-                      <th >Job Title at Frontline</th>
-                      <th >Undertaken Intermediate Training</th>
-                      <th >Intermediate Cohort Number</th>
-                      <th >Year Completed Intermediate</th>
-                      <th >Institution Enrolled at Intermediate</th>
-                      <th >Job Title at Intermediate</th>
-                      <th >Undertaken Advanced Training</th>
-                      <th >Advanced Cohort Number</th>
-                      <th >Year Completed Advanced</th>
-                      <th >Institution Enrolled at Advanced</th>
-                      <th >Job Title at Advanced</th>
-                      <th >Status</th>
+                      <th class="all">Title</th>
+                      <th class="all">First Name</th>
+                      <th class="all">Last Name</th>
+                      <th class="all">Sex</th>
+                      <th class="all">Date of Birth</th>
+                      <th class="all">Phone Number 1</th>
+                      <th class="all">Phone Number 2</th>
+                      <th class="all">Undertaken Frontline Training</th>
+                      <th class="all">Frontline Cohort Number</th>
+                      <th class="all">Year Completed Frontline</th>
+                      <th class="all">Institution Enrolled at Frontline</th>
+                      <th class="all">Job Title at Frontline</th>
+                      <th class="all">Undertaken Intermediate Training</th>
+                      <th class="all">Intermediate Cohort Number</th>
+                      <th class="all">Year Completed Intermediate</th>
+                      <th class="all">Institution Enrolled at Intermediate</th>
+                      <th class="all">Job Title at Intermediate</th>
+                      <th class="all">Undertaken Advanced Training</th>
+                      <th class="all">Advanced Cohort Number</th>
+                      <th class="all">Year Completed Advanced</th>
+                      <th class="all">Institution Enrolled at Advanced</th>
+                      <th class="all">Job Title at Advanced</th>
+                      <th class="all">Status</th>
                       <!-- <th>Date of Birth</th>
                       <th>Last Name</th>
                       <th>Sex</th>
@@ -133,9 +137,9 @@
   </div>
 
 
+{% endblock %}
 
-
-
+{% block js %}
 <script src="/static/feltp/plugins/jszip/jszip.min.js"></script>
 <script src="/static/feltp/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="/static/feltp/plugins/pdfmake/vfs_fonts.js"></script>

@@ -80,7 +80,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['title', 'surname', 'firstname', 'sex', 'phone1', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 
         'institution_enrolled_at_frontline', 'job_title_at_enroll_frontline', 'is_trained_intermediate', 'cohort_number_intermediate', 'yr_completed_intermediate', 
         'institution_enrolled_at_intermediate', 'job_title_at_enroll_intermediate', 'is_trained_advanced', 'cohort_number_advanced', 'yr_completed_advanced', 
-        'institution_enrolled_at_advanced', 'email_status', 'job_title_at_enroll_advanced']
+        'institution_enrolled_at_advanced', 'image', 'email_status', 'job_title_at_enroll_advanced']
 
 
 
@@ -230,6 +230,7 @@ class LoginSerializers(serializers.Serializer):
 class UserAndProfileSerializer(serializers.ModelSerializer):
     
     main_user = UserProfileSerializer()
+    job_to_user = JobInfoSerializer()
     cpassword = serializers.CharField(
         label=_("Confirm password"),
         style={'input_type': 'password'},
@@ -242,7 +243,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'cpassword', 'main_user')
+        fields = ('username', 'email', 'password', 'cpassword', 'main_user', 'job_to_user')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -260,6 +261,11 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         prof = UserProfile.objects.create(**validated_data['main_user'])
         prof.user = user
         prof.save()
+
+        job = JobInfo.objects.create(**validated_data['job_to_user'])
+        job.user = user
+        job.user_profile = prof
+        job.save()
 
         user.first_name = prof.firstname
         user.last_name = prof.surname
@@ -323,6 +329,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         profile.yr_completed_advanced = validated_data.get('yr_completed_advanced', profile.yr_completed_advanced)
         profile.institution_enrolled_at_advanced = validated_data.get('institution_enrolled_at_advanced', profile.institution_enrolled_at_advanced)
         profile.job_title_at_enroll_advanced = validated_data.get('job_title_at_enroll_advanced', profile.job_title_at_enroll_advanced)
+        profile.image = validated_data.get('image', profile.image)
         profile.save()
 
         for datas in job:

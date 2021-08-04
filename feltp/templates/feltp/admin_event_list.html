@@ -4,6 +4,11 @@
 {% block head %}
 {% block title %} Event List {% endblock title %}
 
+<style type="text/css">
+        tr { 
+          cursor: pointer; 
+        }
+    </style>
 {% endblock %}
 
 
@@ -61,12 +66,12 @@
                   </thead>
                   <tbody>
                   {% for ob in obj %}
-                  <tr>
+                  <tr class="clickable" id="{{ob.id}}">
                     <td>{{ob.title | safe}}</td>
                     <td>{{ob.schedule | safe}}</td>
                     <td>{{ob.description | safe}}</td>
                     <td>{{ob.picture | safe}}</td>
-                    <td class="clickable" id="{{ob.id}}">view |edit| delete</td>
+                    <td >view |edit| delete</td>
                   {% endfor %}
                   </tr>
                   
@@ -90,7 +95,9 @@
   <!-- /.content-wrapper -->
 
 
+{% endblock %}
 
+{% block js %}
 
 <script type="text/javascript">
   

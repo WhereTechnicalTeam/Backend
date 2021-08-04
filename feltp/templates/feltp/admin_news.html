@@ -4,6 +4,11 @@
 {% block head %}
 {% block title %} News {% endblock title %}
 
+<style type="text/css">
+        tr { 
+          cursor: pointer; 
+        }
+    </style>
 {% endblock %}
 
 
@@ -61,11 +66,11 @@
                   <tbody>
 
                   {% for ob in obj %}
-                  <tr>
+                  <tr class="clickable" id="{{ob.id}}">
                     <td>{{ob.title | safe}}</td>
                     <td>{{ob.content | safe}}</td>
                     <td>{{ob.picture1 | safe}}</td> 
-                    <td class="clickable" id="{{ob.id}}">view |edit| delete</td>                   
+                    <td>view |edit| delete</td>                   
                   </tr>
                   {% endfor %}
 
@@ -88,6 +93,10 @@
   </div>
   <!-- /.content-wrapper -->
 
+
+{% endblock %}
+
+{% block js %}
 
 
 <script type="text/javascript">

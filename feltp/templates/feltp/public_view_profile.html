@@ -8,12 +8,12 @@
 	<title>Home GFELTP</title>
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="css/font-awesome.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-	<link rel="stylesheet" href="css/prettyPhoto.css">
-	<link href="style.css" rel="stylesheet">
-	<link href="css/responsive.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static/feltp/css/font-awesome.css">
+	<link rel="stylesheet" href="/static/feltp/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/feltp/css/animate.css">
+	<link rel="stylesheet" href="/static/feltp/css/prettyPhoto.css">
+	<link href="/static/feltp/css/public_style.css" rel="stylesheet">
+	<link href="/static/feltp/css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 
@@ -32,24 +32,24 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><img src="img/gflep_logo.jpg" alt=""></a>
+				<a class="navbar-brand" href="#"><img src="/static/feltp/img/gflep_logo.jpg" alt=""></a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
 
-					<li class="active smooth-scroll"><a href="index.html">HOME</a></li>
+					<li class="active smooth-scroll"><a href="{% url 'home' %}">HOME</a></li>
 					
 
                 <li>
 				<!-- user profile -->
 				<div class="profile">
-					<img src="img/avatar.jpg" />
-					<a href="" class="name">User</a>
+					<img src="/static/feltp/img/avatar.jpg" />
+					<a href="" class="name">{{user}}</a>
 					
 					<!-- more menu -->
 					<ul class="menu">
-						<li><a href="#">Edit</a></li>
-						<li><a href="#">Log out</a></li>
+						<!-- <li><a href="{% url 'edituser' user.id %}">Edit</a></li> -->
+						<li><a href="{% url 'logout_view' %}">Log out</a></li>
 					</ul>
 				</div>
 			</li>
@@ -68,127 +68,158 @@
 		<div class="contact-form">
 		<div class="container">
 			<div class="row">
-				<form action="#">
-
+				<form method="POST" enctype="multipart/form-data" id='profile'>
+					{% csrf_token %}
 					<div class="col-sm-4">
 						<label for="usr">First Name</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="firstname" value="{{prof.firstname}}">
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Last Name</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="surname" value="{{prof.surname}}">
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Primary Phone</label>
-						<input type="number" class="form-control" id="usr">
+						<input type="number" class="form-control" id="" name="phone1" value="{{prof.phone1}}">
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Secondary Phone</label>
-						<input type="number" class="form-control" id="usr">
+						<input type="number" class="form-control" id="" name="phone2" value="{{prof.phone2}}">
 					</div>
 					<div class="col-sm-4">
 						
 						<label for="trainedfront">Trained in Frontline</label>
-    					<select class="form-control" id="trainedfront">
-      						<option>Yes</option>
-      						<option>No</option>
+    					<select class="form-control" id="trainedfront" name="is_trained_frontline">
+    						<option value="{{prof.is_trained_frontline}}">{{prof.is_trained_frontline}}</option>
+      						<option value="Yes">Yes</option>
+      						<option value="No">No</option>
                            </select>
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Cohort Number(Frontline)</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="cohort_number_frontline" value="{{prof.cohort_number_frontline}}">
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Date of Completion(Frontline)</label>
-						<input type="Date" class="form-control" id="usr">
+						<input type="Date" class="form-control" id="" name="yr_completed_frontline" value="{{prof.yr_completed_frontline}}">
 					</div>
                     <div class="col-sm-4">
 						<label for="usr">Institution/Department at enrolment(Frontline)</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="institution_enrolled_at_frontline" value="{{prof.institution_enrolled_at_frontline}}"> 
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Job Title at Enrolment(Frontline)</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="job_title_at_enroll_frontline" value="{{prof.job_title_at_enroll_frontline}}">
 					</div>
 					<div class="col-sm-4">
 						
-						<label for="trainedInter">Trained at Intermediate levele</label>
-    					<select class="form-control" id="trainedInter">
-      						<option>Yes</option>
-      						<option>No</option>
+						<label for="trainedInter">Trained at Intermediate level</label>
+    					<select class="form-control" id="trainedInter" name="is_trained_intermediate">
+    						<option value="{{prof.is_trained_frontline}}">{{prof.is_trained_intermediate}}</option>
+      						<option value="Yes">Yes</option>
+      						<option value="No">No</option>
                            </select>
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Cohort (Intermediate) </label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="cohort_number_intermediate" value="{{prof.cohort_number_intermediate}}">
+					</div>
+					<div class="col-sm-4">
+						<label for="usr">Date of Completion(Intermediate)</label>
+						<input type="Date" class="form-control" id="" name="yr_completed_intermediate" value="{{prof.yr_completed_intermediate}}">
 					</div>
 					
 					<div class="col-sm-4">
 						<label for="usr">Institution/Dept at enrolment(Intermediate) </label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="institution_enrolled_at_intermediate" value="{{prof.institution_enrolled_at_intermediate}}">
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Job Title at Enrolment(Intermediate)</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="job_title_at_enroll_intermediate" value="{{prof.job_title_at_enroll_intermediate}}">
 					</div>
 					<div class="col-sm-4">
 						
 						<label for="trainedAdvance">Trained at Advanced level</label>
-    					<select class="form-control" id="trainedAdvance">
-      						<option>Yes</option>
-      						<option>No</option>
+    					<select class="form-control" id="trainedAdvance" name="is_trained_advanced">
+    						<option value="{{prof.is_trained_advanced}}">{{prof.is_trained_advanced}}</option>
+      						<option value="Yes">Yes</option>
+      						<option value="No">No</option>
                            </select>
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Cohort(Advanced)</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="cohort_number_advanced" value="{{prof.cohort_number_advanced}}">
 					</div>
 					<div class="col-sm-4">
+						<label for="usr">Date of Completion(Advanced)</label>
+						<input type="Date" class="form-control" id="" name="yr_completed_advanced" value="{{prof.yr_completed_advanced}}">
+					</div>
+
+					<div class="col-sm-4">
 						<label for="usr">Institution/Depart at enrolment(Advanced)</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="institution_enrolled_at_advanced" value="{{prof.institution_enrolled_at_advanced}}">
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Job Title at Enrolment(Advanced)</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="job_title_at_enroll_advanced" value="{{prof.job_title_at_enroll_advanced}}">
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Current Institution/ Department</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="current_institution" value="{{job.current_institution}}">
 					</div>
 					<div class="col-sm-4">
 						<label for="usr">Current Job Title</label>
-						<input type="text" class="form-control" id="usr">
+						<input type="text" class="form-control" id="" name="job_title" value="{{job.job_title}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Region(Current)</label>
-						<input type="text" class="form-control" id="usr">
+						<select class="form-control" name="region" id="region">
+      						<option value="{{job.region.id}}">{{job.region.region_name}}</option>
+      						{% for a in regions %}
+      						<option value="{{a.id}}">{{a.region_name}}</option>
+      						{% endfor %}
+      					
+                           </select>
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">District (Current)</label>
-						<input type="text" class="form-control" id="usr">
+						<select class="form-control" name="district" id="district">
+      						<option value="{{job.district.id}}">{{job.district.district_name}}</option>
+                           </select>
 					</div>
 					<div class="col-sm-4">
 						
 						<label for="levelHealthSys">Level of Health System(Nat/Reg/District)</label>
-    					<select class="form-control" id="levelHealthSys">
-      						<option>National</option>
-      						<option>Regional</option>
-      						<option>District</option>
+    					<select class="form-control" id="levelHealthSys" name="level_of_health_system">
+    						<option value="{{job.level_of_health_system.id}}">{{job.level_of_health_system.level}}</option>
+      						<option value=1>National</option>
+      						<option value=2>Regional</option>
+      						<option value=3>District</option>
+                           </select>
+					</div>
+					<div class="col-sm-4">
+						
+						<label for="is_current">Is this your current job</label>
+    					<select class="form-control" id="trainedAdvance" name="is_current">
+    						<option value="{{job.is_current}}">{{job.is_current}}</option>
+      						<option value="Yes">Yes</option>
+      						<option value="No">No</option>
                            </select>
 					</div>
 					<div class="col-sm-4">
 						<label for="email">Your Email</label>
-						<input type="email" class="form-control" id="email">
+						<input type="email" class="form-control" id="email" name="email" value="{{user.email}}">
 					</div>
 					 <div class="col-sm-4">
 						<label class="form-label" for="profile">Upload Profile Picture</label>
-						<input type="file" class="form-control" id="profile" />
+						<input type="file" class="form-control" id="profile" name="image"  value="{{prof.image}}"/>
+						<br><br>
 					</div>
     
   
 					<div class="col-sm-12">
-
-
 						<button type="submit" class="btn red-btn">UPDATE</button>
 					</div>
 
@@ -206,7 +237,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-2 text-center">
-				<a href=""><img src="img/gflep_logo.jpg" alt="logo"></a>
+				<a href=""><img src="/static/feltp/img/gflep_logo.jpg" alt="logo"></a>
 			</div>
 			<div class="col-sm-8">
 				<div class="footer-p text-center">
@@ -225,13 +256,26 @@
 		</div>
 	</div>
 </footer>
-<script src="js/jquery-1.11.3.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/isotope.2.2.2min.js"></script>
+<script src="/static/feltp/js/jquery-1.11.3.min.js"></script>
+<script src="/static/feltp/js/bootstrap.min.js"></script>
+<script src="/static/feltp/js/isotope.2.2.2min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
-<script src="js/wow.min.js"></script>
-<script src="js/jquery.prettyPhoto.js"></script>
+<script src="/static/feltp/js/wow.min.js"></script>
+<script src="/static/feltp/js/jquery.prettyPhoto.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-<script src="js/main.js"></script>
+<script src="/static/feltp/js/main.js"></script>
+
+<script type="text/javascript">
+	
+	// ########################   district populate
+    $('#region').change(function() {
+    $.get('/feltp/districtSelectOption?data='+$('#region option:selected').val(), function(data){
+
+        $('#district').html(data)
+       });
+    });
+</script>
+
+
 </body>
 </html>

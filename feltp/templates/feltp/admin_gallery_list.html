@@ -64,10 +64,10 @@
                   </thead>
                   <tbody>
                   {% for ob in obj %}
-                  <tr>
+                  <tr class="clickable" id="{{ob.id}}">
                     <td>{{ob.title}}</td>
                     <td>{{ob.picture}}</td>
-                    <td class="clickable" id="{{ob.id}}">view |edit| delete</td>
+                    <td>view |edit| delete</td>
                   </tr>
                   {% endfor %}
                   </tbody>
@@ -90,6 +90,10 @@
   <!-- /.content-wrapper -->
 
 
+
+{% endblock %}
+
+{% block js %}
 
 <script type="text/javascript">
   

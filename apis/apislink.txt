@@ -35,3 +35,75 @@ All news
 /api/newsdetail
 
 
+Filter by email
+/api/alldata?search=
+
+
+All the fields currently have no required fields except for the username, email and password.
+
+
+
+SAMPLE DATA FOR USERPROFILE, JOBS AND NEWS
+{
+    "username": "",
+    "email": "",
+    "password": "",
+    "cpassword": "",
+    "main_user": {
+        "title": "",
+        "surname": "",
+        "firstname": "",
+        "sex": "",
+        "phone1": "",
+        "is_trained_frontline": null,
+        "cohort_number_frontline": null,
+        "yr_completed_frontline": null,
+        "institution_enrolled_at_frontline": "",
+        "job_title_at_enroll_frontline": "",
+        "is_trained_intermediate": null,
+        "cohort_number_intermediate": null,
+        "yr_completed_intermediate": null,
+        "institution_enrolled_at_intermediate": "",
+        "job_title_at_enroll_intermediate": "",
+        "is_trained_advanced": null,
+        "cohort_number_advanced": null,
+        "yr_completed_advanced": null,
+        "institution_enrolled_at_advanced": "",
+        "image": null,
+        "email_status": "",
+        "job_title_at_enroll_advanced": ""
+    },
+    "job_to_user": {
+        "current_institution": "",
+        "job_title": "",
+        "region": null,
+        "district": null,
+        "level_of_health_system": null,
+        "employment_status": "",
+        "is_current": null,
+        "longitude": null,
+        "latitude": null
+    }
+}
+
+
+
+SAMPLE DATA FOR LOGIN
+{
+"username":"john",
+"password":"jed123456"
+}
+
+
+
+SAMPLE DATA FOR CODE VERIFICATION
+{
+"code":"29M3rA"
+}
+
+
+
+SAMPLE DATA FOR EMAIL SEARCH IF EMAIL IS IN THE SYSTEM
+{
+"email":"jmadjanor6@gmail.com"
+}

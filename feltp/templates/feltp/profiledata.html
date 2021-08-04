@@ -1,0 +1,18 @@
+
+
+
+			{% for prof in profilesearch %}
+			<div class="col-sm-6 col-md-3">
+				<div class="single-team" id="datas">
+					<img src="/media/{{prof.user_profile.picture}}" alt="">
+                    
+					
+
+					Name: {%if prof.user_profile.title%}{{prof.user_profile.title}}{% endif%} {{prof.user_profile.surname}} {{prof.user_profile.firstname}}<br>
+
+					Job title: {{prof.job_title}}<br>
+					Email: {{prof.user.email}}
+
+				</div>
+			</div>
+			{% endfor %}

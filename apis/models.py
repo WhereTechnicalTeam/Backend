@@ -8,22 +8,22 @@ from django.dispatch import receiver
 
 
 REGIONS = (
-    ("1", "AHAFO"),
-    ("2", "ASHANTI"),
-    ("3", "BONO"),
-    ("4", "BONO EAST"),
-    ("5", "CENTRAL"),
-    ("6", "EASTERN"),
-    ("7", "GREATER ACCRA"),
-    ("8", "NORTH EAST"),
-    ("9", "NORTHERN"),
-    ("10", "OTI"),
-    ("11", "SAVANNAH"),
-    ("12", "UPPER EAST"),
-    ("13", "UPPER WEST"),
-    ("14", "VOLTA"),
-    ("15", "WESTERN"),
-    ("16", "WESTERN NORTH"),
+    ("AHAFO", "AHAFO"),
+    ("ASHANTI", "ASHANTI"),
+    ("BONO", "BONO"),
+    ("BONO EAST", "BONO EAST"),
+    ("CENTRAL", "CENTRAL"),
+    ("EASTERN", "EASTERN"),
+    ("GREATER ACCRA", "GREATER ACCRA"),
+    ("NORTH EAST", "NORTH EAST"),
+    ("NORTHERN", "NORTHERN"),
+    ("OTI", "OTI"),
+    ("SAVANNAH", "SAVANNAH"),
+    ("UPPER EAST", "UPPER EAST"),
+    ("UPPER WEST", "UPPER WEST"),
+    ("VOLTA", "VOLTA"),
+    ("WESTERN", "WESTERN"),
+    ("WESTERN NORTH", "WESTERN NORTH"),
 )
 
 
@@ -105,6 +105,7 @@ class UserProfile(models.Model):
     job_title_at_enroll_advanced = models.CharField(max_length=100, blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS, default='pending approval')
     email_status = models.CharField(max_length=100, blank=True, null=True, default='not verified')
+    image = models.ImageField(upload_to='api_images/profile/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # slug = models.SlugField(max_length = 200, null=True)

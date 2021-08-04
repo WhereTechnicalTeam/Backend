@@ -65,7 +65,7 @@
                   <div class="form-group">
                   <label>Schedule:</label>
                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                        <input type="text" name="schedule"  value="{{edit.schedule|date:Y-m-d'}}"/>
+                        <input type="text" name="schedule"  value="{{edit.schedule|date:'Y-m-d'}}"/>
                         
                     </div>
                 </div>
@@ -127,9 +127,11 @@
 
 
 
+{% endblock %}
 
+{% block js %}
 
-<script src="/static/feltp/plugins/jquery/jquery.min.js"></script>
+<!-- <script src="/static/feltp/plugins/jquery/jquery.min.js"></script> -->
 <script>
 
   $(document).ready(function(){

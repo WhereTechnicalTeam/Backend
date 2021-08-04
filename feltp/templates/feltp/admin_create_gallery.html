@@ -93,7 +93,12 @@
  
 
 
- <script src="/static/feltp/plugins/jquery/jquery.min.js"></script>
+
+{% endblock %}
+
+{% block js %}
+
+<!--  <script src="/static/feltp/plugins/jquery/jquery.min.js"></script> -->
 <script type="text/javascript">
   $(document).ready(function(){
 
@@ -106,6 +111,47 @@ if($('#add').val() =='done'){
     e.preventDefault()
     $('#gallery').submit();
   })
+
+
+// $("#sub").click(function(){
+
+//      var token = '{{csrf_token}}';
+
+//     $.ajax({
+//         url  : '/feltp/admincreategallery',
+//         type : 'POST',
+//         data : $('form').serialize(),
+//         headers: { "X-CSRFToken": token },
+//         processData: false,
+//         contentType: false,
+//         success : function(data) {
+//            if(data=="done"){
+
+//                 swal("Saved!", "The record has been successfully saved!", "success")
+//                 .then(function () {
+//                         window.location.href="/feltp/admincreategallery"
+                    
+//                 })
+
+//             }
+//             else if(data=="User already Exists"){
+//                 swal("Error!", "User Already Exists!", "error")
+//             }
+//             else if(data=="User Created, but email not sent. An error occured."){
+//                 swal("Error!", "User Created, but email not sent. An error occured! Contact admin with your email, business name and full name", "error")
+//             }
+
+//             else {
+
+//                 alert('failed');
+//             }
+            
+//         }
+//     });
+
+//     return false;
+// } )
+
 
 
  

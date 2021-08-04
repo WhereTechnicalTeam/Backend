@@ -1,5 +1,5 @@
 from django.urls import path
-
+from djgeojson.views import GeoJSONLayerView
 from . import views
 
 
@@ -7,12 +7,23 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='home'),
-    path('about', views.about, name='about'),
-    path('news', views.news, name='news'),
-    path('alumni', views.alumni, name='alumni'),
-    path('login', views.login, name='login'),
+    # path('about', views.about, name='about'),
+    path('editnews', views.edit_news, name='editnews'),
+    path('edituser/<int:obj_id>', views.edit_user, name='edituser'),
+    path('events', views.events, name='events'),
+    path('fetchprofile', views.fetch_profile, name='fetchprofile'),
+    path('profilesearchquery', views.profile_search_query, name='profilesearchquery'),
+    path('districtSelectOption', views.districtSelectOption, name='districtSelectOption'),
+    path('jobsjson', views.jobsLayer.as_view(), name='jobsjson'),
+    path('queryjson', views.queryjson, name='queryjson'),
+
+    path('login_view', views.login_view, name='login_view'),
+    path('login', views.loginPage, name='login'),
+    path('logout_view', views.logout_view, name='logout_view'),
+    path('forgotpassword', views.forgot_password, name='forgotpassword'),
+    path('passwordreset', views.password_reset, name='passwordreset'),
     
-    path('admindashnoard', views.admin_dashboard, name='admindashnoard'),
+    path('admindashboard', views.admin_dashboard, name='admindashboard'),
     path('admin_alumni', views.admin_alumni, name='admin_alumni'),
     path('admincreateevent', views.admin_create_event, name='admin_create_event'),
     path('admincreategallery', views.admin_create_gallery, name='admin_create_gallery'),
@@ -21,6 +32,7 @@ urlpatterns = [
     path('admingallery', views.admin_gallerylist, name='admin_gallerylist'),
     path('adminmap', views.admin_mapview, name='admin_mapview'),
     path('adminnews', views.admin_newslist, name='admin_newslist'),
+    path('stats', views.stats, name='stats'),
 
     path('eventdetail/<int:obj_id>/', views.admin_eventdetail, name='eventdetail'),
     path('newsdetail/<int:obj_id>/', views.admin_newsdetail, name='newsdetail'),
@@ -33,6 +45,5 @@ urlpatterns = [
     path('eventdetail/<int:obj_id>/delete', views.eventdelete, name='eventdetail'),
     path('newsdetail/<int:obj_id>/delete', views.newsdelete, name='newsdetail'),
     path('gallerydetail/<int:obj_id>/delete', views.gallerydelete, name='gallerydetail'),
-    
-    path('alumnilist', views.aluminiListView.as_view(), name="alumnilist"),
+
 ]
