@@ -47,16 +47,6 @@ def gold():
 
 
 def index(request):
-	alls = JobInfo.objects.all().values_list('id', flat=True)
-	for aa in alls:
-		a = JobInfo.objects.get(pk=aa).user_id
-		print(a)
-		if a != '' and a != None:
-			b = UserProfile.objects.get(user_id=a).pk 
-			print(b)
-			# return (a,b)
-			JobInfo.objects.filter(pk=aa).update(user_profile=b)
-
 
 	d = date.today() - timedelta(days=14)
 
