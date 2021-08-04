@@ -19,6 +19,9 @@
             content: "Current Location!"
         });
 
+
+        map.data.loadGeoJson('/feltp/queryjson')
+
         infowindow.open(map, marker);
 
         //add overlay

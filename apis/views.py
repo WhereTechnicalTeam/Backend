@@ -578,9 +578,9 @@ def get_profile(request):
 					return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 			else:
 				print('verified')
-				prof = {'user':'{}'.format(profile.user_id), 'id':'{}'.format(profile.id), 'id':'{}'.format(profile.id), 'firstname':'{}'.format(profile.firstname), 'lastname':'{}'.format(profile.surname)}
-				return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "user":prof})
-				#return Response({"email_status": profile.email_status, "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
+				# prof = {'user':'{}'.format(profile.user_id), 'id':'{}'.format(profile.id), 'id':'{}'.format(profile.id), 'firstname':'{}'.format(profile.firstname), 'lastname':'{}'.format(profile.surname)}
+				# return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "user":prof})
+				return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "profile":model_to_dict(profile)})
 
 		else:
 			return Response({"action":"User not found", "status":status.HTTP_400_BAD_REQUEST})
