@@ -514,7 +514,65 @@ class jobsLayer(GeoJSONLayerView):
 
 
 def queryjson(request):
-	query = list(JobInfo.objects.exclude(longitude__isnull=True).exclude(latitude__isnull=True).values_list('current_institution', 'region__region_name', 'district__district_name', 'longitude', 'latitude'))
-	
-	query = [list(a) for a in query]
-	return render(request, 'public_index.html', {'query':query})
+	query = list(JobInfo.objects.exclude(longitude__isnull=True).exclude(latitude__isnull=True).values('current_institution', 'region__region_name', 'district__district_name', 'longitude', 'latitude'))
+	# print(query)
+	return JsonResponse(query, safe=False)
+	# return render(request, 'public_index.html', {'query':query})
+
+
+
+
+def cohorts(request):
+	data = request.GET.get('data')
+	data = re.sub("\W\d", '', data)
+	context = {}
+
+	all_profile = UserProfile.objects.all()
+	if data == 'front':
+		frontline = all_profile.filter(is_trained_frontline='Yes')
+		return render(request, 'feltp/stats_list.html', {'frontline':frontline, 'title':'Trained at Frontline'})
+
+	elif data == 'inter':
+		intermediate = all_profile.filter(is_trained_intermediate='Yes')
+		return render(request, 'feltp/stats_list.html', {'intermediate':intermediate, 'title':'Trained at Intermediate'})
+
+	elif data == 'advance':
+		advanced = all_profile.filter(is_trained_advanced='Yes')
+		return render(request, 'feltp/stats_list.html', {'advanced':advanced, 'title':'Trained at Advanced'})
+
+	elif data == 'pending':
+		not_approved = all_profile.filter(status='pending approval')
+		return render(request, 'feltp/stats_list.html', {'not_approved':not_approved, 'title':'Pending Users'})
+
+	elif data == 'unverified':
+		not_verified = all_profile.filter(status='not verified')
+		return render(request, 'feltp/stats_list.html', {'not_verified':not_verified, 'title':'Unverified Users'})
+
+	else:
+		return render(request, 'feltp/stats_list.html')
+	return render(request, 'feltp/stats_list.html')
+
+
+
+
+# ///////////////////////////   approve or disapprove a user  /////////////////////////
+def setstatus(request):
+	idd = request.GET.get('data')
+	vall = request.GET.get('val')
+	# print(idd)
+	# print(vall)
+
+	conf = UserProfile.objects.filter(id=idd).update(status=vall)
+	# conf.save()
+	return HttpResponse('done')
+
+
+
+
+
+# ///////////////////////////   delete a user  /////////////////////////
+def deleteuser(request, obj_id):
+	idd = request.GET.get('data')
+	sb_delete = UserProfile.objects.get(id=obj_id)
+	sb_delete.delete()
+	return HttpResponse('done')

@@ -324,7 +324,7 @@ class NewsDelete(DestroyAPIView):
 class NewCreate(CreateAPIView):
 	queryset = New.objects.all()
 	serializer_class = NewsSerializer
-	permission_classes = [IsAuthenticated]
+	#permission_classes = [IsAuthenticated]
 
 	def perform_create(self, serializer):
 		serializer.save(user=self.request.user)
@@ -487,8 +487,8 @@ def verify_code(request):
 
 
 {
-"username":"aabalekuusimon78",
-"password":"user1234"
+"email":"aabalekuusimon78@gmail.com",
+"password":"add123456"
 }
 
 
@@ -601,6 +601,7 @@ def get_profile(request):
 				  'yr_completed_advanced':'{}'.format(profile.yr_completed_advanced),
 				  'institution_enrolled_at_advanced':'{}'.format(profile.institution_enrolled_at_advanced),
 				  'job_title_at_enroll_advanced':'{}'.format(profile.job_title_at_enroll_advanced),
+				  'status':'{}'.format(profile.status)
 				  }
 				return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "user":prof})
 				#return Response({"email_status": profile.email_status, "profile":model_to_dict(profile), "status":status.HTTP_200_OK})

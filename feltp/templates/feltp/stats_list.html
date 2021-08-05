@@ -46,19 +46,21 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
+              <!-- <div class="card-header">
                 <h3 class="card-title">Alumni</h3>
-              </div>
+              </div> -->
               <!-- /.card-header -->
               
             <!-- /.card -->
 
             <div class="card" style="overflow-x: auto;">
               <div class="card-header">
-                <h3 class="card-title">Alumni List</h3>
+                <h3 class="card-title">{{title}} List</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body div_before_table">
+
+
                 <table id="example1" class="table table-bordered table-responsive table-striped">
                   <thead>
                     <tr>
@@ -86,10 +88,98 @@
                       <th class="all">Job Title at Advanced</th>
                       <th class="all">Status</th>
                        <th class="all">Email Status</th>
+
                     </tr>
                   </thead>
                   <tbody>
-                      {% for ob in obj %}
+                      {% for ob in frontline %}
+                      <tr>
+                          <td>{{ob.title}}</td>
+                          <td>{{ob.firstname}}</td>
+                          <td>{{ob.surname}}</td>
+                          <td>{{ob.sex}}</td>
+                          <td>{{ob.date_of_birth}}</td>
+                          <td>{{ob.phone1}}</td>
+                          <td>{{ob.phone2}}</td>
+                          <td>{{ob.is_trained_frontline}}</td>
+                          <td>{{ob.cohort_number_frontline}}</td>
+                          <td>{{ob.yr_completed_frontline}}</td>
+                          <td>{{ob.institution_enrolled_at_frontline}}</td>
+                          <td>{{ob.job_title_at_enroll_frontline}}</td>
+                          <td>{{ob.is_trained_intermediate}}</td>
+                          <td>{{ob.cohort_number_intermediate}}</td>
+                          <td>{{ob.yr_completed_intermediate}}</td>
+                          <td>{{ob.institution_enrolled_at_intermediate}}</td>
+                          <td>{{ob.job_title_at_enroll_intermediate}}</td>
+                          <td>{{ob.is_trained_advanced}}</td>
+                          <td>{{ob.cohort_number_advanced}}</td>
+                          <td>{{ob.yr_completed_advanced}}</td>
+                          <td>{{ob.institution_enrolled_at_advanced}}</td>
+                          <td>{{ob.job_title_at_enroll_advanced}}</td>
+                          <td>{{ob.status}}</td>
+                         <td>{{obj.email_status}}</td> 
+                      </tr>
+                     {% endfor %}
+
+                      {% for ob in intermediate %}
+                      <tr>
+                          <td>{{ob.title}}</td>
+                          <td>{{ob.firstname}}</td>
+                          <td>{{ob.surname}}</td>
+                          <td>{{ob.sex}}</td>
+                          <td>{{ob.date_of_birth}}</td>
+                          <td>{{ob.phone1}}</td>
+                          <td>{{ob.phone2}}</td>
+                          <td>{{ob.is_trained_frontline}}</td>
+                          <td>{{ob.cohort_number_frontline}}</td>
+                          <td>{{ob.yr_completed_frontline}}</td>
+                          <td>{{ob.institution_enrolled_at_frontline}}</td>
+                          <td>{{ob.job_title_at_enroll_frontline}}</td>
+                          <td>{{ob.is_trained_intermediate}}</td>
+                          <td>{{ob.cohort_number_intermediate}}</td>
+                          <td>{{ob.yr_completed_intermediate}}</td>
+                          <td>{{ob.institution_enrolled_at_intermediate}}</td>
+                          <td>{{ob.job_title_at_enroll_intermediate}}</td>
+                          <td>{{ob.is_trained_advanced}}</td>
+                          <td>{{ob.cohort_number_advanced}}</td>
+                          <td>{{ob.yr_completed_advanced}}</td>
+                          <td>{{ob.institution_enrolled_at_advanced}}</td>
+                          <td>{{ob.job_title_at_enroll_advanced}}</td>
+                          <td>{{ob.status}}</td>
+                         <td>{{obj.email_status}}</td> 
+                      </tr>
+                     {% endfor %}
+
+                      {% for ob in advanced %}
+                      <tr>
+                          <td>{{ob.title}}</td>
+                          <td>{{ob.firstname}}</td>
+                          <td>{{ob.surname}}</td>
+                          <td>{{ob.sex}}</td>
+                          <td>{{ob.date_of_birth}}</td>
+                          <td>{{ob.phone1}}</td>
+                          <td>{{ob.phone2}}</td>
+                          <td>{{ob.is_trained_frontline}}</td>
+                          <td>{{ob.cohort_number_frontline}}</td>
+                          <td>{{ob.yr_completed_frontline}}</td>
+                          <td>{{ob.institution_enrolled_at_frontline}}</td>
+                          <td>{{ob.job_title_at_enroll_frontline}}</td>
+                          <td>{{ob.is_trained_intermediate}}</td>
+                          <td>{{ob.cohort_number_intermediate}}</td>
+                          <td>{{ob.yr_completed_intermediate}}</td>
+                          <td>{{ob.institution_enrolled_at_intermediate}}</td>
+                          <td>{{ob.job_title_at_enroll_intermediate}}</td>
+                          <td>{{ob.is_trained_advanced}}</td>
+                          <td>{{ob.cohort_number_advanced}}</td>
+                          <td>{{ob.yr_completed_advanced}}</td>
+                          <td>{{ob.institution_enrolled_at_advanced}}</td>
+                          <td>{{ob.job_title_at_enroll_advanced}}</td>
+                          <td>{{ob.status}}</td>
+                         <td>{{obj.email_status}}</td> 
+                      </tr>
+                     {% endfor %}
+
+                     {% for ob in not_approved %}
                       <tr>
                           <td>{{ob.title}}</td>
                           <td>{{ob.firstname}}</td>
@@ -126,6 +216,36 @@
                          <td>{{obj.email_status}}</td> 
                       </tr>
                      {% endfor %}
+
+                     {% for ob in not_verified %}
+                      <tr>
+                          <td>{{ob.title}}</td>
+                          <td>{{ob.firstname}}</td>
+                          <td>{{ob.surname}}</td>
+                          <td>{{ob.sex}}</td>
+                          <td>{{ob.date_of_birth}}</td>
+                          <td>{{ob.phone1}}</td>
+                          <td>{{ob.phone2}}</td>
+                          <td>{{ob.is_trained_frontline}}</td>
+                          <td>{{ob.cohort_number_frontline}}</td>
+                          <td>{{ob.yr_completed_frontline}}</td>
+                          <td>{{ob.institution_enrolled_at_frontline}}</td>
+                          <td>{{ob.job_title_at_enroll_frontline}}</td>
+                          <td>{{ob.is_trained_intermediate}}</td>
+                          <td>{{ob.cohort_number_intermediate}}</td>
+                          <td>{{ob.yr_completed_intermediate}}</td>
+                          <td>{{ob.institution_enrolled_at_intermediate}}</td>
+                          <td>{{ob.job_title_at_enroll_intermediate}}</td>
+                          <td>{{ob.is_trained_advanced}}</td>
+                          <td>{{ob.cohort_number_advanced}}</td>
+                          <td>{{ob.yr_completed_advanced}}</td>
+                          <td>{{ob.institution_enrolled_at_advanced}}</td>
+                          <td>{{ob.job_title_at_enroll_advanced}}</td>
+                          <td>{{ob.status}}</td>
+                         <td>{{obj.email_status}}</td> 
+                      </tr>
+                     {% endfor %}
+
                   </tbody>
                 </table>
               </div>
@@ -158,7 +278,8 @@
 <script src="/static/feltp/dist/js/demo.js"></script>
 
 <script type="text/javascript">
-  $('.icheck').change(function(){
+	
+	  $('.icheck').change(function(){
         if($(this).is(':checked')){
             idd = $(this).attr('id')
             vall = $(this).val()
@@ -211,7 +332,6 @@
                 }
             })
     })
-
 </script>
 
 {% endblock %}

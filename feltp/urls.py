@@ -33,6 +33,8 @@ urlpatterns = [
     path('adminmap', views.admin_mapview, name='admin_mapview'),
     path('adminnews', views.admin_newslist, name='admin_newslist'),
     path('stats', views.stats, name='stats'),
+    path('statsdetail', views.cohorts, name='statsdetail'),
+    path('setstatus', views.setstatus, name='setstatus'),
 
     path('eventdetail/<int:obj_id>/', views.admin_eventdetail, name='eventdetail'),
     path('newsdetail/<int:obj_id>/', views.admin_newsdetail, name='newsdetail'),
@@ -45,5 +47,6 @@ urlpatterns = [
     path('eventdetail/<int:obj_id>/delete', views.eventdelete, name='eventdetail'),
     path('newsdetail/<int:obj_id>/delete', views.newsdelete, name='newsdetail'),
     path('gallerydetail/<int:obj_id>/delete', views.gallerydelete, name='gallerydetail'),
+    path('deleteuser/<int:obj_id>', views.deleteuser, name='deleteuser'),
 
 ]
