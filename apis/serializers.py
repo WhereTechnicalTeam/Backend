@@ -112,7 +112,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'confirm')
+        fields = ('email', 'password', 'confirm')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -121,7 +121,7 @@ class UserSerializer(serializers.ModelSerializer):
 
             user = User(
                 email=validated_data['email'],
-                username=validated_data['username']
+                username=validated_data['email']
             )
             user.set_password(validated_data['password'])
             user.save()
@@ -198,7 +198,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializers(serializers.Serializer):
-    username = serializers.CharField(max_length=255)
+    email = serializers.CharField(max_length=255)
     password = serializers.CharField(
         label=_("Password"),
         style={'input_type': 'password'},
@@ -208,11 +208,11 @@ class LoginSerializers(serializers.Serializer):
     )
 
     def validate(self, data):
-        username = data.get('username')
+        email = data.get('email')
         password = data.get('password')
 
-        if username and password:
-            user = authenticate(username=username, password=password)
+        if email and password:
+            user = authenticate(username=email, password=password)
 
             if not user:
                 msg = _('Unable to log in with provided credentials.')
@@ -243,7 +243,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'cpassword', 'main_user', 'job_to_user')
+        fields = ('email', 'password', 'cpassword', 'main_user', 'job_to_user')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -253,7 +253,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
 
         user = User(
             email=validated_data['email'],
-            username=validated_data['username']
+            username=validated_data['email']
         )
         user.set_password(validated_data['password'])
         user.save()

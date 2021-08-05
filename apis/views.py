@@ -493,7 +493,7 @@ def verify_code(request):
 
 
 {
-"username":"john",
+"username":"jmadjanor6@gmail.com",
 "password":"jed123456"
 }
 
@@ -501,6 +501,7 @@ def verify_code(request):
 {
 "code":"29M3rA"
 }
+
 
 {
 "email":"jmadjanor6@gmail.com"
@@ -578,9 +579,31 @@ def get_profile(request):
 					return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 			else:
 				print('verified')
-				# prof = {'user':'{}'.format(profile.user_id), 'id':'{}'.format(profile.id), 'id':'{}'.format(profile.id), 'firstname':'{}'.format(profile.firstname), 'lastname':'{}'.format(profile.surname)}
-				# return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "user":prof})
-				return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "profile":model_to_dict(profile)})
+				prof = {'user':'{}'.format(profile.user_id),
+				 'id':'{}'.format(profile.id),
+				  'title':'{}'.format(profile.title),
+				  'firstname':'{}'.format(profile.firstname),
+				  'lastname':'{}'.format(profile.surname),
+				  'sex':'{}'.format(profile.sex),
+				  'date_of_birth':'{}'.format(profile.date_of_birth),
+				  'phone1':'{}'.format(profile.phone1),
+				  'phone2':'{}'.format(profile.phone2),
+				  'is_trained_frontline':'{}'.format(profile.is_trained_frontline),
+				  'cohort_number_frontline':'{}'.format(profile.cohort_number_frontline),
+				  'yr_completed_frontline':'{}'.format(profile.yr_completed_frontline),
+				  'institution_enrolled_at_frontline':'{}'.format(profile.institution_enrolled_at_frontline),
+				  'job_title_at_enroll_frontline':'{}'.format(profile.job_title_at_enroll_frontline),
+				  'is_trained_intermediate':'{}'.format(profile.is_trained_intermediate),
+				  'yr_completed_intermediate':'{}'.format(profile.yr_completed_intermediate),
+				  'institution_enrolled_at_intermediate':'{}'.format(profile.institution_enrolled_at_intermediate),
+				  'is_trained_advanced':'{}'.format(profile.is_trained_advanced),
+				  'cohort_number_advanced':'{}'.format(profile.cohort_number_advanced),
+				  'yr_completed_advanced':'{}'.format(profile.yr_completed_advanced),
+				  'institution_enrolled_at_advanced':'{}'.format(profile.institution_enrolled_at_advanced),
+				  'job_title_at_enroll_advanced':'{}'.format(profile.job_title_at_enroll_advanced),
+				  }
+				return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "user":prof})
+				#return Response({"email_status": profile.email_status, "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
 
 		else:
 			return Response({"action":"User not found", "status":status.HTTP_400_BAD_REQUEST})
@@ -622,6 +645,26 @@ def v_code(request):
 		print(e)
 		return Response("This verification code does not exist.", status=status.HTTP_400_BAD_REQUEST)
 
+
+
+
+@api_view(['GET'])
+def statistics(request):
+	all_profile = UserProfile.objects.all()
+	alumni = all_profile.count()
+	# news = New.objects.all().count()
+	# galery = Gallery.objects.all().count()
+	# events = Event.objects.all().count()
+	frontline = all_profile.filter(is_trained_frontline='Yes').count()
+	intermediate = all_profile.filter(is_trained_intermediate='Yes').count()
+	advanced = all_profile.filter(is_trained_advanced='Yes').count()
+	# not_approved = all_profile.filter(status='pending approval').count()
+	# not_verified = all_profile.filter(status='not verified').count()
+
+	context = {'alumni':alumni, 'frontline':frontline, 
+	'intermediate':intermediate, 'advanced':advanced}
+
+	return Response({"status":status.HTTP_200_OK, "stats": context})
 
 
 class UserAndProfileCreate(CreateAPIView):

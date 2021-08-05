@@ -66,7 +66,7 @@ urlpatterns = [
     path('userPR', UserAndProfileCreate.as_view(), name='userPR'),
     path('useredit/<int:pk>/', UserAndProfileUpdate.as_view(), name='useredit'),
     path('verifycode', views.v_code, name='verifycode'),
-    # path('log', CustomAuthToken.as_view(), name='log'),
+    path('statistics', views.statistics, name='statistics'),
 
 
 

@@ -6,12 +6,12 @@ from django.contrib.auth.models import User
 
 class DistrictFkNEW(admin.TabularInline):
 	model = District
-	extra = 1
+	extra = 0
 
 
 class JobFK(admin.TabularInline):
 	model = JobInfo
-	extra = 1
+	extra = 0
 
 
 class RegionsAdmin(admin.ModelAdmin):

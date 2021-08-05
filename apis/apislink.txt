@@ -39,6 +39,12 @@ Filter by email
 /api/alldata?search=
 
 
+
+Statistics
+/api/statistics
+
+
+
 All the fields currently have no required fields except for the username, email and password.
 
 

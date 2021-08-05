@@ -47,7 +47,6 @@ def gold():
 
 
 def index(request):
-
 	d = date.today() - timedelta(days=14)
 
 	jobs = JobInfo.objects.all().order_by('-created_at')[:4]
@@ -61,7 +60,8 @@ def index(request):
 		news_old = New.objects.all().order_by('-created_at')[20:24]
 		return render(request, 'feltp/public_index.html', {'news':news, 'news_old':news_old, 'events':events, 'jobs':jobs})
 
-	return render(request, 'feltp/public_index.html', {'news':news, 'events':events, 'jobs':jobs})
+	return render(request, 'feltp/public_index.html', {'news':news, 'events':events, 'jobs':jobs, 'query':query})
+
 
 
 @login_required(login_url="/feltp/login")
@@ -514,5 +514,7 @@ class jobsLayer(GeoJSONLayerView):
 
 
 def queryjson(request):
-	query = JobInfo.objects.all().only('current_institution', 'region', 'district', 'longitude', 'latitude')
-	return JsonResponse(serialize("json", query), safe=False)
+	query = list(JobInfo.objects.exclude(longitude__isnull=True).exclude(latitude__isnull=True).values_list('current_institution', 'region__region_name', 'district__district_name', 'longitude', 'latitude'))
+	
+	query = [list(a) for a in query]
+	return render(request, 'public_index.html', {'query':query})
