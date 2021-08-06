@@ -62,7 +62,7 @@
 <!--our news area-->
 <section id="news">
 	<div class="section-heading news-heading text-center text-uppercase wow swing">
-		<h2><span>Your Profile</span></h2>
+		<h2 ><span style="color: white;"0>Your Profile</span></h2>
 	</div>
 	<div class="container">
 		<div class="contact-form">
@@ -70,86 +70,99 @@
 			<div class="row">
 				<form method="POST" enctype="multipart/form-data" id='profile'>
 					{% csrf_token %}
+
 					<div class="col-sm-4">
 						<label for="usr">First Name</label>
 						<input type="text" class="form-control" id="" name="firstname" value="{{prof.firstname}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Last Name</label>
 						<input type="text" class="form-control" id="" name="surname" value="{{prof.surname}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Primary Phone</label>
 						<input type="number" class="form-control" id="" name="phone1" value="{{prof.phone1}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Secondary Phone</label>
 						<input type="number" class="form-control" id="" name="phone2" value="{{prof.phone2}}">
 					</div>
+
 					<div class="col-sm-4">
-						
 						<label for="trainedfront">Trained in Frontline</label>
     					<select class="form-control" id="trainedfront" name="is_trained_frontline">
     						<option value="{{prof.is_trained_frontline}}">{{prof.is_trained_frontline}}</option>
       						<option value="Yes">Yes</option>
       						<option value="No">No</option>
-                           </select>
+                        </select>
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Cohort Number(Frontline)</label>
 						<input type="text" class="form-control" id="" name="cohort_number_frontline" value="{{prof.cohort_number_frontline}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Date of Completion(Frontline)</label>
 						<input type="Date" class="form-control" id="" name="yr_completed_frontline" value="{{prof.yr_completed_frontline}}">
 					</div>
+
                     <div class="col-sm-4">
 						<label for="usr">Institution/Department at enrolment(Frontline)</label>
 						<input type="text" class="form-control" id="" name="institution_enrolled_at_frontline" value="{{prof.institution_enrolled_at_frontline}}"> 
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Job Title at Enrolment(Frontline)</label>
 						<input type="text" class="form-control" id="" name="job_title_at_enroll_frontline" value="{{prof.job_title_at_enroll_frontline}}">
 					</div>
+
 					<div class="col-sm-4">
-						
 						<label for="trainedInter">Trained at Intermediate level</label>
     					<select class="form-control" id="trainedInter" name="is_trained_intermediate">
     						<option value="{{prof.is_trained_frontline}}">{{prof.is_trained_intermediate}}</option>
       						<option value="Yes">Yes</option>
       						<option value="No">No</option>
-                           </select>
+                        </select><br>
 					</div>
-					<div class="col-sm-4">
+
+					<div class="col-sm-4" style="float: right;">
 						<label for="usr">Cohort (Intermediate) </label>
 						<input type="text" class="form-control" id="" name="cohort_number_intermediate" value="{{prof.cohort_number_intermediate}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Date of Completion(Intermediate)</label>
-						<input type="Date" class="form-control" id="" name="yr_completed_intermediate" value="{{prof.yr_completed_intermediate}}">
+						<input type="Date" class="form-control" id="" name="yr_completed_intermediate" value="{{prof.yr_completed_intermediate}}"><br>
 					</div>
 					
 					<div class="col-sm-4">
 						<label for="usr">Institution/Dept at enrolment(Intermediate) </label>
 						<input type="text" class="form-control" id="" name="institution_enrolled_at_intermediate" value="{{prof.institution_enrolled_at_intermediate}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Job Title at Enrolment(Intermediate)</label>
 						<input type="text" class="form-control" id="" name="job_title_at_enroll_intermediate" value="{{prof.job_title_at_enroll_intermediate}}">
 					</div>
+
 					<div class="col-sm-4">
-						
 						<label for="trainedAdvance">Trained at Advanced level</label>
     					<select class="form-control" id="trainedAdvance" name="is_trained_advanced">
     						<option value="{{prof.is_trained_advanced}}">{{prof.is_trained_advanced}}</option>
       						<option value="Yes">Yes</option>
       						<option value="No">No</option>
-                           </select>
+                        </select><br>
 					</div>
-					<div class="col-sm-4">
+
+					<div class="col-sm-4" style="float: right;">
 						<label for="usr">Cohort(Advanced)</label>
 						<input type="text" class="form-control" id="" name="cohort_number_advanced" value="{{prof.cohort_number_advanced}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Date of Completion(Advanced)</label>
 						<input type="Date" class="form-control" id="" name="yr_completed_advanced" value="{{prof.yr_completed_advanced}}">
@@ -159,14 +172,17 @@
 						<label for="usr">Institution/Depart at enrolment(Advanced)</label>
 						<input type="text" class="form-control" id="" name="institution_enrolled_at_advanced" value="{{prof.institution_enrolled_at_advanced}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Job Title at Enrolment(Advanced)</label>
 						<input type="text" class="form-control" id="" name="job_title_at_enroll_advanced" value="{{prof.job_title_at_enroll_advanced}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Current Institution/ Department</label>
 						<input type="text" class="form-control" id="" name="current_institution" value="{{job.current_institution}}">
 					</div>
+
 					<div class="col-sm-4">
 						<label for="usr">Current Job Title</label>
 						<input type="text" class="form-control" id="" name="job_title" value="{{job.job_title}}">
@@ -180,17 +196,26 @@
       						<option value="{{a.id}}">{{a.region_name}}</option>
       						{% endfor %}
       					
-                           </select>
+                        </select><br>
 					</div>
 
 					<div class="col-sm-4">
-						<label for="usr">District (Current)</label>
+						<label for="district">District (Current)</label>
 						<select class="form-control" name="district" id="district">
       						<option value="{{job.district.id}}">{{job.district.district_name}}</option>
-                           </select>
+                         </select><br>
 					</div>
+					
 					<div class="col-sm-4">
-						
+						<label for="is_current">Is this your current job</label>
+    					<select class="form-control" id="trainedAdvance" name="is_current">
+    						<option value="{{job.is_current}}">{{job.is_current}}</option>
+      						<option value="Yes">Yes</option>
+      						<option value="No">No</option>
+                        </select><br>
+					</div>
+
+					<div class="col-sm-4">
 						<label for="levelHealthSys">Level of Health System(Nat/Reg/District)</label>
     					<select class="form-control" id="levelHealthSys" name="level_of_health_system">
     						<option value="{{job.level_of_health_system.id}}">{{job.level_of_health_system.level}}</option>
@@ -199,19 +224,12 @@
       						<option value=3>District</option>
                            </select>
 					</div>
-					<div class="col-sm-4">
-						
-						<label for="is_current">Is this your current job</label>
-    					<select class="form-control" id="trainedAdvance" name="is_current">
-    						<option value="{{job.is_current}}">{{job.is_current}}</option>
-      						<option value="Yes">Yes</option>
-      						<option value="No">No</option>
-                           </select>
-					</div>
+
 					<div class="col-sm-4">
 						<label for="email">Your Email</label>
 						<input type="email" class="form-control" id="email" name="email" value="{{user.email}}">
 					</div>
+
 					 <div class="col-sm-4">
 						<label class="form-label" for="profile">Upload Profile Picture</label>
 						<input type="file" class="form-control" id="profile" name="image"  value="{{prof.image}}"/>

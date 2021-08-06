@@ -43,10 +43,10 @@
       <form method="POST" action="{% url 'login_view' %}">
         {% csrf_token %}
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Username" name="username" required>
+          <input type="text" class="form-control" placeholder="Email" name="username" required>
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-user"></span>
+              <span class="fas fa-email"></span>
             </div>
           </div>
         </div>
