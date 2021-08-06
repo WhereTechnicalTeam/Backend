@@ -60,7 +60,7 @@ class RegionSerializer(serializers.ModelSerializer):
 class JobInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobInfo
-        fields = ['current_institution', 'job_title', 'region', 'district', 'level_of_health_system', 'employment_status',
+        fields = ['id', 'current_institution', 'job_title', 'region', 'district', 'level_of_health_system', 'employment_status',
         'is_current', 'longitude', 'latitude', 'created_at', 'updated_at']
 
 
@@ -113,7 +113,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'confirm')
+        fields = ('id', 'email', 'password', 'confirm')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -183,7 +183,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'main_user', 'job_to_user', 'news_to_user')
+        fields = ('id', 'username', 'email', 'password', 'main_user', 'job_to_user', 'news_to_user')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -231,7 +231,7 @@ class LoginSerializers(serializers.Serializer):
 class UserAndProfileSerializer(serializers.ModelSerializer):
     
     main_user = UserProfileSerializer(write_only=True)
-    job_to_user = JobInfoSerializer()
+    job_to_user = JobInfoSerializer(write_only=True)
     cpassword = serializers.CharField(
         label=_("Confirm password"),
         style={'input_type': 'password'},
@@ -258,15 +258,18 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
+        print(user)
 
         prof = UserProfile.objects.create(**validated_data['main_user'])
         prof.user = user
         prof.save()
+        print(prof)
 
         job = JobInfo.objects.create(**validated_data['job_to_user'])
         job.user = user
         job.user_profile = prof
         job.save()
+        print(job)
 
         user.first_name = prof.firstname
         user.last_name = prof.surname
@@ -279,9 +282,9 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
                 """Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [validated_data['email']],)
             #return Response({"email_status": prof.email_status, "code":"A verification code has been sent to your email", "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
         except Exception as e:
-            print(e)
+            # print(e)
             return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
-        return Response(validated_data, status=status.HTTP_200_OK)
+        return Response(user)
 
 
 

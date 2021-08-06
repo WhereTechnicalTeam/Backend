@@ -426,11 +426,12 @@ class JobsCreate(CreateAPIView):
 
 #         all data from users to news apis
 class UserDetailViewList(ListAPIView):
-	queryset = User.objects.all()
+	queryset = User.objects.all()[:100]
 	serializer_class = UserDetailSerializer
 	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('username', 'email',)
+
 
 	# def get_queryset(self, *args, **kwargs):
 	# 	queryset_list = User.objects.all()
@@ -705,9 +706,10 @@ def statistics(request):
 
 
 class UserAndProfileCreate(CreateAPIView):
-	queryset = User.objects.all()
+	# queryset = User.objects.all()
 	serializer_class = UserAndProfileSerializer
 	#permission_classes = [IsAuthenticated]
+
 
 
 	def perform_create(self, serializer):
