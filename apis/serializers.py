@@ -78,7 +78,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['user', 'title', 'surname', 'firstname', 'sex', 'phone1', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 
+        fields = ['title', 'surname', 'firstname', 'sex', 'phone1', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 
         'institution_enrolled_at_frontline', 'job_title_at_enroll_frontline', 'is_trained_intermediate', 'cohort_number_intermediate', 'yr_completed_intermediate', 
         'institution_enrolled_at_intermediate', 'job_title_at_enroll_intermediate', 'is_trained_advanced', 'cohort_number_advanced', 'yr_completed_advanced', 
         'institution_enrolled_at_advanced', 'image', 'email_status', 'job_title_at_enroll_advanced']
@@ -230,7 +230,7 @@ class LoginSerializers(serializers.Serializer):
 
 class UserAndProfileSerializer(serializers.ModelSerializer):
     
-    main_user = UserProfileSerializer(many=True)
+    main_user = UserProfileSerializer(write_only=True)
     job_to_user = JobInfoSerializer()
     cpassword = serializers.CharField(
         label=_("Confirm password"),
@@ -281,7 +281,8 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         except Exception as e:
             print(e)
             return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
-        return (user)
+        return Response(validated_data, status=status.HTTP_200_OK)
+
 
 
 

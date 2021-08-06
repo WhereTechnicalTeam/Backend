@@ -426,23 +426,24 @@ class JobsCreate(CreateAPIView):
 
 #         all data from users to news apis
 class UserDetailViewList(ListAPIView):
+	queryset = User.objects.all()
 	serializer_class = UserDetailSerializer
-	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('username', 'email',)
 
-	def get_queryset(self, *args, **kwargs):
-		queryset_list = User.objects.all()
-		query = self.request.GET.get('q')
-		if query:
-			queryset_list = queryset_list.filter(
-				Q(title__icontains=query)|
-				Q(firstname__icontains=query)|
-				Q(title__icontains=query)|
-				Q(current_institution__icontains=query)|
-				Q(content__icontains=query)
-				).distinct()
-		return queryset_list
+	# def get_queryset(self, *args, **kwargs):
+	# 	queryset_list = User.objects.all()
+	# 	query = self.request.GET.get('q')
+	# 	if query:
+	# 		queryset_list = queryset_list.filter(
+	# 			Q(title__icontains=query)|
+	# 			Q(firstname__icontains=query)|
+	# 			Q(title__icontains=query)|
+	# 			Q(current_institution__icontains=query)|
+	# 			Q(content__icontains=query)
+	# 			).distinct()
+	# 	return Response({'data':queryset_list})
 
 
 
@@ -451,6 +452,17 @@ class UserDetailViewDetail(RetrieveAPIView):
 	serializer_class = UserDetailSerializer
 	lookup_field = 'pk'
 	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -507,13 +519,6 @@ def verify_code(request):
 
 	except:
 		return Response("This verification code does not exist.", status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
-
-
 
 
 
@@ -723,14 +728,14 @@ class UserAndProfileCreate(CreateAPIView):
 	# 	user.set_password(validated_data.data['password'])
 	# 	user.save()
 
-	# 	# prof = UserProfile.objects.create(**validated_data.data['main_user'])
-	# 	# prof.user = user
-	# 	# prof.save()
+	# 	prof = UserProfile.objects.create(**validated_data.data['main_user'])
+	# 	prof.user = user
+	# 	prof.save()
 
-	# 	# job = JobInfo.objects.create(**validated_data.data['job_to_user'])
-	# 	# job.user = user
-	# 	# job.user_profile = prof
-	# 	# job.save()
+	# 	job = JobInfo.objects.create(**validated_data.data['job_to_user'])
+	# 	job.user = user
+	# 	job.user_profile = prof
+	# 	job.save()
 	# 	main_user = UserProfile.objects.create(user = user)
 	# 	job_to_user = JobInfo.objects.create(user=user)
 
@@ -789,6 +794,7 @@ class UserAndProfileCreate(CreateAPIView):
 	# 		print(e)
 	# 		return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
 	# 	return Response({"status":status.HTTP_200_OK, "user": validated_data.data})
+	# return Response({"status":status.HTTP_200_OK, "user": validated_data.data})
 
 
 
