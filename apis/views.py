@@ -454,18 +454,18 @@ class UserDetailViewDetail(RetrieveAPIView):
 
 
 
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def logout(request):
+# @api_view(["GET"])
+# # @permission_classes([IsAuthenticated])
+# def logout(request):
 
-	# is_token = Token.objects.get(user_id=request.user.id).exists()
-	# if is_token:
-		# Token.objects.get(user_id=request.user.id).delete()
-	# request.user.auth_token.delete()
+# 	logout(request)
+# 	return Response('User Logged out successfully')
 
-	logout(request)
-	return Response('User Logged out successfully')
-
+class Logout(APIView):
+    def get(self, request, format=None):
+        # simply delete the token to force a login
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 
@@ -710,7 +710,7 @@ class UserAndProfileCreate(CreateAPIView):
 
 
 	# def create(self, validated_data):
-	# 	print(validated_data.data)
+	# 	print(validated_data.data['main_user.title'])
 	# 	if validated_data.data['password'] != validated_data.data['cpassword']:
 	# 		msg = ('Passwords are not the same')
 	# 		raise serializers.ValidationError(msg)
@@ -723,20 +723,62 @@ class UserAndProfileCreate(CreateAPIView):
 	# 	user.set_password(validated_data.data['password'])
 	# 	user.save()
 
-	# 	prof = UserProfile.objects.create(**validated_data.data['main_user'])
-	# 	prof.user = user
-	# 	prof.save()
+	# 	# prof = UserProfile.objects.create(**validated_data.data['main_user'])
+	# 	# prof.user = user
+	# 	# prof.save()
 
-	# 	job = JobInfo.objects.create(**validated_data.data['job_to_user'])
-	# 	job.user = user
-	# 	job.user_profile = prof
-	# 	job.save()
+	# 	# job = JobInfo.objects.create(**validated_data.data['job_to_user'])
+	# 	# job.user = user
+	# 	# job.user_profile = prof
+	# 	# job.save()
+	# 	main_user = UserProfile.objects.create(user = user)
+	# 	job_to_user = JobInfo.objects.create(user=user)
+
+	# 	main_user.title = validated_data.data['main_user.title ']
+	# 	main_user.surname = validated_data.data['main_user.surname']
+	# 	main_user.firstname = validated_data.data['main_user.firstname']
+	# 	main_user.sex = validated_data.data['main_user.sex']
+	# 	main_user.date_of_birth = validated_data.data['main_user.date_of_birth']
+	# 	main_user.phone1 = validated_data.data['main_user.phone1']
+	# 	main_user.phone2 = validated_data.data['main_user.phone2']
+	# 	main_user.is_trained_frontline = validated_data.data['main_user.is_trained_frontline']
+	# 	main_user.cohort_number_frontline = validated_data.data['main_user.cohort_number_frontline']
+	# 	main_user.yr_completed_frontline = validated_data.data['main_user.yr_completed_frontline']
+	# 	main_user.institution_enrolled_at_frontline = validated_data.data['main_user.institution_enrolled_at_frontline']
+	# 	main_user.job_title_at_enroll_frontline = validated_data.data['main_user.job_title_at_enroll_frontline']
+	# 	main_user.is_trained_intermediate = validated_data.data['main_user.is_trained_intermediate']
+	# 	main_user.cohort_number_intermediate = validated_data.data['main_user.cohort_number_intermediate']
+	# 	main_user.yr_completed_intermediate = validated_data.data['main_user.yr_completed_intermediate']
+	# 	main_user.institution_enrolled_at_intermediate = validated_data.data['main_user.institution_enrolled_at_intermediate']
+	# 	main_user.job_title_at_enroll_intermediate = validated_data.data['main_user.job_title_at_enroll_intermediate']
+	# 	main_user.is_trained_advanced = validated_data.data['main_user.is_trained_advanced']
+	# 	main_user.cohort_number_advanced = validated_data.data['main_user.cohort_number_advanced']
+	# 	main_user.yr_completed_advanced = validated_data.data['main_user.yr_completed_advanced']
+	# 	main_user.institution_enrolled_at_advanced = validated_data.data['main_user.institution_enrolled_at_advanced']
+	# 	main_user.job_title_at_enroll_advanced = validated_data.data['main_user.job_title_at_enroll_advanced']
+	# 	main_user.image = validated_data.data['main_user.image']
+	# 	# main_user.user = user
+	# 	main_user.save()
+
+
+	# 	job_to_user.current_institution = datas.data['job_to_user.current_institution']
+	# 	job_to_user.job_title = datas.data['job_to_user.job_title']
+	# 	job_to_user.region = datas.data['job_to_user.region']
+	# 	job_to_user.district = datas.data['job_to_user.district']
+	# 	job_to_user.level_of_health_system = datas.data['job_to_user.level_of_health_system']
+	# 	job_to_user.employment_status = datas.data['job_to_user.employment_status']
+	# 	job_to_user.is_current = datas.data['job_to_user.is_current' ]
+	# 	job_to_user.longitude = datas.data['job_to_user.longitude']
+	# 	job_to_user.latitude = datas.data['job_to_user.latitude']
+	# 	job_to_user.user = user
+	# 	job_to_user.user_profile = main_user
+	# 	job_to_user.save() 
 
 	# 	user.first_name = prof.firstname
 	# 	user.last_name = prof.surname
 	# 	user.save()
 
-	# 	# Token.objects.create(user=user)
+	# 	Token.objects.create(user=user)
 	# 	created = verificationTbl.objects.create(email=validated_data.data['email'], code=codes())
 	# 	try:
 	# 		send_mail('Your Verifcation Code',
@@ -746,7 +788,7 @@ class UserAndProfileCreate(CreateAPIView):
 	# 	except Exception as e:
 	# 		print(e)
 	# 		return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
-	# 	return Response({"status":status.HTTP_200_OK, "stats": validated_data.data})
+	# 	return Response({"status":status.HTTP_200_OK, "user": validated_data.data})
 
 
 

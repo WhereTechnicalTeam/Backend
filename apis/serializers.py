@@ -281,7 +281,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         except Exception as e:
             print(e)
             return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
-        return (validated_data)
+        return (user)
 
 
 

@@ -29,7 +29,7 @@ urlpatterns = [
 
    #    login
     path('login', views.login, name='logins'),
-    path('logout', views.logout, name='logout'),
+    path('logout', Logout.as_view(), name='logout'),
     #path('logins', LoginAPIView.as_view(), name='log'),
 
        # events  crud
