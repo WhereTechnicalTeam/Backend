@@ -230,7 +230,7 @@ class LoginSerializers(serializers.Serializer):
 
 class UserAndProfileSerializer(serializers.ModelSerializer):
     
-    main_user = UserProfileSerializer()
+    main_user = UserProfileSerializer(many=True)
     job_to_user = JobInfoSerializer()
     cpassword = serializers.CharField(
         label=_("Confirm password"),
