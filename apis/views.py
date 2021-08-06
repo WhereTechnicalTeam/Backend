@@ -270,6 +270,17 @@ class EventsCreate(CreateAPIView):
 		serializer.save()
 
 
+	def create(self, validated_data):
+		serializd = EventSerializer(data=validated_data.data)
+		if serializd.is_valid():
+			self.perform_create(serializd)
+			return Response({"status":status.HTTP_200_OK, "news": serializd.data})
+		else:
+			return Response({
+                'status': 'Bad request'
+            }, status=status.HTTP_404_NOT_FOUND)
+
+
 
 
 
@@ -330,7 +341,15 @@ class NewCreate(CreateAPIView):
 		serializer.save(user=self.request.user)
 
 
-
+	def create(self, validated_data):
+		serializd = NewsSerializer(data=validated_data.data)
+		if serializd.is_valid():
+			self.perform_create(serializd)
+			return Response({"status":status.HTTP_200_OK, "news": serializd.data})
+		else:
+			return Response({
+                'status': 'Bad request'
+            }, status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -390,6 +409,18 @@ class JobsCreate(CreateAPIView):
 
 	def perform_create(self, serializer):
 		serializer.save(user=self.request.user)
+
+
+
+	def create(self, validated_data):
+		serializd = JobInfoSerializer(data=validated_data.data)
+		if serializd.is_valid():
+			self.perform_create(serializd)
+			return Response({"status":status.HTTP_200_OK, "news": serializd.data})
+		else:
+			return Response({
+                'status': 'Bad request'
+            }, status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -528,7 +559,7 @@ def login(request):
                 user.is_active = True
                 user.save()
                 (token, created) = Token.objects.get_or_create(user=user)
-                dest = {'user':'{}'.format(prof.user_id), 'id':'{}'.format(prof.id), 'id':'{}'.format(prof.id), 'firstname':'{}'.format(prof.firstname), 'lastname':'{}'.format(prof.surname)}
+                dest = {'user':'{}'.format(prof.user_id), 'id':'{}'.format(prof.id), 'firstname':'{}'.format(prof.firstname), 'lastname':'{}'.format(prof.surname),  'image':'{}'.format(prof.image),}
                 return Response({'status': status.HTTP_200_OK,
                                 'Token': token.key,
                                 'user':dest})
@@ -674,9 +705,48 @@ class UserAndProfileCreate(CreateAPIView):
 	#permission_classes = [IsAuthenticated]
 
 
-
 	def perform_create(self, serializer):
 		serializer.save()
+
+
+	# def create(self, validated_data):
+	# 	print(validated_data.data)
+	# 	if validated_data.data['password'] != validated_data.data['cpassword']:
+	# 		msg = ('Passwords are not the same')
+	# 		raise serializers.ValidationError(msg)
+
+
+	# 	user = User(
+	# 		email=validated_data.data['email'],
+	# 		username=validated_data.data['email']
+	# 		)
+	# 	user.set_password(validated_data.data['password'])
+	# 	user.save()
+
+	# 	prof = UserProfile.objects.create(**validated_data.data['main_user'])
+	# 	prof.user = user
+	# 	prof.save()
+
+	# 	job = JobInfo.objects.create(**validated_data.data['job_to_user'])
+	# 	job.user = user
+	# 	job.user_profile = prof
+	# 	job.save()
+
+	# 	user.first_name = prof.firstname
+	# 	user.last_name = prof.surname
+	# 	user.save()
+
+	# 	# Token.objects.create(user=user)
+	# 	created = verificationTbl.objects.create(email=validated_data.data['email'], code=codes())
+	# 	try:
+	# 		send_mail('Your Verifcation Code',
+	# 			"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [validated_data.data['email']],)
+	# 			#return Response({"email_status": prof.email_status, "code":"A verification code has been sent to your email", "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
+
+	# 	except Exception as e:
+	# 		print(e)
+	# 		return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
+	# 	return Response({"status":status.HTTP_200_OK, "stats": validated_data.data})
 
 
 

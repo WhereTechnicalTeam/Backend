@@ -67,7 +67,8 @@ class JobInfoSerializer(serializers.ModelSerializer):
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = New
-        fields = ['title', 'content', 'picture1', 'picture2', 'picture3']
+        fields = ['id', 'title', 'content', 'picture1', 'picture2', 'picture3']
+            
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -77,7 +78,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['title', 'surname', 'firstname', 'sex', 'phone1', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 
+        fields = ['user', 'title', 'surname', 'firstname', 'sex', 'phone1', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 
         'institution_enrolled_at_frontline', 'job_title_at_enroll_frontline', 'is_trained_intermediate', 'cohort_number_intermediate', 'yr_completed_intermediate', 
         'institution_enrolled_at_intermediate', 'job_title_at_enroll_intermediate', 'is_trained_advanced', 'cohort_number_advanced', 'yr_completed_advanced', 
         'institution_enrolled_at_advanced', 'image', 'email_status', 'job_title_at_enroll_advanced']
@@ -188,7 +189,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User(
             email=validated_data['email'],
-            username=validated_data['username']
+            username=validated_data['email']
         )
         user.set_password(validated_data['password'])
         user.save()
