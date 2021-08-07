@@ -121,7 +121,7 @@ header .navbar {
 /************ Home css ************/
 
 #home {
-	background: url(/static/feltp/img/back.png) no-repeat center center;
+	background: url(img/back.png) no-repeat center center;
 	background-size: cover;
 	position: relative;
 	justify-content: center;
@@ -248,7 +248,7 @@ header .navbar {
 /***************** our team css **************/
 #team {
 	padding: 70px 0;
-	background: url(/static/feltp/img/photo2.png) no-repeat;
+	
 	background-size: cover;
 
 }
@@ -531,7 +531,7 @@ h1 sup {
 
 #news {
 	padding: 70px 0;
-	background: url(/static/feltp/img/photo1.png) no-repeat;
+	background: url(img/photo1.png) no-repeat;
 	background-size: cover;
 }
 
@@ -694,7 +694,7 @@ h1 sup {
 }
 
 .form-control {
-	border-radius: 0;
+	border-radius: 5px;
 }
 
 input[type="text"], input[type="number"], input[type="email"] {
@@ -760,6 +760,7 @@ form.example input[type=text] {
 form.example button {
   float: left;
   width: 20%;
+  height: 40px;
   padding: 10px;
   background: #2196F3;
   color: white;
@@ -822,10 +823,9 @@ a {text-decoration:none;}
 }
 
 .profile {
-	padding:10px;
 	font-size:12px;
 	border:1px solid #000;
-	border-radius:3px;
+	border-radius:10px;
 	box-shadow:0 1px 0 #555 inset, 0 1px 7px #111;
 	background:-webkit-linear-gradient(#222, #111);
 }
