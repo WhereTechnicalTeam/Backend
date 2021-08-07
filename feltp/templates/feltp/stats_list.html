@@ -86,8 +86,12 @@
                       <th class="all">Year Completed Advanced</th>
                       <th class="all">Institution Enrolled at Advanced</th>
                       <th class="all">Job Title at Advanced</th>
-                      <th class="all">Status</th>
+                      <th class="all">Approved Status</th>
+                      {% if not_approved %}
+                      <th class="all">Delete</th>
+                      {% endif %}
                        <th class="all">Email Status</th>
+                      }
 
                     </tr>
                   </thead>
@@ -208,7 +212,16 @@
                                   <label>
                                       <input type="checkbox" value="approved" name='status' id='{{ob.pk}}' class="icheck" {% if ob.status == "approved" %}checked{%endif%}>
                                       <span class="checkbox-material"></span>
-                                      <button type='button' id='{{ob.pk}}' class='' style='border: none;'>
+                                     <!--  <button type='button' id='{{ob.pk}}' class='' style='border: none;'>
+                                     <i class='fa fa-window-close'></i></button> -->
+                                  </label>
+                              </span>
+                          </td>
+                          <td><span class="check">
+                                  <label>
+                                     <!--  <input type="checkbox" value="approved" name='status' id='{{ob.pk}}' class="icheck" {% if ob.status == "approved" %}checked{%endif%}> -->
+                                      <span class="checkbox-material"></span>
+                                      <button type='button' id='{{ob.pk}}' class='bg-danger' style='border: none;'>
                                      <i class='fa fa-window-close'></i></button>
                                   </label>
                               </span>
@@ -285,12 +298,12 @@
             vall = $(this).val()
             alert('You are about to approve this user as part of the group')
             alert(idd,vall)
-            $.get('/feltp/setstatus?data='+ idd + '&val=' + vall, function(data) {
+            $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
                    if(data=="done"){
 
                         Swal.fire("Success!", "The user has been successfully approved!", "success")
                         .then(function () {
-                                window.location.href="/feltp/admin_alumni"
+                                window.location.href="/admin_alumni"
                             
                         })
                     }
@@ -301,12 +314,12 @@
             idd = $(this).attr('id')
             vall = 'not_confirmed'
             alert('You are about to disapprove a user from this group')
-            $.get('/feltp/setstatus?data='+ idd + '&val=' + vall, function(data) {
+            $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
            if(data=="done"){
 
                 Swal.fire("Success", "The user has been successfully disapproved!", "success")
                 .then(function () {
-                        window.location.href="/feltp/admin_alumni"
+                        window.location.href="/admin_alumni"
                     
                 })
             }
@@ -321,12 +334,12 @@
         idd = $(this).attr('id')
         vall = 'denied'
         alert('You are about to delete this user from the group')
-        $.get('/feltp/deleteuser/'+ idd, function(data) {
+        $.get('/deleteuser/'+ idd, function(data) {
            if(data=="done"){
 
                 Swal.fire("Success!", "The user has been successfully deleted from the system!", "success")
                 .then(function () {
-                        window.location.href="/feltp/admin_alumni"
+                        window.location.href="/admin_alumni"
                     
                 })
                 }

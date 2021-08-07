@@ -10,7 +10,7 @@ urlpatterns = [
     # path('', include('app_homepage.urls')),
     # path('users/', include('app_users.urls')),
     # path('contacts/', include('app_contacts.urls')),
-    path('feltp/', include('feltp.urls')),
+    path('', include('feltp.urls')),
     path('api/', include('apis.urls')),
     # path('api/', include(router.urls)),
     # path('apis/', include(router.urls)),

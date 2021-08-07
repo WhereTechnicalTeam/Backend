@@ -199,6 +199,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializers(serializers.Serializer):
+
     email = serializers.CharField(max_length=255)
     password = serializers.CharField(
         label=_("Password"),
@@ -207,6 +208,15 @@ class LoginSerializers(serializers.Serializer):
         max_length=128,
         write_only=True
     )
+
+    main_user = UserProfileSerializer(read_only=True)
+    job_to_user = JobInfoSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'password', 'main_user', 'job_to_user')
+        extra_kwargs = {'password': {'write_only': True}}
+
 
     def validate(self, data):
         email = data.get('email')
@@ -223,16 +233,16 @@ class LoginSerializers(serializers.Serializer):
             raise serializers.ValidationError({'status':'401', 'msg':'You are not authorised yet.'})
             # raise serializers.ValidationError(msg, code='authorization')
 
-        data['user'] = user
-        return data
+        # data['user'] = user
+        return user
 
 
 
 class UserAndProfileSerializer(serializers.ModelSerializer):
     
     
-    main_user = UserProfileSerializer()
-    job_to_user = JobInfoSerializer()
+    main_user = UserProfileSerializer(read_only=True)
+    job_to_user = JobInfoSerializer(read_only=True)
     cpassword = serializers.CharField(
         label=_("Confirm password"),
         style={'input_type': 'password'},

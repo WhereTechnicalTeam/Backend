@@ -514,7 +514,9 @@ class jobsLayer(GeoJSONLayerView):
 
 
 def queryjson(request):
-	query = list(JobInfo.objects.exclude(longitude__isnull=True).exclude(latitude__isnull=True).values('current_institution', 'region__region_name', 'district__district_name', 'longitude', 'latitude', 'user_profile__is_trained_frontline', 'user_profile__is_trained_intermediate', 'user_profile__is_trained_advanced'))
+	query = list(JobInfo.objects.exclude(longitude__isnull=True).exclude(latitude__isnull=True).values('current_institution', 'region__region_name',
+	 'district__district_name', 'longitude', 'latitude', 'user_profile__is_trained_frontline',
+	  'user_profile__is_trained_intermediate', 'user_profile__is_trained_advanced', 'user_profile__firstname', 'user_profile__surname'))
 	# print(query)
 	return JsonResponse(query, safe=False)
 	# return render(request, 'public_index.html', {'query':query})

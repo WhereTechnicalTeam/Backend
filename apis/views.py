@@ -622,7 +622,11 @@ def verify_code(request):
 def login(request):
     serializer = LoginSerializers(data=request.data, context={'request': request})
     if serializer.is_valid(raise_exception=True):
-        user = serializer.validated_data['user']
+        # user = serializer.validated_data['user']
+        email = request.data.get('email')
+        user = User.objects.get(email=email)
+        queryset = User.objects.filter(email=user)
+        serializered = UserAndProfileSerializer(queryset, many=True)
 
         # user = User.objects.get(user=user, user)
 
@@ -643,44 +647,46 @@ def login(request):
                 # 	job.district__district_name=None
                 # 	job.district__region_name=None
                 # print(job.region__region_name)
+
+                return Response({"status":status.HTTP_200_OK, 'token': token.key, "user": serializered.data})
               
-                return Response({'status': status.HTTP_200_OK,
-                                'Token': token.key,
-                                'user':'{}'.format(prof.user_id),
-                                'username':'{}'.format(prof.user),
-								'id':'{}'.format(prof.id),
-								'title':'{}'.format(prof.title),
-								'firstname':'{}'.format(prof.firstname),
-								'lastname':'{}'.format(prof.surname),
-								'sex':'{}'.format(prof.sex),
-								'date_of_birth':'{}'.format(prof.date_of_birth),
-								'phone1':'{}'.format(prof.phone1),
-								'phone2':'{}'.format(prof.phone2),
-								'is_trained_frontline':'{}'.format(prof.is_trained_frontline),
-								'cohort_number_frontline':'{}'.format(prof.cohort_number_frontline),
-								'yr_completed_frontline':'{}'.format(prof.yr_completed_frontline),
-								'institution_enrolled_at_frontline':'{}'.format(prof.institution_enrolled_at_frontline),
-								'job_title_at_enroll_frontline':'{}'.format(prof.job_title_at_enroll_frontline),
-								'is_trained_intermediate':'{}'.format(prof.is_trained_intermediate),
-								'yr_completed_intermediate':'{}'.format(prof.yr_completed_intermediate),
-								'institution_enrolled_at_intermediate':'{}'.format(prof.institution_enrolled_at_intermediate),
-								'is_trained_advanced':'{}'.format(prof.is_trained_advanced),
-								'cohort_number_advanced':'{}'.format(prof.cohort_number_advanced),
-								'yr_completed_advanced':'{}'.format(prof.yr_completed_advanced),
-								'institution_enrolled_at_advanced':'{}'.format(prof.institution_enrolled_at_advanced),
-								'image':'{}'.format(prof.image),
-								'email_status':'{}'.format(prof.email_status),
-								'job_title_at_enroll_advanced':'{}'.format(prof.job_title_at_enroll_advanced),
-								'status':'{}'.format(prof.status),
-								'current_institution':job.current_institution,
-								'job_title':'{}'.format(job.job_title),
-								'region':'{}'.format(job.region),
-								'district':'{}'.format(job.district),
-								'level_of_health_system':'{}'.format(job.level_of_health_system),
-								'employment_status':'{}'.format(job.employment_status),
-								'longitude':'{}'.format(job.longitude),
-								'latitude':'{}'.format(job.latitude)
-								})
+        #         return Response({'status': status.HTTP_200_OK,
+        #                         'Token': token.key,
+        #                         'user':'{}'.format(prof.user_id),
+        #                         'username':'{}'.format(prof.user),
+								# 'id':'{}'.format(prof.id),
+								# 'title':'{}'.format(prof.title),
+								# 'firstname':'{}'.format(prof.firstname),
+								# 'lastname':'{}'.format(prof.surname),
+								# 'sex':'{}'.format(prof.sex),
+								# 'date_of_birth':'{}'.format(prof.date_of_birth),
+								# 'phone1':'{}'.format(prof.phone1),
+								# 'phone2':'{}'.format(prof.phone2),
+								# 'is_trained_frontline':'{}'.format(prof.is_trained_frontline),
+								# 'cohort_number_frontline':'{}'.format(prof.cohort_number_frontline),
+								# 'yr_completed_frontline':'{}'.format(prof.yr_completed_frontline),
+								# 'institution_enrolled_at_frontline':'{}'.format(prof.institution_enrolled_at_frontline),
+								# 'job_title_at_enroll_frontline':'{}'.format(prof.job_title_at_enroll_frontline),
+								# 'is_trained_intermediate':'{}'.format(prof.is_trained_intermediate),
+								# 'yr_completed_intermediate':'{}'.format(prof.yr_completed_intermediate),
+								# 'institution_enrolled_at_intermediate':'{}'.format(prof.institution_enrolled_at_intermediate),
+								# 'is_trained_advanced':'{}'.format(prof.is_trained_advanced),
+								# 'cohort_number_advanced':'{}'.format(prof.cohort_number_advanced),
+								# 'yr_completed_advanced':'{}'.format(prof.yr_completed_advanced),
+								# 'institution_enrolled_at_advanced':'{}'.format(prof.institution_enrolled_at_advanced),
+								# 'image':'{}'.format(prof.image),
+								# 'email_status':'{}'.format(prof.email_status),
+								# 'job_title_at_enroll_advanced':'{}'.format(prof.job_title_at_enroll_advanced),
+								# 'status':'{}'.format(prof.status),
+								# 'current_institution':job.current_institution,
+								# 'job_title':'{}'.format(job.job_title),
+								# 'region':'{}'.format(job.region),
+								# 'district':'{}'.format(job.district),
+								# 'level_of_health_system':'{}'.format(job.level_of_health_system),
+								# 'employment_status':'{}'.format(job.employment_status),
+								# 'longitude':'{}'.format(job.longitude),
+								# 'latitude':'{}'.format(job.latitude)
+								# })
             else:
                 return Response({'status': status.HTTP_400_BAD_REQUEST,
                                 'Final Verifcation': 'You have not yet been verified by the admin. You may knidly contact him/her to be verified to be logged in.'
@@ -713,6 +719,8 @@ def get_profile(request):
 			# profile.status = 'approved'
 			# profile.save()
 			# print(profile)
+			queryset = User.objects.filter(email=request.data['email'])
+			serializered = UserAndProfileSerializer(queryset, many=True)
 
 			if profile.email_status=='not verified':
 				print('not verified')
@@ -720,39 +728,43 @@ def get_profile(request):
 				try:
 					send_mail('Your Verifcation Code',
 						"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [request.data['email']],)
-					prof = {'user':'{}'.format(profile.user_id), 'id':'{}'.format(profile.id), 'id':'{}'.format(profile.id), 'firstname':'{}'.format(profile.firstname), 'lastname':'{}'.format(profile.surname)}
-					return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "code":"A verification code has been sent to your email", "user":prof})
+					return Response({"status":status.HTTP_200_OK, "user": serializered.data, "code":"A verification code has been sent to your email"})
+					# prof = {'user':'{}'.format(profile.user_id), 'id':'{}'.format(profile.id), 'id':'{}'.format(profile.id), 'firstname':'{}'.format(profile.firstname), 'lastname':'{}'.format(profile.surname)}
+					# return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "code":"A verification code has been sent to your email", "user":prof})
 					#return Response({"email_status": profile.email_status, "code":"A verification code has been sent to your email", "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
 				except Exception as e:
 					print(e)
 					return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 			else:
 				print('verified')
-				prof = {'user':'{}'.format(profile.user_id),
-				 'id':'{}'.format(profile.id),
-				  'title':'{}'.format(profile.title),
-				  'firstname':'{}'.format(profile.firstname),
-				  'lastname':'{}'.format(profile.surname),
-				  'sex':'{}'.format(profile.sex),
-				  'date_of_birth':'{}'.format(profile.date_of_birth),
-				  'phone1':'{}'.format(profile.phone1),
-				  'phone2':'{}'.format(profile.phone2),
-				  'is_trained_frontline':'{}'.format(profile.is_trained_frontline),
-				  'cohort_number_frontline':'{}'.format(profile.cohort_number_frontline),
-				  'yr_completed_frontline':'{}'.format(profile.yr_completed_frontline),
-				  'institution_enrolled_at_frontline':'{}'.format(profile.institution_enrolled_at_frontline),
-				  'job_title_at_enroll_frontline':'{}'.format(profile.job_title_at_enroll_frontline),
-				  'is_trained_intermediate':'{}'.format(profile.is_trained_intermediate),
-				  'yr_completed_intermediate':'{}'.format(profile.yr_completed_intermediate),
-				  'institution_enrolled_at_intermediate':'{}'.format(profile.institution_enrolled_at_intermediate),
-				  'is_trained_advanced':'{}'.format(profile.is_trained_advanced),
-				  'cohort_number_advanced':'{}'.format(profile.cohort_number_advanced),
-				  'yr_completed_advanced':'{}'.format(profile.yr_completed_advanced),
-				  'institution_enrolled_at_advanced':'{}'.format(profile.institution_enrolled_at_advanced),
-				  'job_title_at_enroll_advanced':'{}'.format(profile.job_title_at_enroll_advanced),
-				  'status':'{}'.format(profile.status)
-				  }
-				return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "user":prof})
+
+				return Response({"status":status.HTTP_200_OK, "user": serializered.data})
+
+				# prof = {'user':'{}'.format(profile.user_id),
+				#  'id':'{}'.format(profile.id),
+				#   'title':'{}'.format(profile.title),
+				#   'firstname':'{}'.format(profile.firstname),
+				#   'lastname':'{}'.format(profile.surname),
+				#   'sex':'{}'.format(profile.sex),
+				#   'date_of_birth':'{}'.format(profile.date_of_birth),
+				#   'phone1':'{}'.format(profile.phone1),
+				#   'phone2':'{}'.format(profile.phone2),
+				#   'is_trained_frontline':'{}'.format(profile.is_trained_frontline),
+				#   'cohort_number_frontline':'{}'.format(profile.cohort_number_frontline),
+				#   'yr_completed_frontline':'{}'.format(profile.yr_completed_frontline),
+				#   'institution_enrolled_at_frontline':'{}'.format(profile.institution_enrolled_at_frontline),
+				#   'job_title_at_enroll_frontline':'{}'.format(profile.job_title_at_enroll_frontline),
+				#   'is_trained_intermediate':'{}'.format(profile.is_trained_intermediate),
+				#   'yr_completed_intermediate':'{}'.format(profile.yr_completed_intermediate),
+				#   'institution_enrolled_at_intermediate':'{}'.format(profile.institution_enrolled_at_intermediate),
+				#   'is_trained_advanced':'{}'.format(profile.is_trained_advanced),
+				#   'cohort_number_advanced':'{}'.format(profile.cohort_number_advanced),
+				#   'yr_completed_advanced':'{}'.format(profile.yr_completed_advanced),
+				#   'institution_enrolled_at_advanced':'{}'.format(profile.institution_enrolled_at_advanced),
+				#   'job_title_at_enroll_advanced':'{}'.format(profile.job_title_at_enroll_advanced),
+				#   'status':'{}'.format(profile.status)
+				#   }
+				# return Response({"status":status.HTTP_200_OK, "email_status": profile.email_status, "user":prof})
 				#return Response({"email_status": profile.email_status, "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
 
 		else:

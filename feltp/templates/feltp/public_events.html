@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="/static/feltp/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/static/feltp/css/animate.css">
 	<link rel="stylesheet" href="/static/feltp/css/prettyPhoto.css">
-	<link href="/static/feltp/css/style.css" rel="stylesheet">
+	<link href="/static/feltp/css/public_style.css" rel="stylesheet">
 	<link href="css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
@@ -37,18 +37,18 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
 
-					<li class="active smooth-scroll"><a href="index.html">HOME</a></li>
+					<li class="active smooth-scroll"><a href="{% url 'home' %}">HOME</a></li>
 					
 
                 <li>
 				<!-- user profile -->
 				<div class="profile">
-					<img src="img/avatar.jpg" />
-					<a href="" class="name">User</a>
+					<!-- <img src="img/avatar.jpg" /> -->
+					<a href="" class="name">{{user}}</a>
 					
 					<!-- more menu -->
 					<ul class="menu">
-						<li><a href="#">Edit</a></li>
+						<!-- <li><a href="#">Edit</a></li> -->
 						<li><a href="#">Log out</a></li>
 					</ul>
 				</div>
@@ -70,7 +70,7 @@
 <!--our news area-->
 <section id="news">
 	<div class="section-heading news-heading text-center text-uppercase wow swing">
-		<h2> <span>EVENTS</span></h2>
+		<h2> <span style="color:white;">EVENTS</span></h2>
 	</div>
 	<div class="container">
 		<div class="row no-gutter">
@@ -80,21 +80,23 @@
 
 					<h3>Upcoming Events</h3>
 
+					{% for event in events %}
 					<div class="news-content">
 						<div class="new-date">
-							<img src="img/photo1.png" alt="">
+							<img src="media/{{event.picture}}" alt="">
 						</div>
 						<div class="news-text">
-							<h5>The Launch of Greater Accra Chapter </h5>
+							<h5>{{event.schedule}} </h5>
 
-							<p>Lorem ipsum dolor sit amet, consectetur</p>
+							<p>{{event.description}}</p>
 
-							<p><!-- Button trigger modal -->
+		
 </p>
 							
 						</div>
 					</div>
-					<div class="news-content">
+					{% endfor %}
+<!-- 					<div class="news-content">
 						<div class="new-date">
 							<img src="img/photo2.png" alt="">
 						</div>
@@ -103,7 +105,7 @@
 
 							<p>Lorem ipsum dolor sit amet, consectetur</p>
 
-							<p><!-- Button trigger modal -->
+							
 </p>
 							
 						</div>
@@ -117,7 +119,7 @@
 
 							<p>Lorem ipsum dolor sit amet, consectetur</p>
 
-							<p><!-- Button trigger modal -->
+						
 </p>
 							
 						</div>
@@ -131,7 +133,7 @@
 
 							<p>Lorem ipsum dolor sit amet, consectetur</p>
 
-							<p><!-- Button trigger modal -->
+						
 </p>
 							
 						</div>
@@ -146,11 +148,11 @@
 
 							<p>Lorem ipsum dolor sit amet, consectetur</p>
 
-							<p><!-- Button trigger modal -->
+							
 </p>
 							
 						</div>
-					</div>
+					</div> -->
 
 					
 

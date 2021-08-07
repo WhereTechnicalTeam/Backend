@@ -287,7 +287,7 @@
 	
 	// ########################   district populate
     $('#region').change(function() {
-    $.get('/feltp/districtSelectOption?data='+$('#region option:selected').val(), function(data){
+    $.get('/districtSelectOption?data='+$('#region option:selected').val(), function(data){
 
         $('#district').html(data)
        });

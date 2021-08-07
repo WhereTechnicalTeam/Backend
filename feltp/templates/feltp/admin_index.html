@@ -62,7 +62,7 @@
               <div class="icon">
                 <i class="fa fa-users"></i>
               </div>
-              <a href="/feltp/statsdetail?data=front" class="small-box-footer">Info<i class=""></i></a>
+              <a href="/statsdetail?data=front" class="small-box-footer">Info<i class=""></i></a>
             </div>
           </div>
 
@@ -78,7 +78,7 @@
               <div class="icon">
                 <i class="fa fa-users"></i>
               </div>
-              <a href="/feltp/statsdetail?data=inter" class="small-box-footer"> <i class="">Info</i></a>
+              <a href="/statsdetail?data=inter" class="small-box-footer"> <i class="">Info</i></a>
             </div>
           </div>
 
@@ -94,7 +94,7 @@
               <div class="icon">
                 <i class="fa fa-users"></i>
               </div>
-              <a href="/feltp/statsdetail?data=advance" class="small-box-footer">Info<i class=""></i></a>
+              <a href="/statsdetail?data=advance" class="small-box-footer">Info<i class=""></i></a>
             </div>
           </div>
 
@@ -110,7 +110,7 @@
               <div class="icon">
                 <i class="fa fa-users"></i>
               </div>
-              <a href="/feltp/statsdetail?data=pending" class="small-box-footer"> <i class="">Info</i></a>
+              <a href="/statsdetail?data=pending" class="small-box-footer"> <i class="">Info</i></a>
             </div>
           </div>
 
@@ -126,7 +126,7 @@
               <div class="icon">
                 <i class="fa fa-users"></i>
               </div>
-              <a href="/feltp/statsdetail?data=unverified" class="small-box-footer">Info <i class=""></i></a>
+              <a href="/statsdetail?data=unverified" class="small-box-footer">Info <i class=""></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -198,7 +198,7 @@
 <script type="text/javascript">
   
 
-$.get('/feltp/stats', function(data){
+$.get('/stats', function(data){
   document.getElementById("alumnis").innerHTML = data['alumni']
   document.getElementById('events').innerHTML = data['events']
   document.getElementById('gal').innerHTML = data['galery']
