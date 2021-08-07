@@ -238,11 +238,27 @@ class LoginSerializers(serializers.Serializer):
 
 
 
-class UserAndProfileSerializer(serializers.ModelSerializer):
-    
+
+class AlldataSerializer(serializers.ModelSerializer):
     
     main_user = UserProfileSerializer(read_only=True)
     job_to_user = JobInfoSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'main_user', 'job_to_user')
+        extra_kwargs = {'password': {'write_only': True}}
+
+
+
+
+
+
+class UserAndProfileSerializer(serializers.ModelSerializer):
+    
+    
+    main_user = UserProfileSerializer(write_only=True)
+    job_to_user = JobInfoSerializer(write_only=True)
     cpassword = serializers.CharField(
         label=_("Confirm password"),
         style={'input_type': 'password'},
@@ -297,6 +313,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         except Exception as e:
             # print(e)
             return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
+        # serializerd = AlldataSerializer(user)
         return user
 
 

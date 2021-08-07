@@ -626,7 +626,7 @@ def login(request):
         email = request.data.get('email')
         user = User.objects.get(email=email)
         queryset = User.objects.filter(email=user)
-        serializered = UserAndProfileSerializer(queryset, many=True)
+        serializered = AlldataSerializer(queryset, many=True)
 
         # user = User.objects.get(user=user, user)
 
@@ -720,7 +720,7 @@ def get_profile(request):
 			# profile.save()
 			# print(profile)
 			queryset = User.objects.filter(email=request.data['email'])
-			serializered = UserAndProfileSerializer(queryset, many=True)
+			serializered = AlldataSerializer(queryset, many=True)
 
 			if profile.email_status=='not verified':
 				print('not verified')
@@ -814,14 +814,9 @@ def v_code(request):
 def statistics(request):
 	all_profile = UserProfile.objects.all()
 	alumni = all_profile.count()
-	# news = New.objects.all().count()
-	# galery = Gallery.objects.all().count()
-	# events = Event.objects.all().count()
 	frontline = all_profile.filter(is_trained_frontline='Yes').count()
 	intermediate = all_profile.filter(is_trained_intermediate='Yes').count()
 	advanced = all_profile.filter(is_trained_advanced='Yes').count()
-	# not_approved = all_profile.filter(status='pending approval').count()
-	# not_verified = all_profile.filter(status='not verified').count()
 
 	context = {'alumni':alumni, 'frontline':frontline, 
 	'intermediate':intermediate, 'advanced':advanced}
@@ -829,7 +824,7 @@ def statistics(request):
 	return Response({"status":status.HTTP_200_OK, "stats": context})
 
 
-class UserAndProfileCreate(ListCreateAPIView):
+class UserAndProfileCreate(CreateAPIView):
 	queryset = User.objects.all()
 	serializer_class = UserAndProfileSerializer
 	#permission_classes = [IsAuthenticated]
@@ -838,7 +833,7 @@ class UserAndProfileCreate(ListCreateAPIView):
 	def list(self, request):
 		# Note the use of `get_queryset()` instead of `self.queryset`
 		queryset = self.get_queryset()
-		serializer = UserAndProfileSerializer(queryset, many=True)
+		serializer = AlldataSerializer(queryset, many=True)
 		return Response({"status":status.HTTP_200_OK, "user": serializer.data})
 
 
