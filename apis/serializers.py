@@ -258,18 +258,18 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
-        print(user)
+        # print(user)
 
         prof = UserProfile.objects.create(**validated_data['main_user'])
         prof.user = user
         prof.save()
-        print(prof)
+        # print(prof)
 
         job = JobInfo.objects.create(**validated_data['job_to_user'])
         job.user = user
         job.user_profile = prof
         job.save()
-        print(job)
+        # print(job)
 
         user.first_name = prof.firstname
         user.last_name = prof.surname
@@ -284,7 +284,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         except Exception as e:
             # print(e)
             return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
-        return Response(user)
+        return user
 
 
 

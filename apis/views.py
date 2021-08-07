@@ -426,7 +426,7 @@ class JobsCreate(CreateAPIView):
 
 #         all data from users to news apis
 class UserDetailViewList(ListAPIView):
-	queryset = User.objects.all()[:100]
+	queryset = User.objects.all()[:50]
 	serializer_class = UserDetailSerializer
 	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
@@ -530,7 +530,7 @@ def verify_code(request):
 
 
 {
-"username":"jmadjanor6@gmail.com",
+"email":"jmadjanor6@gmail.com",
 "password":"jed123456"
 }
 
@@ -565,10 +565,52 @@ def login(request):
                 user.is_active = True
                 user.save()
                 (token, created) = Token.objects.get_or_create(user=user)
-                dest = {'user':'{}'.format(prof.user_id), 'id':'{}'.format(prof.id), 'firstname':'{}'.format(prof.firstname), 'lastname':'{}'.format(prof.surname),  'image':'{}'.format(prof.image),}
+                #dest = {'id':'{}'.format(user.id), 'user':'{}'.format(prof.username), 'firstname':'{}'.format(prof.firstname), 'lastname':'{}'.format(prof.surname),  'image':'{}'.format(prof.image),}
+                # usr = {'id':'{}'.format(user.id), 'user':'{}'.format(prof.username)}
+                job =  JobInfo.objects.get(user=user)
+                # print(job.district)
+                # if job.district == '' or job.district == None:
+                # 	job.district__district_name=None
+                # 	job.district__region_name=None
+                # print(job.region__region_name)
+              
                 return Response({'status': status.HTTP_200_OK,
                                 'Token': token.key,
-                                'user':dest})
+                                'user':'{}'.format(prof.user_id),
+                                'username':'{}'.format(prof.user),
+								'id':'{}'.format(prof.id),
+								'title':'{}'.format(prof.title),
+								'firstname':'{}'.format(prof.firstname),
+								'lastname':'{}'.format(prof.surname),
+								'sex':'{}'.format(prof.sex),
+								'date_of_birth':'{}'.format(prof.date_of_birth),
+								'phone1':'{}'.format(prof.phone1),
+								'phone2':'{}'.format(prof.phone2),
+								'is_trained_frontline':'{}'.format(prof.is_trained_frontline),
+								'cohort_number_frontline':'{}'.format(prof.cohort_number_frontline),
+								'yr_completed_frontline':'{}'.format(prof.yr_completed_frontline),
+								'institution_enrolled_at_frontline':'{}'.format(prof.institution_enrolled_at_frontline),
+								'job_title_at_enroll_frontline':'{}'.format(prof.job_title_at_enroll_frontline),
+								'is_trained_intermediate':'{}'.format(prof.is_trained_intermediate),
+								'yr_completed_intermediate':'{}'.format(prof.yr_completed_intermediate),
+								'institution_enrolled_at_intermediate':'{}'.format(prof.institution_enrolled_at_intermediate),
+								'is_trained_advanced':'{}'.format(prof.is_trained_advanced),
+								'cohort_number_advanced':'{}'.format(prof.cohort_number_advanced),
+								'yr_completed_advanced':'{}'.format(prof.yr_completed_advanced),
+								'institution_enrolled_at_advanced':'{}'.format(prof.institution_enrolled_at_advanced),
+								'image':'{}'.format(prof.image),
+								'email_status':'{}'.format(prof.email_status),
+								'job_title_at_enroll_advanced':'{}'.format(prof.job_title_at_enroll_advanced),
+								'status':'{}'.format(prof.status),
+								'current_institution':job.current_institution,
+								'job_title':'{}'.format(job.job_title),
+								'region':'{}'.format(job.region),
+								'district':'{}'.format(job.district),
+								'level_of_health_system':'{}'.format(job.level_of_health_system),
+								'employment_status':'{}'.format(job.employment_status),
+								'longitude':'{}'.format(job.longitude),
+								'latitude':'{}'.format(job.latitude)
+								})
             else:
                 return Response({'status': status.HTTP_400_BAD_REQUEST,
                                 'Final Verifcation': 'You have not yet been verified by the admin. You may knidly contact him/her to be verified to be logged in.'
