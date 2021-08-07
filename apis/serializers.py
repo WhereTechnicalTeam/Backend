@@ -230,7 +230,7 @@ class LoginSerializers(serializers.Serializer):
 
 class UserAndProfileSerializer(serializers.ModelSerializer):
     
-    status = serializers.CharField(max_length=128, read_only=True)
+    
     main_user = UserProfileSerializer()
     job_to_user = JobInfoSerializer()
     cpassword = serializers.CharField(
@@ -245,7 +245,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'password', 'cpassword', 'main_user', 'job_to_user', 'status')
+        fields = ('id', 'email', 'password', 'cpassword', 'main_user', 'job_to_user')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -276,7 +276,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         user.last_name = prof.surname
         user.save()
 
-        status = 200
+        # status = 200
 
         # Token.objects.create(user=user)
         created = verificationTbl.objects.create(email=validated_data['email'], code=codes())
