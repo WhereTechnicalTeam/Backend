@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from .models import *
 from .serializers import *
-from rest_framework.generics import (ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView, DestroyAPIView, CreateAPIView)
+from rest_framework.generics import (ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView, DestroyAPIView, CreateAPIView, ListCreateAPIView)
 from .permissions import * 
 from rest_framework.permissions import (AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly)
 from django.db.models import Q
@@ -96,6 +96,7 @@ class UserProfileList(ListAPIView):
 		return queryset_list
 
 
+
 class UserProfileDetail(RetrieveAPIView):
 	queryset = UserProfile.objects.all()
 	serializer_class = UserProfileSerializer
@@ -154,12 +155,27 @@ class UserList(ListAPIView):
 		return queryset_list
 
 
+	def list(self, request):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		serializer = UserSerializer(queryset, many=True)
+		return Response({"status":status.HTTP_200_OK, "events": serializer.data})
+
+
 
 class UserDetail(RetrieveAPIView):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
 	lookup_field = 'pk'
 	permission_classes = [IsAuthenticated]
+
+
+	def get(self, request, pk):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		queryset = queryset.get(pk=pk)
+		serializer = UserSerializer(queryset)
+		return Response({"status":status.HTTP_200_OK, "user": serializer.data})
 
 
 class UserUpdate(RetrieveUpdateAPIView):
@@ -185,11 +201,10 @@ class UserUpdate(RetrieveUpdateAPIView):
 			obj.username=username
 			obj.set_password(password)
 			obj.save()
-			return Response("Success, user details updated", status=status.HTTP_201_CREATED)
+			return Response("Success, user details updated", status=status.HTTP_200_OK)
 
 		else:
-			return Response('Passwords must match',
-	                        status=status.HTTP_400_BAD_REQUEST)
+			return Response({"status":status.HTTP_404_BAD_REQEUST, "msg":"Passwords do not match"})
 
 
 class UserDelete(DestroyAPIView):
@@ -232,12 +247,28 @@ class EventsList(ListAPIView):
 		return queryset_list
 
 
+	def list(self, request):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		serializer = NewsSerializer(queryset, many=True)
+		return Response({"status":status.HTTP_200_OK, "events": serializer.data})
+
+
 
 class EventsDetail(RetrieveAPIView):
 	queryset = Event.objects.all()
 	serializer_class = EventSerializer
 	lookup_field = 'pk'
 	permission_classes = [IsAuthenticated]
+
+
+	def get(self, request, pk):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		queryset = queryset.get(pk=pk)
+		serializer = EventSerializer(queryset)
+		return Response({"status":status.HTTP_200_OK, "events": serializer.data})
+
 
 
 class EventsUpdate(RetrieveUpdateAPIView):
@@ -274,11 +305,9 @@ class EventsCreate(CreateAPIView):
 		serializd = EventSerializer(data=validated_data.data)
 		if serializd.is_valid():
 			self.perform_create(serializd)
-			return Response({"status":status.HTTP_200_OK, "news": serializd.data})
+			return Response({"status":status.HTTP_200_OK, "events": serializd.data})
 		else:
-			return Response({
-                'status': 'Bad request'
-            }, status=status.HTTP_404_NOT_FOUND)
+			return Response({"status":status.HTTP_404_NOT_FOUND})
 
 
 
@@ -288,7 +317,7 @@ class EventsCreate(CreateAPIView):
 #         News  Apis
 class NewsList(ListAPIView):
 	serializer_class = NewsSerializer
-	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('content', 'title',)
 
@@ -303,12 +332,27 @@ class NewsList(ListAPIView):
 		return queryset_list
 
 
+	def list(self, request):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		serializer = NewsSerializer(queryset, many=True)
+		return Response({"status":status.HTTP_200_OK, "news": serializer.data})
+
+
 
 class NewsDetail(RetrieveAPIView):
 	queryset = New.objects.all()
 	serializer_class = NewsSerializer
 	lookup_field = 'pk'
 	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+
+
+	def get(self, request, pk):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		queryset = queryset.get(pk=pk)
+		serializer = NewsSerializer(queryset)
+		return Response({"status":status.HTTP_200_OK, "news": serializer.data})
 
 
 class NewsUpdate(RetrieveUpdateAPIView):
@@ -347,9 +391,7 @@ class NewCreate(CreateAPIView):
 			self.perform_create(serializd)
 			return Response({"status":status.HTTP_200_OK, "news": serializd.data})
 		else:
-			return Response({
-                'status': 'Bad request'
-            }, status=status.HTTP_404_NOT_FOUND)
+			return Response({"status":status.HTTP_404_NOT_FOUND})
 
 
 
@@ -371,12 +413,28 @@ class JobsList(ListAPIView):
 		return queryset_list
 
 
+	def list(self, request):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		serializer = JobInfoSerializer(queryset, many=True)
+		return Response({"status":status.HTTP_200_OK, "news": serializer.data})
+
+
 
 class JobsDetail(RetrieveAPIView):
 	queryset = JobInfo.objects.all()
 	serializer_class = JobInfoSerializer
 	lookup_field = 'pk'
 	permission_classes = [IsAuthenticated]
+
+
+	def get(self, request, pk):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		queryset = queryset.get(pk=pk)
+		serializer = JobInfoSerializer(queryset)
+		return Response({"status":status.HTTP_200_OK, "job": serializer.data})
+
 
 
 class JobsUpdate(RetrieveUpdateAPIView):
@@ -446,6 +504,12 @@ class UserDetailViewList(ListAPIView):
 	# 			).distinct()
 	# 	return Response({'data':queryset_list})
 
+	def list(self, request):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		serializer = UserDetailSerializer(queryset, many=True)
+		return Response({"status":status.HTTP_200_OK, "alldata": serializer.data})
+
 
 
 class UserDetailViewDetail(RetrieveAPIView):
@@ -454,6 +518,12 @@ class UserDetailViewDetail(RetrieveAPIView):
 	lookup_field = 'pk'
 	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
+	def get(self, request, pk):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		queryset = queryset.get(pk=pk)
+		serializer = UserDetailSerializer(queryset)
+		return Response({"status":status.HTTP_200_OK, "alldata": serializer.data})
 
 
 
@@ -747,10 +817,17 @@ def statistics(request):
 	return Response({"status":status.HTTP_200_OK, "stats": context})
 
 
-class UserAndProfileCreate(CreateAPIView):
-	# queryset = User.objects.all()
+class UserAndProfileCreate(ListCreateAPIView):
+	queryset = User.objects.all()
 	serializer_class = UserAndProfileSerializer
 	#permission_classes = [IsAuthenticated]
+
+
+	def list(self, request):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset = self.get_queryset()
+		serializer = UserAndProfileSerializer(queryset, many=True)
+		return Response({"status":status.HTTP_200_OK, "user": serializer.data})
 
 
 

@@ -7,6 +7,13 @@
 
 
 
+        var markers = [];
+        var markerCluster;
+        var filterSelect = jQuery('.filter');
+
+        var filters;
+
+
 
     function initialize() {
         var mapOptions = {
@@ -20,22 +27,33 @@
 
         var infowindow = new google.maps.InfoWindow();
 
-        var marker, i;
+        var marker, i, queryjson;
 
         $.get('/feltp/queryjson', function(querydata){
+            queryjson = querydata
+            // alert(queryjson)
+            // alert(querydata[1]['user_profile__is_trained_intermediate'])
 
-            for (i = 0; i < querydata.length; i++) {  
+            for (i = 0; i < queryjson.length; i++) {
+              queryjson[i]['user_profile__is_trained_frontline'] = 'frontline'
+              queryjson[i]['user_profile__is_trained_intermediate'] = 'intermediate'
+              queryjson[i]['user_profile__is_trained_advanced'] = 'advanced'
+              // alert(queryjson[i]['user_profile__is_trained_intermediate'])
           marker = new google.maps.Marker({
-            position: new google.maps.LatLng(querydata[i]['latitude'], querydata[i]['longitude']),
+            position: new google.maps.LatLng(queryjson[i]['latitude'], queryjson[i]['longitude']),
             map: map
           });
 
-          const contentString="<div><p>Institution: "+ querydata[i]['current_institution']+"</p><p>Region:  "+ querydata[i]['region__region_name']+"</p><p>District:  "+ querydata[i]['district__district_name']+"</p></div>"
+        markerCluster = new MarkerClusterer(map, markers, {ignoreHiddenMarkers: true, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+        markers.push(marker);
+        // alert(markers)
+          const contentString="<div><p>Institution: "+ queryjson[i]['current_institution']+"</p><p>Region:  "+ queryjson[i]['region__region_name']+"</p><p>District:  "+ queryjson[i]['district__district_name']+"</p></div>"
 
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
               infowindow.setContent(contentString);
               infowindow.open(map, marker);
+              map.panTo(this.getPosition());
             }
           })(marker, i));
        
@@ -45,63 +63,78 @@
 
         
 
-         // Create the search box and link it to the UI element.
-           // Create the search box and link it to the UI element.
-  const input = document.getElementById("pac-input");
-  const searchBox = new google.maps.places.SearchBox(input);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-  // Bias the SearchBox results towards current map's viewport.
-  map.addListener("bounds_changed", () => {
-    searchBox.setBounds(map.getBounds());
-  });
-  let markers = [];
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  searchBox.addListener("places_changed", () => {
-    const places = searchBox.getPlaces();
 
-    if (places.length == 0) {
-      return;
-    }
-    // Clear out the old markers.
-    markers.forEach((marker) => {
-      marker.setMap(null);
-    });
-    markers = [];
-    // For each place, get the icon, name and location.
-    const bounds = new google.maps.LatLngBounds();
-    places.forEach((place) => {
-      if (!place.geometry || !place.geometry.location) {
-        console.log("Returned place contains no geometry");
-        return;
-      }
-      const icon = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25),
-      };
-      // Create a marker for each place.
-      markers.push(
-        new google.maps.Marker({
-          map,
-          icon,
-          title: place.name,
-          position: place.geometry.location,
-        })
-      );
 
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    });
-    map.fitBounds(bounds);
-  });
-       
+
+
+        function clusterManager(array) {
+            markerCluster.clearMarkers();
+            
+            for (i=0; i < array.length; i++) {
+              markerCluster.addMarker(array[i]);
+            }
+        }
+
+
+        //@todo add inputsearch
+        function newFilter() {
+          
+            var filteredMarkers = [];
+          
+            $.each(markers, function(index, markerl) { // on parcourt les markers
+              //console.log('maker ', index);
+              
+              $.each(filters, function(i, categoryFilter) { // on parcourt les différentes catégories présentes dans les filtres
+            
+                if (marker['user_profile__is_trained_frontline'] == categoryFilter) {//si le marker est l'une des categories, on l'ajoute au filteredMarkers
+                  filteredMarkers.push(markerl);
+                }
+                if (marker['user_profile__is_trained_intermediate'] == categoryFilter) {//si le marker est l'une des categories, on l'ajoute au filteredMarkers
+                  filteredMarkers.push(markerl);
+                }
+                if (marker['user_profile__is_trained_advanced']== categoryFilter) {//si le marker est l'une des categories, on l'ajoute au filteredMarkers
+                  filteredMarkers.push(markerl);
+                }
+              });
+            });
+          //console.log('filteredMarkers : ',filteredMarkers);
+            
+            clusterManager(filteredMarkers);
+        }
+
+          
+
+
+        $(document).ready(function() {
+          
+            
+          $('.check-filters input').on('change', function(){
+            filters = [];
+            $('.check-filters input:checked').each(function(index, elem) {
+              filters.push($(elem).val());
+            });
+            newFilter(filters);
+            // console.log('filters selected : ', filters);
+            // alert(filters)
+            
+            //si tous les filtres sont cochés
+            if($('.check-filters input').length == $('.check-filters input:checked').length) {
+              //console.log('tous les filtres sont cochés', );
+              $('.js-check-all').addClass('active');
+            } else {
+              //console.log('Pas tous cochés');
+              $('.js-check-all').removeClass('active');
+            }
+          });
+          
+          $('.js-check-all').on('click', function(e){
+            var $obj = $(e.currentTarget);
+            $obj.addClass('active');
+            $('.check-filters input').prop('checked', 'true').first().change();
+          });
+
+        });
+
 
         // infowindow.open(map, marker);
 

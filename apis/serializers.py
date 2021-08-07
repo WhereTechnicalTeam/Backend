@@ -78,7 +78,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['title', 'surname', 'firstname', 'sex', 'phone1', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 
+        fields = ['id', 'title', 'surname', 'firstname', 'sex', 'phone1', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 
         'institution_enrolled_at_frontline', 'job_title_at_enroll_frontline', 'is_trained_intermediate', 'cohort_number_intermediate', 'yr_completed_intermediate', 
         'institution_enrolled_at_intermediate', 'job_title_at_enroll_intermediate', 'is_trained_advanced', 'cohort_number_advanced', 'yr_completed_advanced', 
         'institution_enrolled_at_advanced', 'image', 'email_status', 'job_title_at_enroll_advanced']
@@ -230,8 +230,9 @@ class LoginSerializers(serializers.Serializer):
 
 class UserAndProfileSerializer(serializers.ModelSerializer):
     
-    main_user = UserProfileSerializer(write_only=True)
-    job_to_user = JobInfoSerializer(write_only=True)
+    status = serializers.CharField(max_length=128, read_only=True)
+    main_user = UserProfileSerializer()
+    job_to_user = JobInfoSerializer()
     cpassword = serializers.CharField(
         label=_("Confirm password"),
         style={'input_type': 'password'},
@@ -244,7 +245,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'cpassword', 'main_user', 'job_to_user')
+        fields = ('id', 'email', 'password', 'cpassword', 'main_user', 'job_to_user', 'status')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -275,6 +276,8 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         user.last_name = prof.surname
         user.save()
 
+        status = 200
+
         # Token.objects.create(user=user)
         created = verificationTbl.objects.create(email=validated_data['email'], code=codes())
         try:
@@ -298,7 +301,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('main_user', 'job_to_user', 'news_to_user')
+        fields = ('id', 'main_user', 'job_to_user', 'news_to_user')
 
     def update(self, instance, validated_data):
         job = validated_data.pop('job_to_user')
