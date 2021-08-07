@@ -426,7 +426,7 @@ class JobsCreate(CreateAPIView):
 
 #         all data from users to news apis
 class UserDetailViewList(ListAPIView):
-	queryset = User.objects.all()[:50]
+	queryset = User.objects.all()[:20]
 	serializer_class = UserDetailSerializer
 	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
