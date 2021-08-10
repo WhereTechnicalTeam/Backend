@@ -319,7 +319,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         user.last_name = prof.surname
         user.save()
 
-
+        ans = User.objects.get(pk=user.id)
         # Token.objects.create(user=user)
         created = verificationTbl.objects.create(email=validated_data['email'], code=codes())
         try:
@@ -330,7 +330,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
             # print(e)
             return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
         # serializerd = AlldataSerializer(user)
-        return validated_data
+        return ans
 
 
 
