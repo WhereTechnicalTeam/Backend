@@ -89,6 +89,8 @@
 
                 <div class="card-footer">
                   <button type="button" id="sub" class="btn btn-primary">Submit</button>
+                 <!--  <a href="{% url 'admin_create_event' %}" class="btn btn-primary">Submit</a>
+ -->
                 </div>
               </form>
               
@@ -136,20 +138,52 @@
 
   $(document).ready(function(){
 
-if($('#add').val() =='done'){
-    Swal.fire('Saved', 'Event has been updated', 'success')
-  }
+// if($('#add').val() =='done'){
+//     Swal.fire('Saved', 'Event has been updated', 'success')
+//   }
 
 
-  $("#sub").click(function(e){
-    e.preventDefault()
-    $('#event').submit();
-  })
+//   $("#sub").click(function(e){
+//     e.preventDefault()
+//     $('#event').submit();
+//   })
 
 
-  if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
+//   if ( window.history.replaceState ) {
+//         window.history.replaceState( null, null, window.location.href );
+//     }
+
+
+$("#sub").click(function(e){
+    e.preventDefault();
+    var data = new FormData($('#events').get(0));
+    // console.log(data)
+
+
+var token = '{{csrf_token}}';
+
+    $.ajax({
+        url: "/eventdetail/{{edit.pk}}/edit", // same url 'action' in form
+        type: 'POST',
+        headers: { "X-CSRFToken": token },
+        data: data,
+        contentType: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if(data=="done"){
+
+                Swal.fire('Saved', 'News has been created', 'success')
+                .then(function () {
+                        window.location.href="/eventdetail/{{edit.pk}}/"
+                    
+                })
+
+            }
+        }
+    });
+    return false;
+})
 
 
   $(function () {

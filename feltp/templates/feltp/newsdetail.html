@@ -126,11 +126,11 @@ $('#edit').click(function(e){
 
 $('#delete').click(function(e){
      e.preventDefault();
-     $.get('/feltp/newsdetail/{{obj.id}}/delete', function(data){
+     $.get('/newsdetail/{{obj.id}}/delete', function(data){
         if (data == 'Deleted'){
              Swal.fire("Deleted!", 'Data has successfully been deleted.', "success")
             .then(function () {
-                        window.location.href="/feltp/adminnews"
+                        window.location.href="/adminnews"
                     
                 })
         }
@@ -140,7 +140,7 @@ $('#delete').click(function(e){
 
 $('#back').click(function(e){
      e.preventDefault();
-    document.location.href = '/feltp/adminnews'
+    document.location.href = '/adminnews'
   });
 
   $(function () {

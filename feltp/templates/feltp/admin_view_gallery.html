@@ -76,6 +76,8 @@
 
                 <div class="card-footer">
                   <button type="button" id="sub" class="btn btn-primary">Submit</button>
+                 <!-- <a href="{% url 'admin_create_gallery' %}" class="btn btn-primary">Submit</a> -->
+
                 </div>
               </form>
               
@@ -102,24 +104,51 @@
 <script type="text/javascript">
   $(document).ready(function(){
 
-if($('#add').val() =='done'){
-    Swal.fire('Saved', 'Gallery has been updated', 'success')
-  }
+// if($('#add').val() =='done'){
+//     Swal.fire('Saved', 'Gallery has been updated', 'success')
+//   }
 
 
-  $("#sub").click(function(e){
-    e.preventDefault()
-    $('#gallery').submit();
-  })
+//   $("#sub").click(function(e){
+//     e.preventDefault()
+//     $('#gallery').submit();
+//   })
 
 
- 
+//   if ( window.history.replaceState ) {
+//         window.history.replaceState( null, null, window.location.href );
+//     }
 
 
-  if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
+$("#sub").click(function(e){
+    e.preventDefault();
+    var data = new FormData($('#events').get(0));
+    // console.log(data)
 
+var token = '{{csrf_token}}';
+
+    $.ajax({
+        url: "/gallerydetail/{{edit.pk}}/edit", // same url 'action' in form
+        type: 'POST',
+        headers: { "X-CSRFToken": token },
+        data: data,
+        contentType: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if(data=="done"){
+
+                Swal.fire('Saved', 'News has been created', 'success')
+                .then(function () {
+                        window.location.href="/gallerydetail/{{edit.pk}}/"
+                    
+                })
+
+            }
+        }
+    });
+    return false;
+})
 
  })
 </script>

@@ -113,29 +113,29 @@ REST_FRAMEWORK = {
 }
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'feltp',
-        'USER': 'appuser',
-        'PASSWORD': 'EwpvKyq8aFse3TJ9',
-        'HOST': 'wheregeospatial.com',
-        'PORT': 6432,
-    }
-}
-
-
-
 # DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'HOST': 'localhost',
-#             'PORT': '5432',
-#             'NAME': 'feltptRIAL',
-#             'USER': 'postgres',
-#             'PASSWORD': 'postgres1234',
-#         }
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'feltp',
+#         'USER': 'appuser',
+#         'PASSWORD': 'EwpvKyq8aFse3TJ9',
+#         'HOST': 'wheregeospatial.com',
+#         'PORT': 6432,
 #     }
+# }
+
+
+
+DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'HOST': 'localhost',
+            'PORT': '5432',
+            'NAME': 'feltptRIAL',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres1234',
+        }
+    }
 
     
 

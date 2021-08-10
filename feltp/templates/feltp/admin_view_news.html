@@ -81,7 +81,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="type" class="btn btn-primary" id="sub">Submit</button>
+                  <button type="button" class="btn btn-primary" id="sub">Submit</button>
                 </div>
               </form>
               
@@ -109,15 +109,45 @@
 <script type="text/javascript">
   $(document).ready(function(){
 
-if($('#add').val() =='done'){
-    Swal.fire('Saved', 'News has been updated', 'success')
-  }
+// if($('#add').val() =='done'){
+//     Swal.fire('Saved', 'News has been updated', 'success')
+//   }
 
 
-  $("#sub").click(function(e){
-    e.preventDefault()
-    $('#news').submit();
-  })
+//   $("#sub").click(function(e){
+//     e.preventDefault()
+//     $('#news').submit();
+//   })
+
+
+
+$("#sub").click(function(e){
+    e.preventDefault();
+    var data = new FormData($('#news').get(0));
+    // console.log(data)
+
+    $.ajax({
+        url: "/newsdetail/{{edit.pk}}/edit", // same url 'action' in form
+        type: 'POST',
+        data: data,
+        contentType: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if(data=="done"){
+
+                Swal.fire('Saved', 'News has been created', 'success')
+                .then(function () {
+                        window.location.href="/newsdetail/{{edit.pk}}/"
+                    
+                })
+
+            }
+        }
+    });
+    return false;
+})
+
 
 
   $(function () {
@@ -139,46 +169,10 @@ if($('#add').val() =='done'){
   })
 
 
-  if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
+  // if ( window.history.replaceState ) {
+  //       window.history.replaceState( null, null, window.location.href );
+  //   }
   
-//   var token = '{{csrf_token}}';
-
-//   var data = new FormData($("#news").get(0))
-//   var file = $('#pic').val()
-//   data.append("image", file);
-//   $("#sub").click(function(e){
-//     e.preventDefault();    
-//     alert($('#pic').val())
-//     $.ajax({
-//         url  : '/feltp/admincreatenews',
-//         type : 'POST',
-//         headers: { "X-CSRFToken": token },
-//         processData: false,
-//         contentType: false,
-//         data : data,
-//         success : function(data) {
-//            if(data=="done"){
-
-//                 swal("Saved!", "The record has been successfully saved!", "success")
-//                 .then(function () {
-//                         window.location.href="/login/"
-                    
-//                 })
-
-//             }
-
-//             else {
-
-//                 alert('failed');
-//             }
-            
-//         }
-//     });
-
-//     return false;
-// })
 
 
  })

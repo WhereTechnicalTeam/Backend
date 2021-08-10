@@ -48,7 +48,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <form method="POST" enctype="multipart/form-data" id='news'>
+              <form action="." method="POST" enctype="multipart/form-data" id='news'>
                 {% csrf_token %}
                 <div class="card-body">
                   <div class="form-group">
@@ -81,7 +81,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="type" class="btn btn-primary" id="sub">Submit</button>
+                  <button type="button" class="btn btn-primary" id="sub">Submit</button>
+                   <!-- <a href="{% url 'admin_create_news' %}" class="btn btn-primary">Submit</a> -->
                 </div>
               </form>
               
@@ -104,21 +105,51 @@
 
 {% block js %}
 
-<!-- <script src="/static/feltp/plugins/jquery/jquery.min.js"></script> -->
-
 
 <script type="text/javascript">
   $(document).ready(function(){
 
-if($('#add').val() =='done'){
-    Swal.fire('Saved', 'News has been created', 'success')
-  }
+// if($('#add').val() =='done'){
+//     Swal.fire('Saved', 'News has been created', 'success')
+//   }
 
 
-  $("#sub").click(function(e){
-    e.preventDefault()
-    $('#news').submit();
-  })
+  // $("#sub").click(function(e){
+  //   e.preventDefault()
+  //   $('#news').submit();
+  // })
+
+
+$("#sub").click(function(e){
+    e.preventDefault();
+    var data = new FormData($('#news').get(0));
+    // console.log(data)
+    var token = '{{csrf_token}}';
+
+    $.ajax({
+        url: "/admincreatenews", // same url 'action' in form
+        type: 'POST',
+        headers: { "X-CSRFToken": token },
+        data: data,
+        contentType: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if(data=="done"){
+
+                Swal.fire('Saved', 'News has been created', 'success')
+                .then(function () {
+                        window.location.href="/admincreatenews"
+                    
+                })
+
+            }
+        }
+    });
+    return false;
+})
+
+
 
 
   $(function () {
@@ -140,9 +171,9 @@ if($('#add').val() =='done'){
   })
 
 
-  if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
+  // if ( window.history.replaceState ) {
+  //       window.history.replaceState( null, null, window.location.href );
+  //   }
   
 //   var token = '{{csrf_token}}';
 

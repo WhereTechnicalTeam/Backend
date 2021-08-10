@@ -76,6 +76,7 @@
 
                 <div class="card-footer">
                   <button type="button" id="sub" class="btn btn-primary">Submit</button>
+                 <!--  <a href="{% url 'admin_create_gallery' %}" class="btn btn-primary">Submit</a> -->
                 </div>
               </form>
               
@@ -102,64 +103,56 @@
 <script type="text/javascript">
   $(document).ready(function(){
 
-if($('#add').val() =='done'){
-    Swal.fire('Saved', 'Gallery has been updated', 'success')
-  }
+// if($('#add').val() =='done'){
+//     Swal.fire('Saved', 'Gallery has been updated', 'success')
+//   }
 
 
-  $("#sub").click(function(e){
-    e.preventDefault()
-    $('#gallery').submit();
-  })
+  // $("#sub").click(function(e){
+  //   e.preventDefault()
+  //   $('#gallery').submit();
+  // })
 
 
-// $("#sub").click(function(){
+$("#sub").click(function(e){
+    e.preventDefault();
+    var data = new FormData($('#gallery').get(0));
+    // console.log(data)
+    
+var token = '{{csrf_token}}';
 
-//      var token = '{{csrf_token}}';
+    $.ajax({
+        url: "/admincreategallery", // same url 'action' in form
+        type: 'POST',
+        headers: { "X-CSRFToken": token },
+        data: data,
+        contentType: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if(data=="done"){
 
-//     $.ajax({
-//         url  : '/feltp/admincreategallery',
-//         type : 'POST',
-//         data : $('form').serialize(),
-//         headers: { "X-CSRFToken": token },
-//         processData: false,
-//         contentType: false,
-//         success : function(data) {
-//            if(data=="done"){
-
-//                 swal("Saved!", "The record has been successfully saved!", "success")
-//                 .then(function () {
-//                         window.location.href="/feltp/admincreategallery"
+                Swal.fire('Saved', 'Gallery has been updated', 'success')
+                .then(function () {
+                        window.location.href="/admincreategallery"
                     
-//                 })
+                })
 
-//             }
-//             else if(data=="User already Exists"){
-//                 swal("Error!", "User Already Exists!", "error")
-//             }
-//             else if(data=="User Created, but email not sent. An error occured."){
-//                 swal("Error!", "User Created, but email not sent. An error occured! Contact admin with your email, business name and full name", "error")
-//             }
+            }
+        }
+    });
+    return false;
+})
 
-//             else {
-
-//                 alert('failed');
-//             }
-            
-//         }
-//     });
-
-//     return false;
-// } )
 
 
 
  
 
 
-  if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
+  // if ( window.history.replaceState ) {
+  //       window.history.replaceState( null, null, window.location.href );
+  //   }
 
 
  })

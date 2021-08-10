@@ -17,12 +17,25 @@
 	<link href="/static/feltp/css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-dFHYjTqEVLndbN2gdvXsx09jfJHmNc8&callback=myMap"></script>    
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		<script type="text/javascript" src="/static/feltp/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/feltp/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/feltp/js/bootstrap.min.js"></script>
+<!--start slider -->
+    <link rel="stylesheet" href="/static/feltp/css/fwslider.css" media="all">
+    <script src="/static/feltp/js/jquery-ui.min.js"></script>
+    <script src="/static/feltp/js/css3-mediaqueries.js"></script>
+    <script src="/static/feltp/js/fwslider.js"></script>
+<!--end slider -->
+<!-- must have -->
+<link href="/static/feltp/css/allinone_carousel.css" rel="stylesheet" type="text/css">
+<link href="static/feltp/css/owl.carousel.css" rel="stylesheet">
+<script src="/static/feltp/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<script src="/static/feltp/js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+<script src="/static/feltp/js/allinone_carousel.js" type="text/javascript"></script>
+<!--[if IE]><script src="js/excanvas.compiled.js" type="text/javascript"></script><![endif]-->
+<!-- must have -->
 
-
-	<!--[if lt IE 9]>
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
 </head>
 <body>
 <header>
@@ -331,16 +344,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div class="single-gl hosting design col-md-2  col-sm-3">
-					<img src="/static/feltp/img/img4.jpg" alt="">
-
-					<div class="gl-overlay">
-						<div class="caption">
-							<a href="/static/feltp/img/img4.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
-							
-						</div>
-					</div>
-				</div> -->
+				
 				<div class="single-gl design web col-md-2 col-sm-3">
 					<img src="/static/feltp/img/img5.jpg" alt="">
 
@@ -361,26 +365,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div class="single-gl app theme col-md-2 col-sm-3">
-					<img src="/static/feltp/img/img7.jpg" alt="">
-
-					<div class="gl-overlay">
-						<div class="caption">
-							<a href="/static/feltp/img/img7.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
-							
-						</div>
-					</div>
-				</div> -->
-				<!-- <div class="single-gl hosting web col-md-2 col-sm-3">
-					<img src="/static/feltp/img/img8.jpg" alt="">
-
-					<div class="gl-overlay">
-						<div class="caption">
-							<a href="/static/feltp/img/img8.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
-							
-						</div>
-					</div>
-				</div> -->
+				
 				<div class="single-gl app col-md-2 col-sm-3">
 					<img src="/static/feltp/img/img9.jpg" alt="">
 
@@ -391,16 +376,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div class="single-gl app theme col-md-2 col-sm-3">
-					<img src="/static/feltp/img/img10.jpg" alt="">
-
-					<div class="gl-overlay">
-						<div class="caption">
-							<a href="/static/feltp/img/img10.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
-							
-						</div>
-					</div>
-				</div> -->
+				
 				<div class="single-gl app theme col-md-2 col-sm-3">
 					<img src="/static/feltp/img/img11.jpg" alt="">
 
@@ -421,16 +397,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div class="single-gl app theme col-md-2 col-sm-3">
-					<img src="/static/feltp/img/img13.jpg" alt="">
-
-					<div class="gl-overlay">
-						<div class="caption">
-							<a href="/static/feltp/img/img13.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
-							
-						</div>
-					</div>
-				</div> -->
+				
 				<div class="single-gl app theme col-md-2 col-sm-3">
 					<img src="/static/feltp/img/img14.jpg" alt="">
 
@@ -696,7 +663,160 @@ $(document).ready(function() {
 
  });
 </script>
+	<script>
+		jQuery(function() {
 
+			jQuery('#allinone_carousel_charming').allinone_carousel({
+				skin: 'charming',
+				width: 990,
+				height: 454,
+				responsive:true,
+				autoPlay: 3,
+				resizeImages:true,
+				autoHideBottomNav:false,
+				showElementTitle:false,
+				verticalAdjustment:50,
+				showPreviewThumbs:false,
+				//easing:'easeOutBounce',
+				numberOfVisibleItems:5,
+				nextPrevMarginTop:23,
+				playMovieMarginTop:0,
+				bottomNavMarginBottom:-10
+			});		
+		});
+	</script>
+<!-- Owl Carousel Assets -->
+
+<script src="static/feltp/js/owl.carousel.js">
+	
+</script>
+		<script>
+			$(document).ready(function() {
+
+				$("#owl-demo").owlCarousel({
+					items : 4,
+					lazyLoad : true,
+					autoPlay : true,
+					navigation : true,
+					navigationText : ["", ""],
+					rewindNav : false,
+					scrollPerPage : false,
+					pagination : false,
+					paginationNumbers : false,
+				});
+
+			});
+		</script>
+		<!-- //Owl Carousel Assets -->
+<!-- start circle -->
+<script>
+(function($){
+	$.fn.percentPie = function(options){
+
+		var settings = $.extend({
+			width: 100,
+			trackColor: "EEEEEE",
+			barColor: "E2534B",
+			barWeight: 30,
+			startPercent: 0,
+			endPercent: 1,
+			fps: 60
+		}, options);
+
+		this.css({
+			width: settings.width,
+			height: settings.width
+		});
+
+		var	that = this,
+			hoverPolice = false,
+			canvasWidth = settings.width,
+			canvasHeight = canvasWidth,
+			id = $('canvas').length,
+			canvasElement = $('<canvas id="'+ id +'" width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>'),
+			canvas = canvasElement.get(0).getContext("2d"),
+			centerX = canvasWidth/2,
+			centerY = canvasHeight/2,
+			radius = settings.width/2 - settings.barWeight/2;
+			counterClockwise = false,
+			fps = 1000 / settings.fps,
+			update = .01;
+			this.angle = settings.startPercent;
+
+		this.drawArc = function(startAngle, percentFilled, color){
+			var drawingArc = true;
+			canvas.beginPath();
+			canvas.arc(centerX, centerY, radius, (Math.PI/180)*(startAngle * 360 - 90), (Math.PI/180)*(percentFilled * 360 - 90), counterClockwise);
+			canvas.strokeStyle = color;
+			canvas.lineWidth = settings.barWeight;
+			canvas.stroke();
+			drawingArc = false;
+		}
+
+		this.fillChart = function(stop){
+			var loop = setInterval(function(){
+				hoverPolice = true;
+				canvas.clearRect(0, 0, canvasWidth, canvasHeight);
+
+				that.drawArc(0, 360, settings.trackColor);
+				that.angle += update;
+				that.drawArc(settings.startPercent, that.angle, settings.barColor);
+
+				if(that.angle > stop){
+					clearInterval(loop);
+					hoverPolice = false;
+				}
+			}, fps);
+		}
+
+		this.mouseover(function(){
+			if(hoverPolice == false){
+				that.angle = settings.startPercent;
+				that.fillChart(settings.endPercent);
+			}
+		});
+
+		this.fillChart(settings.endPercent);
+		this.append(canvasElement);
+		return this;
+	}
+}(jQuery));
+
+$(document).ready(function() {
+
+	$('.google').percentPie({
+		width: 100,
+		trackColor: "E2534B",
+		barColor: "76C7C0",
+		barWeight: 20,
+		endPercent: .9,
+		fps: 60
+	});
+  
+  $('.moz').percentPie({
+		width: 100,
+		trackColor: "E2534B",
+		barColor: "76C7C0",
+		barWeight: 20,
+		endPercent: .75,
+		fps: 60
+	});
+  
+  $('.safari').percentPie({
+		width: 100,
+		trackColor: "E2534B",
+		barColor: "#76C7C0",
+		barWeight: 20,
+		endPercent: .5,
+		fps: 60
+	});
+    
+});
+</script>
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
 
 </body>
 </html>
