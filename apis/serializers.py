@@ -300,7 +300,9 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
-        # print(user)
+        print(user.id)
+
+        # newuser = User.objects
 
         prof = UserProfile.objects.create(**validated_data['main_user'])
         prof.user = user
@@ -328,7 +330,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
             # print(e)
             return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
         # serializerd = AlldataSerializer(user)
-        return user
+        return validated_data
 
 
 
