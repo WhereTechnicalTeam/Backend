@@ -48,9 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'xhtml2pdf',
-    # 'app_homepage.apps.AppHomepageConfig',
-    # 'app_users.apps.AppUsersConfig',
-    # 'app_contacts.apps.AppContactsConfig',
     'allauth',
     # 'allauth.account',
     # 'allauth.socialaccount',

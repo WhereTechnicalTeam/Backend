@@ -22,4 +22,5 @@ deploy:
   on:
     branch: master
   api_key: "$HEROKU_AUTH_TOKEN"
-  
+  after_deploy:
+  - ssh -t $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_DIR && supervisorctl restart feltp"

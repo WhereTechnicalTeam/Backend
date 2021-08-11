@@ -18,7 +18,8 @@ oauthlib==3.1.1
 Pillow==8.3.0
 psycopg2-binary==2.8.6
 pycparser==2.20
-PyJWT==2.1.0
+djangorestframework-jwt
+PyJWT
 PyPDF2==1.26.0
 python-bidi==0.4.2
 python3-openid==3.2.0
