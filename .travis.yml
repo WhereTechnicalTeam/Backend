@@ -22,3 +22,4 @@ deploy:
   on:
     branch: master
   api_key: "$HEROKU_AUTH_TOKEN"
+
