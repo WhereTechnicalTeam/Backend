@@ -18,8 +18,7 @@ before_deploy:
 - echo -e "Host ${DEPLOY_HOST}\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 deploy:
   provider: script
-  script: rsync --rsync-path="sudo rsync" --quiet -rvz $TRAVIS_BUILD_DIR/ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_DIR
+  script: rsync  --quiet -rvz $TRAVIS_BUILD_DIR/ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_DIR
   on:
     branch: master
   api_key: "$HEROKU_AUTH_TOKEN"
-
