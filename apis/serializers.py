@@ -299,10 +299,11 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
             username=validated_data['email']
         )
         user.set_password(validated_data['password'])
+        print(validated_data['main_user'])
+        user.first_name = validated_data['main_user']['firstname']
+        user.last_name = validated_data['main_user']['surname']
         user.save()
-        print(user.id)
-
-        # newuser = User.objects
+        # print(user.id)
 
         prof = UserProfile.objects.create(**validated_data['main_user'])
         prof.user = user
@@ -315,22 +316,16 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         job.save()
         # print(job)
 
-        user.first_name = prof.firstname
-        user.last_name = prof.surname
-        user.save()
-
-        ans = User.objects.get(pk=user.id)
         # Token.objects.create(user=user)
         created = verificationTbl.objects.create(email=validated_data['email'], code=codes())
         try:
             send_mail('Your Verifcation Code',
                 """Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [validated_data['email']],)
-            #return Response({"email_status": prof.email_status, "code":"A verification code has been sent to your email", "profile":model_to_dict(profile), "status":status.HTTP_200_OK})
         except Exception as e:
             # print(e)
-            return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
+            raise serializers.ValidationError("Could not send info to email, an error occured. Contact admin for verification.")
         # serializerd = AlldataSerializer(user)
-        return ans
+        return user
 
 
 

@@ -737,6 +737,37 @@ class UserAndProfileCreate(CreateAPIView):
 
 	def perform_create(self, serializer):
 		serializer.save()
+
+
+
+# # APIView Class defines the view behavior manually for the API,
+# # and also appropriate for use when there is some intermediate business
+# # logic to run before saving data
+# class UserAndProfileCreate(APIView):
+# 	"""
+#     Retrieve all, and create new.
+#     """
+# 	# permission_classes = (permissions.DjangoModelPermissions,)
+# 	serializer_class = UserAndProfileSerializer
+# 	queryset = User.objects.none()
+
+# 	# # /user list
+# 	# def get(self, request, format=None):
+# 	# 	users = User.objects.all() #This can also be a Geodjango query operation
+# 	# 	serializer = UserAndProfileSerializer(users, many=True)
+# 	# 	return Response(serializer.data)
+
+# 	# /user create
+# 	def post(self, request, format=None):
+# 		serializer = UserAndProfileSerializer(data=request.data)
+# 		if serializer.is_valid():
+
+# 			# Additional business logic code goes here
+
+# 			serializer.save()			
+# 			return Response(serializer.data, status=status.HTTP_201_CREATED)
+# 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 	
 
 
