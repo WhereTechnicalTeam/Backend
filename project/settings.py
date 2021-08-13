@@ -114,10 +114,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'feltp',
-        'USER': 'appuser',
-        'PASSWORD': 'EwpvKyq8aFse3TJ9',
-        'HOST': 'wheregeospatial.com',
-        'PORT': 6432,
+        'USER': os.environ.get('FELTP_DB_USER'),
+        'PASSWORD': os.environ.get('FELTP_DB_USER_PASSWORD'),
+        'HOST': os.environ.get('FELTP_DB_HOST'),
+        'PORT': os.environ.get('FELTP_DB_PORT'),
     }
 }
 
