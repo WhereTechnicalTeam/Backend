@@ -116,8 +116,8 @@ DATABASES = {
         'NAME': 'feltp',
         'USER': 'appuser',
         'PASSWORD': 'EwpvKyq8aFse3TJ9',
-        'HOST': 'localhost',
-        'PORT': 6432,
+        'HOST': 'wheregeospatial.com',
+        'PORT': '6432',
     }
 }
 
