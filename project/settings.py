@@ -113,7 +113,7 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ.get("FELTP_DB"),
+        'NAME': 'feltp',
         'USER': 'appuser',
         'PASSWORD': 'EwpvKyq8aFse3TJ9',
         'HOST': 'wheregeospatial.com',
