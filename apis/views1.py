@@ -514,40 +514,21 @@ class UserDetailViewDetail(RetrieveAPIView):
 
 
 
-@api_view(["GET", "POST"])
-def tokenValidate(request):
-	data = request.data['token']
-	if Token.objects.filter(pk=data).exists():
-		return Response({"status":status.HTTP_200_OK, "token" : "true"})
-	return JsonResponse({"status":status.HTTP_404_NOT_FOUND, "token" : "false"})
 
 
 
-
-
-@api_view(["GET", "POST"])
-def logout_user(request):
-    # simply delete the token to force a login
-    print(request.data['token'])
-    data = request.data['token']
-    Token.objects.get(pk=data).delete()
-    return JsonResponse({"status":status.HTTP_200_OK, "logout" : "true"})
-
-
-
-
-# class Logout(APIView):
-#     def get(self, request, format=None):
-#         # simply delete the token to force a login
-#         request.user.auth_token.delete()
-#         return Response({"status":status.HTTP_200_OK, "logout" : "true"})
+class Logout(APIView):
+    def get(self, request, format=None):
+        # simply delete the token to force a login
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 
 @api_view(['POST'])
 def verify_code(request):
 	print(request.data['code'])
-	# print(request.data)
+	print(request.data)
 
 	try:
 		query = verificationTbl.objects.get(code__contains=request.data['code'])
@@ -753,8 +734,39 @@ class UserAndProfileCreate(CreateAPIView):
 		return Response({"status":status.HTTP_200_OK, "user": serializer.data})
 
 
+
 	def perform_create(self, serializer):
-		return serializer.save()
+		serializer.save()
+
+
+
+# # APIView Class defines the view behavior manually for the API,
+# # and also appropriate for use when there is some intermediate business
+# # logic to run before saving data
+# class UserAndProfileCreate(APIView):
+# 	"""
+#     Retrieve all, and create new.
+#     """
+# 	# permission_classes = (permissions.DjangoModelPermissions,)
+# 	serializer_class = UserAndProfileSerializer
+# 	queryset = User.objects.none()
+
+# 	# # /user list
+# 	# def get(self, request, format=None):
+# 	# 	users = User.objects.all() #This can also be a Geodjango query operation
+# 	# 	serializer = UserAndProfileSerializer(users, many=True)
+# 	# 	return Response(serializer.data)
+
+# 	# /user create
+# 	def post(self, request, format=None):
+# 		serializer = UserAndProfileSerializer(data=request.data)
+# 		if serializer.is_valid():
+
+# 			# Additional business logic code goes here
+
+# 			serializer.save()			
+# 			return Response(serializer.data, status=status.HTTP_201_CREATED)
+# 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 	
 

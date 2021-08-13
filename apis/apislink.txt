@@ -44,6 +44,10 @@ Statistics
 /api/statistics
 
 
+Token Validation
+/api/tokenvalidate
+
+
 
 All the fields currently have no required fields except for the username, email and password.
 

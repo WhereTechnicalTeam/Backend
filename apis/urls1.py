@@ -29,8 +29,7 @@ urlpatterns = [
 
    #    login
     path('login', views.login, name='logins'),
-    # path('logout', Logout.as_view(), name='logout'),
-    path('logout', views.logout_user, name='logout'),
+    path('logout', Logout.as_view(), name='logout'),
     #path('logins', LoginAPIView.as_view(), name='log'),
 
        # events  crud
@@ -68,7 +67,7 @@ urlpatterns = [
     path('useredit/<int:pk>/', UserAndProfileUpdate.as_view(), name='useredit'),
     path('verifycode', views.v_code, name='verifycode'),
     path('statistics', views.statistics, name='statistics'),
-    path('tokenvalidate', views.tokenValidate, name='tokenvalidate'),
+
 
 
 ] 

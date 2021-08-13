@@ -117,7 +117,7 @@
                           <!-- <td>{{ob.status}}</td> -->
                           <td><span class="check">
                                   <label>
-                                      <input type="checkbox" value="approved" name='status' id='{{ob.pk}}' class="icheck" {% if ob.status == "approved" %}checked{%endif%}>
+                                      <input type="checkbox" value="approved" name='status' id='{{ob.pk}}' class="icheck {{ob.pk}}" {% if ob.status == "approved" %}checked{%endif%}>
                                       <span class="checkbox-material"></span>
                                       <!-- <button type='button' id='{{ob.pk}}' class='' style='border: none;'> -->
                                   <!--    <i class='fa fa-window-close'></i></button> -->
@@ -128,7 +128,7 @@
                                   <label>
                                       <!-- <input type="checkbox" value="approved" name='status' id='{{ob.pk}}' class="icheck" {% if ob.status == "approved" %}checked{%endif%}> -->
                                       <span class="checkbox-material"></span>
-                                      <button type='button' id='{{ob.pk}}' class='bg-danger' style='border: none;'>
+                                      <button type='button' id='{{ob.pk}}' class='bg-danger but' style='border: none;'>
                                      <i class='fa fa-window-close'></i></button>
                                   </label>
                               </span>
@@ -143,6 +143,39 @@
             </div>
             <!-- /.card -->
           </div>
+
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+              <h4 class="modal-title">Action Alert</h4>
+            </div>
+            <div class="modal-body">
+
+             <div class="md-form mb-4">
+               <p id="check">
+                You are about to approve this user as part of the group.
+              </p>
+              <p style="display: none;" id="uncheck">
+                You are about to disapprove a user from this group.
+              </p><p style="display: none;" id="dell">
+                You are about to delete this user from the group
+              </p>
+             </div>
+
+            <div class="modal-footer">
+              <button type="button" id="cancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" id="ok" class="btn btn-default" value="" data-dismiss="modal">Ok</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+
           <!-- /.col -->
         </div>
         <!-- /.row -->
@@ -168,58 +201,145 @@
 <script src="/static/feltp/dist/js/demo.js"></script>
 
 <script type="text/javascript">
-  $('.icheck').change(function(){
-        if($(this).is(':checked')){
-            idd = $(this).attr('id')
-            vall = $(this).val()
-            alert('You are about to approve this user as part of the group')
-            // alert(idd,vall)
-            $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
-                   if(data=="done"){
+  // $('.icheck').change(function(){
+  //       if($(this).is(':checked')){
+  //           idd = $(this).attr('id')
+  //           vall = $(this).val()
+  //           // alert('You are about to approve this user as part of the group')
+  //           // alert(idd,vall)
+  //           $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
+  //                  if(data=="done"){
 
-                        Swal.fire("Success!", "The user has been successfully approved!", "success")
-                        .then(function () {
-                                window.location.href="/admin_alumni"
+  //                       Swal.fire("Success!", "The user has been successfully approved!", "success")
+  //                       .then(function () {
+  //                               window.location.href="/admin_alumni"
                             
-                        })
-                    }
+  //                       })
+  //                   }
 
-            })
-        } 
-        else{
-            idd = $(this).attr('id')
-            vall = 'not_confirmed'
-            alert('You are about to disapprove a user from this group')
-            $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
-           if(data=="done"){
+  //           })
+  //       } 
+  //       else{
+  //           idd = $(this).attr('id')
+  //           vall = 'not_confirmed'
+  //           alert('You are about to disapprove a user from this group')
+  //           $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
+  //          if(data=="done"){
 
-                Swal.fire("Success", "The user has been successfully disapproved!", "success")
-                .then(function () {
-                        window.location.href="/admin_alumni"
+  //               Swal.fire("Success", "The user has been successfully disapproved!", "success")
+  //               .then(function () {
+  //                       window.location.href="/admin_alumni"
                     
-                })
+  //               })
+  //           }
+
+  //           })
+  //       }
+
+        
+  //   })
+  
+  // $('.but').click(function(){
+  //       idd = $(this).attr('id')
+  //       vall = 'denied'
+  //       alert('You are about to delete this user from the group')
+  //       $.get('/deleteuser/'+ idd, function(data) {
+  //          if(data=="done"){
+
+  //               Swal.fire("Success!", "The user has been successfully deleted this user from the system!", "success")
+  //               .then(function () {
+  //                       window.location.href="/admin_alumni"
+                    
+  //               })
+  //               }
+  //           })
+  //   })
+
+    $('.icheck').on('click', function(){
+      idd = $(this).attr('id')
+        if($(this).is(':checked')){
+          vall = $(this).val()
+            // alert('You are about to approve this user as part of the group')
+            $('#check').css('display', '')
+            $('#uncheck').css('display', 'none')
+            $('#myModal').modal('toggle')
+            $('#myModal').modal('show')
+            // $('#ok').val(idd)
+            $('#ok').click(function(){
+            $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
+           if(data=="done"){                
+                  alert(data.length )
+                  return Swal.fire("Success", "The user has been successfully disapproved!", "success")
+                // Swal.fire("Success!", "The user has been successfully approved!", "success")
+                // .then(function () {
+                //         window.location.href="/admin_alumni"
+                    
+                // })
+            }
+
+    })                  
+  })
+   $('#cancel').click(function(){
+    $(`#${idd}`).prop('checked', false)
+    return
+    })
+       }
+       else {
+        $('#check').css('display', 'none')
+        $('#uncheck').css('display', '')
+        $('#myModal').modal('toggle')
+        $('#myModal').modal('show')
+        // $('#ok').val(idd)
+        // $('#cancel').val(idd)
+        $('#ok').click(function(){
+            // idd = $(this).attr('id')
+            vall = 'not_confirmed'
+            $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
+           if(data=="done"){                  
+                  Swal.fire("Success", "The user has been successfully disapproved!", "success")
+                // .then(function () {
+                //         window.location.href="/admin_alumni"
+                    
+                // })
+              
             }
 
             })
-        }
-
-        
+        })
+   $('#cancel').click(function(){
+    $(`#${idd}`).prop('checked', true)
+    // document.querySelector(`#${idd}`).checked = true
+    return
     })
+       }
+    
+       return false
   
-  $('button').click(function(){
+  })
+
+
+  $('.but').click(function(){
         idd = $(this).attr('id')
         vall = 'denied'
-        alert('You are about to delete this user from the group')
+         $('#dell').css('display', '')
+         $('#check').css('display', 'none')
+         $('#uncheck').css('display', 'none')
+         $('#myModal').modal('toggle')
+        $('#myModal').modal('show')
+        // alert('You are about to delete this user from the group')
+        $('#ok').click(function(){
+
         $.get('/deleteuser/'+ idd, function(data) {
            if(data=="done"){
-
+                $('#dell').css('display', 'none')
                 Swal.fire("Success!", "The user has been successfully deleted this user from the system!", "success")
-                .then(function () {
-                        window.location.href="/admin_alumni"
+                // .then(function () {
+                //         window.location.href="/admin_alumni"
                     
-                })
+                // })
                 }
             })
+       })
     })
 
 </script>

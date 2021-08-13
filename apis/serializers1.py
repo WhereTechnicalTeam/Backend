@@ -144,7 +144,7 @@ class UserSerializer(serializers.ModelSerializer):
             # Token.objects.create(user=user)
             return user
         raise ValidationError('Passwords must match')
-        # return validated_data
+        return validated_data
 
 
 
@@ -267,7 +267,10 @@ class AlldataSerializer(serializers.ModelSerializer):
 
 
 
+
+
 class UserAndProfileSerializer(serializers.ModelSerializer):
+    
     
     main_user = UserProfileSerializer(write_only=True)
     job_to_user = JobInfoSerializer(write_only=True)
@@ -278,6 +281,8 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         max_length=128,
         write_only=True
     )
+
+
 
     class Meta:
         model = User
@@ -291,34 +296,35 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
 
         user = User(
             email=validated_data['email'],
-            username=validated_data['email'],
-            first_name=validated_data['main_user']['firstname'],
-            last_name=validated_data['main_user']['surname']
+            username=validated_data['email']
         )
         user.set_password(validated_data['password'])
-
-        # user.first_name = validated_data['main_user']['firstname']
-        # user.last_name = validated_data['main_user']['surname']
+        print(validated_data['main_user'])
+        user.first_name = validated_data['main_user']['firstname']
+        user.last_name = validated_data['main_user']['surname']
         user.save()
+        # print(user.id)
 
         prof = UserProfile.objects.create(**validated_data['main_user'])
         prof.user = user
         prof.save()
+        # print(prof)
 
         job = JobInfo.objects.create(**validated_data['job_to_user'])
         job.user = user
         job.user_profile = prof
         job.save()
+        # print(job)
 
         # Token.objects.create(user=user)
         created = verificationTbl.objects.create(email=validated_data['email'], code=codes())
         try:
             send_mail('Your Verifcation Code',
                 """Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [validated_data['email']],)
-            return user
         except Exception as e:
-            print(e)
+            # print(e)
             raise serializers.ValidationError("Could not send info to email, an error occured. Contact admin for verification.")
+        # serializerd = AlldataSerializer(user)
         return user
 
 
@@ -349,7 +355,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
 
         user = User.objects.get(email=validated_data['email'])
 
-        prof = UserProfile.objects.filter(id=user.id).update(**main)
+        prof = UserProfile.objects.update(**main)
 
         # profile = prof.pop(0)
         # profile.title = validated_data.get('title', profile.title)
