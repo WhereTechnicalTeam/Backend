@@ -334,8 +334,7 @@
             // $('#ok').val(idd)
             $('#ok').click(function(){
             $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
-           if(data=="done"){                
-                  alert(data.length )
+           if(data=="done"){
                   return Swal.fire("Success", "The user has been successfully disapproved!", "success")
                 // Swal.fire("Success!", "The user has been successfully approved!", "success")
                 // .then(function () {

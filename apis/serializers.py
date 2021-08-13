@@ -340,7 +340,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         main = validated_data.pop('main_user')
         # news = validated_data.pop('news_to_user')
 
-        profile = instance.main_user
+        # profile = instance.main_user
         jobs_data1 = instance.job_to_user.all()
         news_data1 = instance.news_to_user.all()
 
@@ -348,8 +348,10 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         # jobs_data1 = list(prof)
 
         user = User.objects.get(email=validated_data['email'])
+        print(user)
 
-        prof = UserProfile.objects.filter(id=user.id).update(**main)
+        prof = UserProfile.objects.filter(user_id=user.id).update(**main)
+        print(prof)
 
         # profile = prof.pop(0)
         # profile.title = validated_data.get('title', profile.title)
@@ -377,18 +379,23 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         # # profile.image = validated_data.get('image', profile.image)
         # profile.save()
 
-        for datas in job:
-            jobs = jobs_data1.pop(0)
-            jobs.current_institution = datas.get('current_institution', jobs.current_institution)
-            jobs.job_title = datas.get('job_title', jobs.job_title)
-            jobs.region = datas.get('region', jobs.region)
-            jobs.district = datas.get('district', jobs.district)
-            jobs.level_of_health_system = datas.get('level_of_health_system', jobs.level_of_health_system)
-            jobs.employment_status = datas.get('employment_status', jobs.employment_status)
-            jobs.is_current = datas.get('is_current', jobs.is_current)
-            jobs.longitude = datas.get('longitude', jobs.longitude)
-            jobs.latitude = datas.get('latitude', jobs.latitude)
-            jobs.save()
+        if len(jobs_data1) > 0:
+            for datas in job:
+                jobs = jobs_data1.pop(0)
+                jobs.current_institution = datas.get('current_institution', jobs.current_institution)
+                jobs.job_title = datas.get('job_title', jobs.job_title)
+                jobs.region = datas.get('region', jobs.region)
+                jobs.district = datas.get('district', jobs.district)
+                jobs.level_of_health_system = datas.get('level_of_health_system', jobs.level_of_health_system)
+                jobs.employment_status = datas.get('employment_status', jobs.employment_status)
+                jobs.is_current = datas.get('is_current', jobs.is_current)
+                jobs.longitude = datas.get('longitude', jobs.longitude)
+                jobs.latitude = datas.get('latitude', jobs.latitude)
+                jobs.save()
+
+        else:
+            jobs=JobInfo.objects.filter(user_id=user.id).update(**job)
+
 
         for info in news_data1:
             news1 = news_data1.pop(0)
