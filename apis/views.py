@@ -591,7 +591,7 @@ def verify_code(request):
 
 
 {
-"email":"jmadjanor6@gmail.com"
+"email":"aabalekuusimon78@gmail.com"
 }
 
 
@@ -622,7 +622,7 @@ def login(request):
                 job =  JobInfo.objects.get(user=user)
 
 
-                return Response({"status":status.HTTP_200_OK, 'token': token.key, "user": serializered.data})
+                return Response({"status":status.HTTP_200_OK, 'token': token.key, "alldata": serializered.data})
               
             else:
                 return Response({'status': status.HTTP_400_BAD_REQUEST,
@@ -661,7 +661,7 @@ def get_profile(request):
 				try:
 					send_mail('Your Verifcation Code',
 						"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [request.data['email']],)
-					return Response({"status":status.HTTP_200_OK, "user": serializered.data, "code":"A verification code has been sent to your email"})
+					return Response({"status":status.HTTP_200_OK, "alldata": serializered.data, "code":"A verification code has been sent to your email"})
 					
 				except Exception as e:
 					print(e)
@@ -669,7 +669,7 @@ def get_profile(request):
 			else:
 				print('verified')
 
-				return Response({"status":status.HTTP_200_OK, "user": serializered.data})
+				return Response({"status":status.HTTP_200_OK, "alldata": serializered.data})
 
 				
 		else:
