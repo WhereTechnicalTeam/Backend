@@ -750,7 +750,7 @@ class UserAndProfileCreate(CreateAPIView):
 		# Note the use of `get_queryset()` instead of `self.queryset`
 		queryset = self.get_queryset()
 		serializer = AlldataSerializer(queryset, many=True)
-		return Response({"status":status.HTTP_200_OK, "user": serializer.data})
+		return Response({"status":status.HTTP_200_OK, "alldata": serializer.data})
 
 
 	def perform_create(self, serializer):

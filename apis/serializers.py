@@ -81,7 +81,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'surname', 'date_of_birth', 'firstname', 'sex', 'phone1', 'phone2', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 
         'institution_enrolled_at_frontline', 'job_title_at_enroll_frontline', 'is_trained_intermediate', 'cohort_number_intermediate', 'yr_completed_intermediate', 
         'institution_enrolled_at_intermediate', 'job_title_at_enroll_intermediate', 'is_trained_advanced', 'cohort_number_advanced', 'yr_completed_advanced', 
-        'institution_enrolled_at_advanced', 'image', 'email_status', 'job_title_at_enroll_advanced']
+        'institution_enrolled_at_advanced', 'image', 'email_status', 'job_title_at_enroll_advanced', 'status']
 
 
 
@@ -96,7 +96,7 @@ class UpdateUserProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'surname', 'date_of_birth', 'firstname', 'sex', 'phone1', 'phone2', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 
         'institution_enrolled_at_frontline', 'job_title_at_enroll_frontline', 'is_trained_intermediate', 'cohort_number_intermediate', 'yr_completed_intermediate', 
         'institution_enrolled_at_intermediate', 'job_title_at_enroll_intermediate', 'is_trained_advanced', 'cohort_number_advanced', 'yr_completed_advanced', 
-        'institution_enrolled_at_advanced', 'email_status', 'job_title_at_enroll_advanced']
+        'institution_enrolled_at_advanced', 'email_status', 'job_title_at_enroll_advanced', 'status']
 
 
 
@@ -270,7 +270,7 @@ class AlldataSerializer(serializers.ModelSerializer):
 class UserAndProfileSerializer(serializers.ModelSerializer):
     
     main_user = UserProfileSerializer(write_only=True)
-    job_to_user = JobInfoSerializer(write_only=True)
+    job_to_user = JobInfoSerializer(write_only=True, many=True)
     cpassword = serializers.CharField(
         label=_("Confirm password"),
         style={'input_type': 'password'},
@@ -305,10 +305,30 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         prof.user = user
         prof.save()
 
-        job = JobInfo.objects.create(**validated_data['job_to_user'])
-        job.user = user
-        job.user_profile = prof
-        job.save()
+
+        # job = JobInfo.objects.create(**validated_data['job_to_user'])
+        # job.user = user
+        # job.user_profile = prof
+        # job.save()
+        job = validated_data.pop('job_to_user')
+
+        for datas in job:
+            # jobs = jobs_data1.pop(0)
+            JobInfo.objects.create(
+                user_profile_id = prof.id,
+                user_id = user.id,
+                current_institution = datas.get('current_institution'),
+                job_title = datas.get('job_title'),
+                region = datas.get('region'),
+                district = datas.get('district'),
+                level_of_health_system = datas.get('level_of_health_system'),
+                employment_status = datas.get('employment_status'),
+                is_current = datas.get('is_current'),
+                longitude = datas.get('longitude'),
+                latitude = datas.get('latitude')
+                )
+            
+     
 
         # Token.objects.create(user=user)
         created = verificationTbl.objects.create(email=validated_data['email'], code=codes())
@@ -324,6 +344,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
 
 
 
+
 # ###########     update the profile all
 class UpdateProfileSerializer(serializers.ModelSerializer):
     job_to_user = JobInfoSerializer(many=True)
@@ -334,6 +355,29 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'main_user', 'job_to_user')
+
+
+    # def update(self, instance, validated_data):
+    #     job = validated_data.pop('job_to_user')
+    #     main = validated_data.pop('main_user')
+    #     # news = validated_data.pop('news_to_user')
+
+    #     user = User.objects.get(email=validated_data['email'])
+    #     # print(user)
+
+    #     prof = UserProfile.objects.filter(user_id=user.id).update(**main)
+    #     print(prof)
+
+    #     jobs = JobInfo.objects.filter(user_id=user.id).update(**job)
+    #     print(jobs)
+    #     return user
+
+
+
+
+
+
+
 
     def update(self, instance, validated_data):
         job = validated_data.pop('job_to_user')
