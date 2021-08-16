@@ -167,7 +167,7 @@ def profile_search_query(request):
 
 @login_required(login_url='/login')
 def admin_dashboard(request):
-	if not request.user.has_perm('feltp.view_project'):
+	if not request.user.has_perm('apis.view_project'):
 		raise PermissionDenied()
 	else:
 		return render(request, 'feltp/admin_index.html')
@@ -176,7 +176,7 @@ def admin_dashboard(request):
 
 @login_required(login_url='/login')
 def admin_alumni(request):
-	if not request.user.has_perm('feltp.view_project'):
+	if not request.user.has_perm('apis.view_project'):
 		raise PermissionDenied()
 	else:
 		obj = UserProfile.objects.all()
@@ -186,15 +186,17 @@ def admin_alumni(request):
 
 @login_required(login_url='/login')
 def admin_create_event(request):
-	# user = request.user.id
+	if not request.user.has_perm('apis.add_project'):
+		raise PermissionDenied()
+	else:
 
-	if request.method == 'POST' and request.is_ajax():
-		title = request.POST.get('title')
-		schedule = request.POST.get('schedule')
-		description = request.POST.get('description')
-		image = request.FILES.get('picture')
-		a = Event.objects.create(title=title, schedule=schedule, description=description, picture=image)
-		return HttpResponse('done')
+		if request.method == 'POST' and request.is_ajax():
+			title = request.POST.get('title')
+			schedule = request.POST.get('schedule')
+			description = request.POST.get('description')
+			image = request.FILES.get('picture')
+			a = Event.objects.create(title=title, schedule=schedule, description=description, picture=image)
+			return HttpResponse('done')
 		# messages.success(request, 'done')
 		# return HttpResponseRedirect("/admincreateevent")
 
@@ -203,12 +205,16 @@ def admin_create_event(request):
 
 @login_required(login_url='/login')
 def admin_create_gallery(request):
-	if request.method == 'POST' and request.is_ajax():
-		title = request.POST.get('title')
-		image = request.FILES.get('picture')
-		# print(image)
-		a = Gallery.objects.create(title=title, picture=image)
-		return HttpResponse('done')
+	if not request.user.has_perm('apis.add_project'):
+		raise PermissionDenied()
+	else:
+
+		if request.method == 'POST' and request.is_ajax():
+			title = request.POST.get('title')
+			image = request.FILES.get('picture')
+			# print(image)
+			a = Gallery.objects.create(title=title, picture=image)
+			return HttpResponse('done')
 		# messages.success(request, 'done')
 		# return HttpResponseRedirect("/admincreategallery")
 
@@ -221,15 +227,18 @@ def admin_create_gallery(request):
 def admin_create_news(request):
 
 	user = request.user.id
+	if not request.user.has_perm('apis.add_project'):
+		raise PermissionDenied()
+	else:
 
-	if request.method == 'POST' and request.is_ajax():
-		title = request.POST.get('title')
-		content = request.POST.get('content')
-		image = request.FILES.get('picture1')
-		# print(image)
-		# if title != '' and content != '':
-		a = New.objects.create(title=title, content=content, picture1=image, user_id=user)
-		return HttpResponse('done')
+		if request.method == 'POST' and request.is_ajax():
+			title = request.POST.get('title')
+			content = request.POST.get('content')
+			image = request.FILES.get('picture1')
+			# print(image)
+			# if title != '' and content != '':
+			a = New.objects.create(title=title, content=content, picture1=image, user_id=user)
+			return HttpResponse('done')
 		# messages.success(request, 'done')
 		# return HttpResponseRedirect("/admincreatenews")
 
@@ -240,7 +249,7 @@ def admin_create_news(request):
 #    lists
 @login_required(login_url='/login')
 def admin_eventlist(request):
-	if not request.user.has_perm('feltp.view_project'):
+	if not request.user.has_perm('apis.view_project'):
 		raise PermissionDenied()
 	else:
 		obj = Event.objects.all()
@@ -251,7 +260,7 @@ def admin_eventlist(request):
 
 @login_required(login_url="/login")
 def admin_gallerylist(request):
-	if not request.user.has_perm('feltp.view_project'):
+	if not request.user.has_perm('apis.view_project'):
 		raise PermissionDenied()
 	else:
 		obj = Gallery.objects.all()
@@ -263,7 +272,7 @@ def admin_gallerylist(request):
 
 @login_required(login_url="/login")
 def admin_newslist(request):
-	if not request.user.has_perm('feltp.view_project'):
+	if not request.user.has_perm('apis.view_project'):
 		raise PermissionDenied()
 	else:
 		obj = New.objects.all()
@@ -282,19 +291,22 @@ def admin_mapview(request):
 #      edits
 @login_required(login_url="/login")
 def admin_edit_news(request, obj_id):
-	edit = get_object_or_404(New, pk=obj_id)
+	if not request.user.has_perm('apis.change_project'):
+		raise PermissionDenied()
+	else:
+		edit = get_object_or_404(New, pk=obj_id)
 
-	user = request.user.id
+		user = request.user.id
 
-	if request.method == 'POST' and request.is_ajax():
-		title = request.POST.get('title')
-		content = request.POST.get('content')
-		image = request.FILES.get('picture1')
-		# if title != '' and content != '':
-		a = New.objects.filter(id=obj_id).update(title=title, content=content, picture1=image, user_id=user)
-		# messages.success(request, 'done')
-		# return HttpResponseRedirect("/admincreatenews")
-		return HttpResponse('done')
+		if request.method == 'POST' and request.is_ajax():
+			title = request.POST.get('title')
+			content = request.POST.get('content')
+			image = request.FILES.get('picture1')
+			# if title != '' and content != '':
+			a = New.objects.filter(id=obj_id).update(title=title, content=content, picture1=image, user_id=user)
+			# messages.success(request, 'done')
+			# return HttpResponseRedirect("/admincreatenews")
+			return HttpResponse('done')
 
 	return render(request, 'feltp/admin_view_news.html', {'edit':edit})
 
@@ -302,34 +314,40 @@ def admin_edit_news(request, obj_id):
 
 @login_required(login_url="/login")
 def admin_edit_event(request, obj_id):
-	edit = get_object_or_404(Event, pk=obj_id)
+	if not request.user.has_perm('apis.change_project'):
+		raise PermissionDenied()
+	else:
+		edit = get_object_or_404(Event, pk=obj_id)
 
-	if request.method == 'POST' and request.is_ajax():
-		title = request.POST.get('title')
-		schedule = request.POST.get('schedule')
-		description = request.POST.get('description')
-		image = request.FILES.get('picture')
-		# if title != '' and content != '':
-		a = Event.objects.filter(id=obj_id).update(title=title, schedule=schedule, description=description, picture=image)
-		# messages.success(request, 'done')
-		# return HttpResponseRedirect("/admincreateevent")
-		return HttpResponse('done')
+		if request.method == 'POST' and request.is_ajax():
+			title = request.POST.get('title')
+			schedule = request.POST.get('schedule')
+			description = request.POST.get('description')
+			image = request.FILES.get('picture')
+			# if title != '' and content != '':
+			a = Event.objects.filter(id=obj_id).update(title=title, schedule=schedule, description=description, picture=image)
+			# messages.success(request, 'done')
+			# return HttpResponseRedirect("/admincreateevent")
+			return HttpResponse('done')
 
 	return render(request, 'feltp/admin_view_event.html', {'edit':edit})
 
 
 @login_required(login_url="/login")
 def admin_edit_gallery(request, obj_id):
-	edit = get_object_or_404(Gallery, pk=obj_id)
+	if not request.user.has_perm('apis.change_project'):
+		raise PermissionDenied()
+	else:
+		edit = get_object_or_404(Gallery, pk=obj_id)
 
-	if request.method == 'POST' and request.is_ajax():
-		title = request.POST.get('title')
-		image = request.FILES.get('picture')
-		# print(image)
-		a = Gallery.objects.filter(id=obj_id).update(title=title, picture=image)
-		# messages.success(request, 'done')
-		# return HttpResponseRedirect("/admincreategallery")
-		return HttpResponse('done')
+		if request.method == 'POST' and request.is_ajax():
+			title = request.POST.get('title')
+			image = request.FILES.get('picture')
+			# print(image)
+			a = Gallery.objects.filter(id=obj_id).update(title=title, picture=image)
+			# messages.success(request, 'done')
+			# return HttpResponseRedirect("/admincreategallery")
+			return HttpResponse('done')
 
 	return render(request, 'feltp/admin_view_gallery.html', {'edit':edit})
 
@@ -338,7 +356,7 @@ def admin_edit_gallery(request, obj_id):
 #     detail
 @login_required(login_url="/login")
 def admin_eventdetail(request, obj_id):
-	if not request.user.has_perm('feltp.view_project'):
+	if not request.user.has_perm('apis.view_project'):
 		raise PermissionDenied()
 	else:
 		obj = get_object_or_404(Event, pk=obj_id)
@@ -348,7 +366,7 @@ def admin_eventdetail(request, obj_id):
 
 @login_required(login_url="/login")
 def admin_gallerydetail(request, obj_id):
-	if not request.user.has_perm('feltp.view_project'):
+	if not request.user.has_perm('apis.view_project'):
 		raise PermissionDenied()
 	else:
 		obj = get_object_or_404(Gallery, pk=obj_id)
@@ -358,7 +376,7 @@ def admin_gallerydetail(request, obj_id):
 
 @login_required(login_url="/login")
 def admin_newsdetail(request, obj_id):
-	if not request.user.has_perm('feltp.view_project'):
+	if not request.user.has_perm('apis.view_project'):
 		raise PermissionDenied()
 	else:	
 		obj = get_object_or_404(New, pk=obj_id)
@@ -369,25 +387,37 @@ def admin_newsdetail(request, obj_id):
 
 # ##################   Event delete view   ##########################################
 def eventdelete(request, obj_id):
- 	sb_delete = Event.objects.get(id=obj_id)
- 	sb_delete.delete()
- 	return HttpResponse('Deleted')
+	if not request.user.has_perm('apis.delete_project'):
+		raise PermissionDenied()
+	else:
+	 	sb_delete = Event.objects.get(id=obj_id)
+	 	sb_delete.delete()
+	 	return HttpResponse('Deleted')
+	return render(request, 'feltp/serverError.html')
 
 
 
 # ##################   Gallery delete view   ##########################################
 def gallerydelete(request, obj_id):
- 	sb_delete = Gallery.objects.get(id=obj_id)
- 	sb_delete.delete()
- 	return HttpResponse('Deleted')
+	if not request.user.has_perm('apis.delete_project'):
+		raise PermissionDenied()
+	else:
+	 	sb_delete = Gallery.objects.get(id=obj_id)
+	 	sb_delete.delete()
+	 	return HttpResponse('Deleted')
+	return render(request, 'feltp/serverError.html')
 
 
 
 # ##################   News delete view   ##########################################
 def newsdelete(request, obj_id):
- 	sb_delete = New.objects.get(id=obj_id)
- 	sb_delete.delete()
- 	return HttpResponse('Deleted')
+	if not request.user.has_perm('apis.delete_project'):
+		raise PermissionDenied()
+	else:
+	 	sb_delete = New.objects.get(id=obj_id)
+	 	sb_delete.delete()
+	 	return HttpResponse('Deleted')
+	return render(request, 'feltp/serverError.html')
 
 
 
@@ -599,3 +629,17 @@ def deleteuser(request, obj_id):
 	sb_delete = UserProfile.objects.get(id=obj_id)
 	sb_delete.delete()
 	return HttpResponse('done')
+
+
+
+
+def contactus(request):
+	if request.method == 'POST' and request.is_ajax():
+		name = request.POST.get('name')
+		email = request.POST.get('email')
+		number = request.POST.get('number')
+		messasge = request.POST.get('messasge')
+		a = contactUs.objects.create(name=name, email=email, number=number, messasge=messasge)
+		return HttpResponse('done')
+
+	return render(request, 'feltp/public_index.html')

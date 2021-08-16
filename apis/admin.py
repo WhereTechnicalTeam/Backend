@@ -76,8 +76,18 @@ class EventsAdmin(admin.ModelAdmin):
 	list_filter = ['title']
 	search_fields = ['title']
 	ordering = ('id',)
-
 	can_delete = False
+
+
+class ContactUsAdmin(admin.ModelAdmin):
+	list_display = ['name', 'email', 'number', 'messasge',  'created_at']
+	list_filter = ['name', 'email']
+	search_fields = ['name', 'email']
+	ordering = ('id',)
+
+
+
+
 
 admin.site.register(Region, RegionsAdmin)
 admin.site.register(District, DistrictsAdmin)
@@ -86,3 +96,4 @@ admin.site.register(JobInfo, JobInfoAdmin)
 admin.site.register(LevelOfHealthSystem, LevelOfHealthSystemAdmin)
 admin.site.register(New, NewsAdmin)
 admin.site.register(Event, EventsAdmin)
+admin.site.register(contactUs, ContactUsAdmin)

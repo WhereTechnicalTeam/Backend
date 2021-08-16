@@ -249,3 +249,18 @@ class Gallery(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True, default=None)
     picture = models.ImageField(upload_to='api_images/gallery/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+
+
+class contactUs(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    number = models.CharField(max_length=13)
+    messasge = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        managed = True
+        db_table = 'contactus'
+        verbose_name_plural = ' Contact Us'

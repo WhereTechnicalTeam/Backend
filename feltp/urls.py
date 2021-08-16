@@ -18,6 +18,7 @@ urlpatterns = [
     path('queryjson', views.queryjson, name='queryjson'),
     path('detailevent/<int:obj_id>/', views.event_detail, name='detailevent'),
     path('detailnews/<int:obj_id>/', views.news_detail, name='detailnews'),
+    path('contactus', views.contactus, name='contactus'),
 
     path('login_view', views.login_view, name='login_view'),
     path('login/', views.loginPage, name='login'),
