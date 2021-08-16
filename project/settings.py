@@ -123,19 +123,6 @@ DATABASES = {
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'feltp',
-        'USER': 'appuser',
-        'PASSWORD': 'EwpvKyq8aFse3TJ9',
-        'HOST': 'wheregeospatial.com',
-        'PORT': 6432,
-    }
-}
-
-
-
 
 
 # DATABASES = {
