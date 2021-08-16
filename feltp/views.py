@@ -161,8 +161,8 @@ def profile_search_query(request):
 	data = re.sub("\W\d", '', data)
 
 	profilesearch = JobInfo.objects.filter(Q(user_profile__surname__icontains=data) | Q(user_profile__firstname__icontains=data))
-	print(profilesearch)
-	return render(request, 'feltp/profiledata.html', {'profilesearch':profilesearch})
+	# print(profilesearch)
+	return render(request, 'feltp/profiledata.html', {'profilesearch':profilesearch[:8]})
 
 
 @login_required(login_url='/login')
