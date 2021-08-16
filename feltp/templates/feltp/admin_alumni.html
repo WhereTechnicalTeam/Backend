@@ -168,7 +168,7 @@
 
             <div class="modal-footer">
               <button type="button" id="cancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button type="button" id="ok" class="btn btn-default" value="" data-dismiss="modal">Ok</button>
+              <button type="button" id="ok" class="btn btn-success" value="" data-dismiss="modal">Approve</button>
             </div>
           </div>
           
@@ -262,22 +262,25 @@
             // alert('You are about to approve this user as part of the group')
             $('#check').css('display', '')
             $('#uncheck').css('display', 'none')
+            $('#dell').css('display', 'none')
+            $('#ok').text('Approve')
+            document.getElementById("ok").style.background="green"
             $('#myModal').modal('toggle')
             $('#myModal').modal('show')
             // $('#ok').val(idd)
             $('#ok').click(function(){
             $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
-           if(data=="done"){                
-                  return Swal.fire("Success", "The user has been successfully disapproved!", "success")
-                // Swal.fire("Success!", "The user has been successfully approved!", "success")
-                // .then(function () {
-                //         window.location.href="/admin_alumni"
+           if(data=="done"){ 
+                Swal.fire("Success!", "The user has been successfully approved!", "success")
+                .then(function () {
+                        window.location.href="/admin_alumni"
                     
-                // })
+                })
             }
 
     })                  
   })
+
    $('#cancel').click(function(){
     $(`#${idd}`).prop('checked', false)
     return
@@ -286,6 +289,9 @@
        else {
         $('#check').css('display', 'none')
         $('#uncheck').css('display', '')
+        $('#dell').css('display', 'none')
+        $('#ok').text('Disapprove')
+        document.getElementById("ok").style.background="red"
         $('#myModal').modal('toggle')
         $('#myModal').modal('show')
         // $('#ok').val(idd)
@@ -296,10 +302,10 @@
             $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
            if(data=="done"){                  
                   Swal.fire("Success", "The user has been successfully disapproved!", "success")
-                // .then(function () {
-                //         window.location.href="/admin_alumni"
+                .then(function () {
+                        window.location.href="/admin_alumni"
                     
-                // })
+                })
               
             }
 
@@ -323,6 +329,8 @@
          $('#dell').css('display', '')
          $('#check').css('display', 'none')
          $('#uncheck').css('display', 'none')
+         $('#ok').text('Delete')
+         document.getElementById("ok").style.background="red"
          $('#myModal').modal('toggle')
         $('#myModal').modal('show')
         // alert('You are about to delete this user from the group')
@@ -332,10 +340,10 @@
            if(data=="done"){
                 $('#dell').css('display', 'none')
                 Swal.fire("Success!", "The user has been successfully deleted this user from the system!", "success")
-                // .then(function () {
-                //         window.location.href="/admin_alumni"
+                .then(function () {
+                        window.location.href="/admin_alumni"
                     
-                // })
+                })
                 }
             })
        })

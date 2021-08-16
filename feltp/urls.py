@@ -8,7 +8,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='home'),
     # path('about', views.about, name='about'),
-    path('editnews', views.edit_news, name='editnews'),
+    path('news', views.news, name='news'),
     path('edituser/<int:obj_id>', views.edit_user, name='edituser'),
     path('events', views.events, name='events'),
     path('fetchprofile', views.fetch_profile, name='fetchprofile'),
@@ -16,6 +16,8 @@ urlpatterns = [
     path('districtSelectOption', views.districtSelectOption, name='districtSelectOption'),
     path('jobsjson', views.jobsLayer.as_view(), name='jobsjson'),
     path('queryjson', views.queryjson, name='queryjson'),
+    path('detailevent/<int:obj_id>/', views.event_detail, name='detailevent'),
+    path('detailnews/<int:obj_id>/', views.news_detail, name='detailnews'),
 
     path('login_view', views.login_view, name='login_view'),
     path('login/', views.loginPage, name='login'),

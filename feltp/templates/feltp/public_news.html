@@ -13,7 +13,8 @@
 	<link rel="stylesheet" href="/static/feltp/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/static/feltp/css/animate.css">
 	<link rel="stylesheet" href="/static/feltp/css/prettyPhoto.css">
-	<link href="/static/feltp/css/public_style.css" rel="stylesheet">
+	<!-- <link href="/static/feltp/css/public_style.css" rel="stylesheet"> -->
+	<link href="/static/feltp/css/style2.css" rel="stylesheet">
 	<link href="/static/feltp/css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
@@ -91,6 +92,8 @@
 
 							<p>{{new.content}}</p>
 
+							<a href="{% url 'detailevent' new.id %}" class="btn text">Read...</a>
+
 							<p><!-- Button trigger modal --></p>
 							
 						</div>
@@ -116,6 +119,17 @@
 			</div>
 			
 		</div>
+<div class="center">
+  <div class="pagination">
+  <a href="#">&laquo;</a>
+  <a href="#" class="active">1</a>
+  <a href="#">2</a>
+  <a href="#">3</a>
+  <a href="#">4</a>
+  <a href="#">5</a>
+  <a href="#">&raquo;</a>
+  </div>
+</div>
 	</div>
 </section>
 <!--contact heading-->

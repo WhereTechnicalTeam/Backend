@@ -60,7 +60,7 @@ def index(request):
 		news_old = New.objects.all().order_by('-created_at')[20:24]
 		return render(request, 'feltp/public_index.html', {'news':news, 'news_old':news_old, 'events':events, 'jobs':jobs})
 
-	return render(request, 'feltp/public_index.html', {'news':news, 'events':events, 'jobs':jobs, 'query':query})
+	return render(request, 'feltp/public_index.html', {'news':news, 'events':events, 'jobs':jobs})
 
 
 
@@ -122,7 +122,7 @@ def edit_user(request, obj_id):
 
 
 # @login_required(login_url='/login')
-def edit_news(request):
+def news(request):
 	news = New.objects.all().order_by('-created_at')
 	# if request.method == 'POST':
 
@@ -138,11 +138,23 @@ def events(request):
 
 
 
+def event_detail(request, obj_id):
+	obj = get_object_or_404(Event, pk=obj_id)
+	return render(request, 'feltp/public_event_detail.html', {'obj':obj})
+
+
+
+def news_detail(request, obj_id):
+	obj = get_object_or_404(New, pk=obj_id)
+	return render(request, 'feltp/public_news_detail.html', {'obj':obj})
+
+
+
 def fetch_profile(request):
 	proff = UserProfile.objects.all().order_by('-created_at')
 	# if request.method == 'POST':
-
 	return render(request, 'feltp/public_view_profile.html', {'proff':proff})
+
 
 def profile_search_query(request):
 	data = request.GET.get('data')
@@ -313,6 +325,7 @@ def admin_edit_gallery(request, obj_id):
 	if request.method == 'POST' and request.is_ajax():
 		title = request.POST.get('title')
 		image = request.FILES.get('picture')
+		# print(image)
 		a = Gallery.objects.filter(id=obj_id).update(title=title, picture=image)
 		# messages.success(request, 'done')
 		# return HttpResponseRedirect("/admincreategallery")

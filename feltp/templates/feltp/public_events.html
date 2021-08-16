@@ -12,8 +12,9 @@
 	<link rel="stylesheet" href="/static/feltp/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/static/feltp/css/animate.css">
 	<link rel="stylesheet" href="/static/feltp/css/prettyPhoto.css">
-	<link href="/static/feltp/css/public_style.css" rel="stylesheet">
-	<link href="css/responsive.css" rel="stylesheet">
+	<!-- <link href="/static/feltp/css/public_style.css" rel="stylesheet"> -->
+	<link href="/static/feltp/css/style2.css" rel="stylesheet">
+	<link href="/static/feltp/css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 
@@ -89,6 +90,7 @@
 							<h5>{{event.schedule}} </h5>
 
 							<p>{{event.description}}</p>
+							<a href="{% url 'detailevent' event.id %}" class="btn text">Read...</a>
 
 		
 </p>

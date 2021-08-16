@@ -48,7 +48,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <form method="POST" enctype="multipart/form-data" id='event'>
+              <form method="POST" enctype="multipart/form-data" id='events'>
                 {% csrf_token %}
                 <div class="card-body">
                   <div class="form-group">
@@ -157,8 +157,9 @@
 
 $("#sub").click(function(e){
     e.preventDefault();
-    var data = new FormData($('#event').get(0));
+    var data = new FormData($('#events').get(0));
     // console.log(data)
+    var token = '{{csrf_token}}';
 
     $.ajax({
         url: "/admincreateevent", // same url 'action' in form

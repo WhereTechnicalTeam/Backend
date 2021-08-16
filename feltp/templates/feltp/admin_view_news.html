@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-{% block title %} Detailed News Page {% endblock title %}
+{% block title %} Edit News Page {% endblock title %}
 
 {% endblock %}
 
@@ -136,7 +136,7 @@ $("#sub").click(function(e){
         success: function(data) {
             if(data=="done"){
 
-                Swal.fire('Saved', 'News has been created', 'success')
+                Swal.fire('Saved', 'News has been updated', 'success')
                 .then(function () {
                         window.location.href="/newsdetail/{{edit.pk}}/"
                     

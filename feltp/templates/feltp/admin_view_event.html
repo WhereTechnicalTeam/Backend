@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-{% block title %} Editor {% endblock title %}
+{% block title %} Edit Events {% endblock title %}
 
 {% endblock %}
 
@@ -48,7 +48,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <form method="POST" enctype="multipart/form-data" id='event'>
+              <form method="POST" enctype="multipart/form-data" id='events'>
                 {% csrf_token %}
                 <div class="card-body">
                   <div class="form-group">
@@ -173,7 +173,7 @@ var token = '{{csrf_token}}';
         success: function(data) {
             if(data=="done"){
 
-                Swal.fire('Saved', 'News has been created', 'success')
+                Swal.fire('Saved', 'Event has been updated', 'success')
                 .then(function () {
                         window.location.href="/eventdetail/{{edit.pk}}/"
                     

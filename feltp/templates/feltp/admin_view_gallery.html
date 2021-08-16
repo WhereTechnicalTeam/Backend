@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-{% block title %} Create Gallery {% endblock title %}
+{% block title %} Edit Gallery {% endblock title %}
 
 {% endblock %}
 
@@ -122,10 +122,10 @@
 
 $("#sub").click(function(e){
     e.preventDefault();
-    var data = new FormData($('#events').get(0));
+    var data = new FormData($('#gallery').get(0));
     // console.log(data)
 
-var token = '{{csrf_token}}';
+  var token = '{{csrf_token}}';
 
     $.ajax({
         url: "/gallerydetail/{{edit.pk}}/edit", // same url 'action' in form
@@ -138,7 +138,7 @@ var token = '{{csrf_token}}';
         success: function(data) {
             if(data=="done"){
 
-                Swal.fire('Saved', 'News has been created', 'success')
+                Swal.fire('Saved', 'Gallery has been updated', 'success')
                 .then(function () {
                         window.location.href="/gallerydetail/{{edit.pk}}/"
                     

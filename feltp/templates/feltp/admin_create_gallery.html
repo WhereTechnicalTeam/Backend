@@ -43,7 +43,7 @@
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
-                Create Gallery
+                Add Gallery Photo
               </h3>
             </div>
             <!-- /.card-header -->
@@ -132,7 +132,7 @@ var token = '{{csrf_token}}';
         success: function(data) {
             if(data=="done"){
 
-                Swal.fire('Saved', 'Gallery has been updated', 'success')
+                Swal.fire('Saved', 'Gallery has been created', 'success')
                 .then(function () {
                         window.location.href="/admincreategallery"
                     
