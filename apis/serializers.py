@@ -58,6 +58,11 @@ class RegionSerializer(serializers.ModelSerializer):
 
 
 class JobInfoSerializer(serializers.ModelSerializer):
+    region = serializers.SlugRelatedField(queryset=Region.objects.all(), slug_field='region_name')
+    district = serializers.SlugRelatedField(queryset=District.objects.all(), slug_field='district_name')
+    level_of_health_system = serializers.SlugRelatedField(queryset=LevelOfHealthSystem.objects.all(), slug_field='level')
+
+
     class Meta:
         model = JobInfo
         fields = ['id', 'current_institution', 'job_title', 'region', 'district', 'level_of_health_system', 'employment_status',
@@ -357,28 +362,6 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         fields = ('id', 'email', 'main_user', 'job_to_user')
 
 
-    # def update(self, instance, validated_data):
-    #     job = validated_data.pop('job_to_user')
-    #     main = validated_data.pop('main_user')
-    #     # news = validated_data.pop('news_to_user')
-
-    #     user = User.objects.get(email=validated_data['email'])
-    #     # print(user)
-
-    #     prof = UserProfile.objects.filter(user_id=user.id).update(**main)
-    #     print(prof)
-
-    #     jobs = JobInfo.objects.filter(user_id=user.id).update(**job)
-    #     print(jobs)
-    #     return user
-
-
-
-
-
-
-
-
     def update(self, instance, validated_data):
         job = validated_data.pop('job_to_user')
         main = validated_data.pop('main_user')
@@ -392,10 +375,13 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         # jobs_data1 = list(prof)
 
         user = User.objects.get(email=validated_data['email'])
-        print(user)
+        # print(user)
 
-        prof = UserProfile.objects.filter(user_id=user.id).update(**main)
-        print(prof)
+        if UserProfile.objects.filter(user_id=user.id).exists():
+            prof = UserProfile.objects.filter(user_id=user.id).update(**main)
+        else:
+            prof = UserProfile.objects.filter(user_id=user.id).create(**main, user=user)
+        # print(prof[0].id)
 
         # profile = prof.pop(0)
         # profile.title = validated_data.get('title', profile.title)
@@ -438,7 +424,20 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
                 jobs.save()
 
         else:
-            jobs=JobInfo.objects.filter(user_id=user.id).update(**job)
+            new_job = JobInfo.objects.create(**job[0], user=user, user_profile_id=prof[0].id)
+
+
+            # jobs = jobs_data1.pop(0)
+            # jobs.current_institution = job.get('current_institution', jobs.current_institution)
+            # jobs.job_title = job.get('job_title', jobs.job_title)
+            # jobs.region = job.get('region', jobs.region)
+            # jobs.district = job.get('district', jobs.district)
+            # jobs.level_of_health_system = job.get('level_of_health_system', jobs.level_of_health_system)
+            # jobs.employment_status = job.get('employment_status', jobs.employment_status)
+            # jobs.is_current = job.get('is_current', jobs.is_current)
+            # jobs.longitude = job.get('longitude', jobs.longitude)
+            # jobs.latitude = job.get('latitude', jobs.latitude)
+            # jobs.save()
 
 
         for info in news_data1:
