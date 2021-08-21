@@ -114,16 +114,16 @@ REST_FRAMEWORK = {
 }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': os.environ.get('FELTP_DB'),
-#         'USER': os.environ.get('FELTP_DB_USER'),
-#         'PASSWORD': os.environ.get('FELTP_DB_USER_PASSWORD'),
-#         'HOST': os.environ.get('FELTP_DB_HOST'),
-#         'PORT': os.environ.get('FELTP_DB_PORT'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.environ.get('FELTP_DB'),
+        'USER': os.environ.get('FELTP_DB_USER'),
+        'PASSWORD': os.environ.get('FELTP_DB_USER_PASSWORD'),
+        'HOST': os.environ.get('FELTP_DB_HOST'),
+        'PORT': os.environ.get('FELTP_DB_PORT'),
+    }
+}
 
 
 
