@@ -106,20 +106,26 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.IsAuthenticated',
         # 'rest_framework.permissions.IsAdminUser',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
     ]
 }
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ.get('FELTP_DB'),
-        'USER': os.environ.get('FELTP_DB_USER'),
-        'PASSWORD': os.environ.get('FELTP_DB_USER_PASSWORD'),
-        'HOST': os.environ.get('FELTP_DB_HOST'),
-        'PORT': os.environ.get('FELTP_DB_PORT'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': os.environ.get('FELTP_DB'),
+#         'USER': os.environ.get('FELTP_DB_USER'),
+#         'PASSWORD': os.environ.get('FELTP_DB_USER_PASSWORD'),
+#         'HOST': os.environ.get('FELTP_DB_HOST'),
+#         'PORT': os.environ.get('FELTP_DB_PORT'),
+#     }
+# }
+
+
 
 
 
@@ -174,6 +180,8 @@ USE_TZ = True
 
 
 SITE_ID=1
+
+
 
 
 EMAIL_USE_TLS = True

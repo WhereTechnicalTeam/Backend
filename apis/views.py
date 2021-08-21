@@ -29,6 +29,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
 from rest_framework.parsers import FormParser
+from rest_framework.renderers import JSONRenderer
 
 
 
@@ -85,16 +86,16 @@ class UserProfileList(ListAPIView):
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('firstname', 'surname', 'status',)
 
-	def get_queryset(self, *args, **kwargs):
-		queryset_list = UserProfile.objects.all()
-		query = self.request.GET.get('q')
-		if query:
-			queryset_list = queryset_list.filter(
-				Q(surname__icontains=query)|
-				Q(firstname__icontains=query)|
-				Q(status__icontains=query)
-				).distinct()
-		return queryset_list
+	# def get_queryset(self, *args, **kwargs):
+	# 	queryset_list = UserProfile.objects.all()
+	# 	query = self.request.GET.get('q')
+	# 	if query:
+	# 		queryset_list = queryset_list.filter(
+	# 			Q(surname__icontains=query)|
+	# 			Q(firstname__icontains=query)|
+	# 			Q(status__icontains=query)
+	# 			).distinct()
+	# 	return queryset_list
 
 
 
@@ -113,6 +114,7 @@ class UserProfileUpdate(RetrieveUpdateAPIView):
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
+		return Response({"status":status.HTTP_200_OK, "user": serializer.data})
 
 
 class UserProfileDelete(DestroyAPIView):
@@ -125,6 +127,7 @@ class UserProfileDelete(DestroyAPIView):
 		serializer.save(user=self.request.user)
 
 
+
 class UserProfileCreate(CreateAPIView):
 	queryset = UserProfile.objects.all()
 	serializer_class = UserProfileSerializer
@@ -132,6 +135,7 @@ class UserProfileCreate(CreateAPIView):
 
 	def perform_create(self, serializer):
 		serializer.save(user=self.request.user)
+		return Response({"status":status.HTTP_200_OK, "user": serializer.data})
 	
 
 
@@ -145,15 +149,15 @@ class UserList(ListAPIView):
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('username', 'email',)
 
-	def get_queryset(self, *args, **kwargs):
-		queryset_list = User.objects.all()
-		query = self.request.GET.get('q')
-		if query:
-			queryset_list = queryset_list.filter(
-				Q(username__icontains=query)|
-				Q(email__icontains=query)
-				).distinct()
-		return queryset_list
+	# def get_queryset(self, *args, **kwargs):
+	# 	queryset_list = User.objects.all()
+	# 	query = self.request.GET.get('q')
+	# 	if query:
+	# 		queryset_list = queryset_list.filter(
+	# 			Q(username__icontains=query)|
+	# 			Q(email__icontains=query)
+	# 			).distinct()
+	# 	return queryset_list
 
 
 	def list(self, request):
@@ -225,6 +229,7 @@ class UserCreate(CreateAPIView):
 
 	def perform_create(self, serializer):
 		serializer.save()
+		return Response({"status":status.HTTP_200_OK, "user": serializer.data})
 	
 
 
@@ -236,22 +241,22 @@ class EventsList(ListAPIView):
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('schedule', 'description', 'title',)
 
-	def get_queryset(self, *args, **kwargs):
-		queryset_list = Event.objects.all()
-		query = self.request.GET.get('q')
-		if query:
-			queryset_list = queryset_list.filter(
-				Q(title__icontains=query)|
-				Q(description__icontains=query)|
-				Q(schedule__icontains=query)
-				).distinct()
-		return queryset_list
+	# def get_queryset(self, *args, **kwargs):
+	# 	queryset_list = Event.objects.all()
+	# 	query = self.request.GET.get('q')
+	# 	if query:
+	# 		queryset_list = queryset_list.filter(
+	# 			Q(title__icontains=query)|
+	# 			Q(description__icontains=query)|
+	# 			Q(schedule__icontains=query)
+	# 			).distinct()
+	# 	return queryset_list
 
 
 	def list(self, request):
 		# Note the use of `get_queryset()` instead of `self.queryset`
 		queryset = self.get_queryset()
-		serializer = NewsSerializer(queryset, many=True)
+		serializer = EventSerializer(queryset, many=True)
 		return Response({"status":status.HTTP_200_OK, "events": serializer.data})
 
 
@@ -280,6 +285,7 @@ class EventsUpdate(RetrieveUpdateAPIView):
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
+		return Response({"status":status.HTTP_200_OK, "events": serializer.data})
 
 	
 
@@ -300,6 +306,7 @@ class EventsCreate(CreateAPIView):
 
 	def perform_create(self, serializer):
 		serializer.save()
+		return Response({"status":status.HTTP_200_OK, "events": serializer.data})
 
 
 	def create(self, validated_data):
@@ -436,6 +443,7 @@ class JobsUpdate(RetrieveUpdateAPIView):
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
+		return Response({"status":status.HTTP_200_OK, "job": serializer.data})
 
 	
 
@@ -458,6 +466,7 @@ class JobsCreate(CreateAPIView):
 
 	def perform_create(self, serializer):
 		serializer.save(user=self.request.user)
+		return Response({"status":status.HTTP_200_OK, "job": serializer.data})
 
 
 
@@ -467,9 +476,7 @@ class JobsCreate(CreateAPIView):
 			self.perform_create(serializd)
 			return Response({"status":status.HTTP_200_OK, "news": serializd.data})
 		else:
-			return Response({
-                'status': 'Bad request'
-            }, status=status.HTTP_404_NOT_FOUND)
+			return Response({"status":status.HTTP_404_NOT_FOUND})
 
 
 
@@ -518,8 +525,8 @@ class UserDetailViewDetail(RetrieveAPIView):
 def tokenValidate(request):
 	data = request.data['token']
 	if Token.objects.filter(pk=data).exists():
-		return Response({"status":status.HTTP_200_OK, "token" : "true"})
-	return JsonResponse({"status":status.HTTP_404_NOT_FOUND, "token" : "false"})
+		return Response({"status":status.HTTP_200_OK, "msg" : "true"})
+	return JsonResponse({"status":status.HTTP_404_NOT_FOUND, "msg" : "false"})
 
 
 
@@ -528,10 +535,10 @@ def tokenValidate(request):
 @api_view(["GET", "POST"])
 def logout_user(request):
     # simply delete the token to force a login
-    print(request.data['token'])
+    # print(request.data['token'])
     data = request.data['token']
     Token.objects.get(pk=data).delete()
-    return JsonResponse({"status":status.HTTP_200_OK, "logout" : "true"})
+    return JsonResponse({"status":status.HTTP_200_OK, "msg" : "logged out"})
 
 
 
@@ -559,17 +566,17 @@ def verify_code(request):
 				query.user_id = User.objects.get(email=query.email).id
 				query.save()
 
-				return Response("Verification code is valid. You may login.", status=status.HTTP_200_OK)
+				return Response({"msg":"Verification code is valid. You may login.", "status":status.HTTP_200_OK})
 			
 			else:
 				# print('here')
-				return Response("Verification code is valid. You may sign up.", status=status.HTTP_200_OK)
+				return Response({"msg":"Verification code is valid. You may sign up.", "status":status.HTTP_200_OK})
 
 		else:
-			return Response("This verification code does not exist.", status=status.HTTP_400_BAD_REQUEST)
+			return Response({"msg":"This verification code does not exist.", "status":status.HTTP_400_BAD_REQUEST})
 
 	except:
-		return Response("This verification code does not exist.", status=status.HTTP_400_BAD_REQUEST)
+		return Response({"msg":"This verification code does not exist.", "status":status.HTTP_400_BAD_REQUEST})
 
 
 
@@ -606,30 +613,29 @@ def login(request):
         email = request.data.get('email')
         user = User.objects.get(email=email)
         queryset = User.objects.filter(email=user)
-        serializered = AlldataSerializer(queryset, many=True)
 
-        # user = User.objects.get(user=user, user)
+        if UserProfile.objects.filter(user=user).exists():
+	        prof = UserProfile.objects.get(user=user)
+	        try:
+	            if prof.status == 'approved' and prof.email_status == 'verified':
+	                # print ('ver')
+	                # print('yes')
+	                update_last_login(None, user)
+	                user.is_active = True
+	                user.save()
+	                (token, created) = Token.objects.get_or_create(user=user)
+	                
+	                # job =  JobInfo.objects.get(user=user)
 
-        # print (user)
-        prof = UserProfile.objects.get(user=user)
-        try:
-            if prof.status == 'approved' and prof.email_status == 'verified':
-                print ('ver')
-                update_last_login(None, user)
-                user.is_active = True
-                user.save()
-                (token, created) = Token.objects.get_or_create(user=user)
-                job =  JobInfo.objects.get(user=user)
+	                return Response({"status":status.HTTP_200_OK, 'token': token.key, "alldata": serializer.data})
+	              
+	            else:
+	                return Response({'status': status.HTTP_400_BAD_REQUEST, 'msg': 'You have not yet been verified.'})
+	        except Exception as e:
+	            return Response({'status': status.HTTP_500_INTERNAL_SERVER_ERROR})
+	    # else:
+	    # 	return Response({'status': status.HTTP_400_BAD_REQUEST})
 
-
-                return Response({"status":status.HTTP_200_OK, 'token': token.key, "alldata": serializered.data})
-              
-            else:
-                return Response({'status': status.HTTP_400_BAD_REQUEST,
-                                'Final Verifcation': 'You have not yet been verified by the admin. You may knidly contact him/her to be verified to be logged in.'
-                                })
-        except Exception as e:
-            return Response({'status': status.HTTP_500_INTERNAL_SERVER_ERROR})
     return Response({'status': status.HTTP_400_BAD_REQUEST})
 
 
@@ -661,11 +667,11 @@ def get_profile(request):
 				try:
 					send_mail('Your Verifcation Code',
 						"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [request.data['email']],)
-					return Response({"status":status.HTTP_200_OK, "alldata": serializered.data, "code":"A verification code has been sent to your email"})
+					return Response({"status":status.HTTP_200_OK, "alldata": serializered.data, "msg":"A verification code has been sent to your email"})
 					
 				except Exception as e:
 					print(e)
-					return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+					return Response({"status":status.HTTP_500_INTERNAL_SERVER_ERROR, "msg":"Could not send info to email, an error occured. Contact admin for verification."})
 			else:
 				print('verified')
 
@@ -673,10 +679,10 @@ def get_profile(request):
 
 				
 		else:
-			return Response({"action":"User not found", "status":status.HTTP_400_BAD_REQUEST})
+			return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"User not found"})
 
 	except:
-		return Response({"action":"User not found", "status":status.HTTP_400_BAD_REQUEST})
+		return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"User not found"})
 
 
 
@@ -703,14 +709,14 @@ def v_code(request):
 				print(prof.email_status)
 				# token, created = Token.objects.get_or_create(user=user)
 			# 	return Response({"status": status.HTTP_200_OK, "Token": token.key})
-				return Response("Verification code is valid. You may login.", status=status.HTTP_200_OK)
+				return Response({"msg":"Verification code is valid. You may login.", "status":status.HTTP_200_OK})
 			
 		else:
-			return Response("This verification code does not exist.", status=status.HTTP_400_BAD_REQUEST)
+			return Response({"msg":"This verification code does not exist.", "status":status.HTTP_400_BAD_REQUEST})
 
 	except Exception as e:
 		print(e)
-		return Response("This verification code does not exist.", status=status.HTTP_400_BAD_REQUEST)
+		return Response({"msg":"This verification code does not exist.", "status":status.HTTP_400_BAD_REQUEST})
 
 
 
@@ -744,6 +750,7 @@ class UserAndProfileCreate(CreateAPIView):
 	queryset = User.objects.all()
 	serializer_class = UserAndProfileSerializer
 	#permission_classes = [IsAuthenticated]
+	renderer_classes = [JSONRenderer]
 
 
 	def list(self, request):
@@ -754,8 +761,8 @@ class UserAndProfileCreate(CreateAPIView):
 
 
 	def perform_create(self, serializer):
-		return serializer.save()
-
+		serializer.save()
+		return Response({"status":status.HTTP_200_OK, "alldata": serializer.data})
 	
 
 
@@ -780,3 +787,26 @@ class UserAndProfileUpdate(RetrieveUpdateAPIView):
 
 
 
+class updatePassword(RetrieveUpdateAPIView):
+	queryset = User.objects.values('id', 'email')
+	serializer_class = PasswordSerializer
+	#permission_classes = [IsAuthenticated, IsUserOrNot]
+
+	def perform_update(self, serializer):
+		serializer.save()
+		return Response({"status":status.HTTP_200_OK, "alldata": serializer.data})
+
+	def update(self, validated_data, pk):
+		obj = get_object_or_404(User, email=validated_data.data['email'])
+		print(obj)
+
+		password = self.request.data.get('password')
+		confirm = self.request.data.get('confirm')
+
+		if confirm == password:
+			obj.set_password(password)
+			obj.save()
+			return Response({"status":status.HTTP_200_OK, "msg":"Success, user password updated"})
+
+		else:
+			return Response({"status":status.HTTP_404_BAD_REQEUST, "msg":"Passwords do not match"})

@@ -55,7 +55,6 @@ All the fields currently have no required fields except for the username, email 
 
 SAMPLE DATA FOR USERPROFILE, JOBS AND NEWS
 {
-    "username": "",
     "email": "",
     "password": "",
     "cpassword": "",

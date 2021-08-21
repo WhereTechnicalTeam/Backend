@@ -69,6 +69,7 @@ urlpatterns = [
     path('verifycode', views.v_code, name='verifycode'),
     path('statistics', views.statistics, name='statistics'),
     path('tokenvalidate', views.tokenValidate, name='tokenvalidate'),
+    path('useredit/<int:pk>/updatepassword', updatePassword.as_view(), name='updatepassword'),
 
 
 ] 

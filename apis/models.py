@@ -145,7 +145,7 @@ class JobInfo(models.Model):
     district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
     level_of_health_system = models.ForeignKey(LevelOfHealthSystem, on_delete=models.CASCADE, null=True)
     employment_status = models.CharField(max_length=100, blank=True, null=True, default=None)
-    is_current = models.CharField(max_length=5, choices=CURRENT, default=None)
+    is_current = models.CharField(max_length=5,  default=None)
     longitude = models.FloatField(blank=True, null=True, default=None)
     latitude = models.FloatField(blank=True, null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -159,6 +159,9 @@ class JobInfo(models.Model):
 
     def __str__(self):
         return str(self.current_institution)
+
+
+    
 
 
     # @receiver(post_save, sender=UserProfile)

@@ -58,9 +58,9 @@ class RegionSerializer(serializers.ModelSerializer):
 
 
 class JobInfoSerializer(serializers.ModelSerializer):
-    region = serializers.SlugRelatedField(queryset=Region.objects.all(), slug_field='region_name')
-    district = serializers.SlugRelatedField(queryset=District.objects.all(), slug_field='district_name')
-    level_of_health_system = serializers.SlugRelatedField(queryset=LevelOfHealthSystem.objects.all(), slug_field='level')
+    # region = serializers.SlugRelatedField(queryset=Region.objects.all(), slug_field='region_name')
+    # district = serializers.SlugRelatedField(queryset=District.objects.all(), slug_field='district_name')
+    # level_of_health_system = serializers.SlugRelatedField(queryset=LevelOfHealthSystem.objects.all(), slug_field='level')
 
 
     class Meta:
@@ -77,8 +77,6 @@ class NewsSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    # job_to_profile = JobInfoSerializer(many=True, read_only=True)
-    # news_to_profile = NewsSerializer(many=True, read_only=True)
 
 
     class Meta:
@@ -92,8 +90,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class UpdateUserProfileSerializer(serializers.ModelSerializer):
-    # job_to_profile = JobInfoSerializer(many=True, read_only=True)
-    # news_to_profile = NewsSerializer(many=True, read_only=True)
 
 
     class Meta:
@@ -148,7 +144,7 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
             # Token.objects.create(user=user)
             return user
-        raise ValidationError('Passwords must match')
+        raise ValidationError({"msg":'Passwords must match'})
         # return validated_data
 
 
@@ -230,7 +226,7 @@ class LoginSerializers(serializers.Serializer):
     )
 
     main_user = UserProfileSerializer(read_only=True)
-    job_to_user = JobInfoSerializer(read_only=True)
+    job_to_user = JobInfoSerializer(read_only=True, many=True)
 
     class Meta:
         model = User
@@ -246,14 +242,10 @@ class LoginSerializers(serializers.Serializer):
             user = authenticate(username=email, password=password)
 
             if not user:
-                msg = _('Unable to log in with provided credentials.')
                 raise serializers.ValidationError({'status':'400', 'msg':'Unable to log in with provided credentials.'})
         else:
-            msg = _( 'Must include "username" and "password".')
             raise serializers.ValidationError({'status':'401', 'msg':'You are not authorised yet.'})
-            # raise serializers.ValidationError(msg, code='authorization')
 
-        # data['user'] = user
         return user
 
 
@@ -291,8 +283,11 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         if validated_data['password'] != validated_data['cpassword']:
-            msg = ('Passwords are not the same')
+            msg = ({"msg":'Passwords are not the same'})
             raise serializers.ValidationError(msg)
+
+        if validated_data['main_user']['surname'] == '' or validated_data['main_user']['firstname'] == '' or validated_data['main_user']['is_trained_frontline'] == '' or validated_data['job_to_user'][0]['is_current'] == '':
+            raise serializers.ValidationError({'status':'400', "msg":'Fill required fileds'})
 
         user = User(
             email=validated_data['email'],
@@ -302,8 +297,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
 
-        # user.first_name = validated_data['main_user']['firstname']
-        # user.last_name = validated_data['main_user']['surname']
+
         user.save()
 
         prof = UserProfile.objects.create(**validated_data['main_user'])
@@ -311,31 +305,28 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         prof.save()
 
 
-        # job = JobInfo.objects.create(**validated_data['job_to_user'])
-        # job.user = user
-        # job.user_profile = prof
-        # job.save()
         job = validated_data.pop('job_to_user')
 
-        for datas in job:
-            # jobs = jobs_data1.pop(0)
-            JobInfo.objects.create(
-                user_profile_id = prof.id,
-                user_id = user.id,
-                current_institution = datas.get('current_institution'),
-                job_title = datas.get('job_title'),
-                region = datas.get('region'),
-                district = datas.get('district'),
-                level_of_health_system = datas.get('level_of_health_system'),
-                employment_status = datas.get('employment_status'),
-                is_current = datas.get('is_current'),
-                longitude = datas.get('longitude'),
-                latitude = datas.get('latitude')
-                )
-            
-     
+        if len(job) > 0:
+            for datas in job:
+                JobInfo.objects.create(
+                    user_profile_id=prof.id,
+                    user_id = user.id,
+                    current_institution = datas.get('current_institution'),
+                    job_title = datas.get('job_title'),
+                    region = datas.get('region'),
+                    district = datas.get('district'),
+                    level_of_health_system = datas.get('level_of_health_system'),
+                    employment_status = datas.get('employment_status'),
+                    is_current = datas.get('is_current'),
+                    longitude = datas.get('longitude'),
+                    latitude = datas.get('latitude')
+                    )
 
-        # Token.objects.create(user=user)
+        else:
+            new_job = JobInfo.objects.create(**job[0], user=user, user_profile_id=prof[0].id)
+            
+
         created = verificationTbl.objects.create(email=validated_data['email'], code=codes())
         try:
             send_mail('Your Verifcation Code',
@@ -343,7 +334,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
             return user
         except Exception as e:
             print(e)
-            raise serializers.ValidationError("Could not send info to email, an error occured. Contact admin for verification.")
+            raise serializers.ValidationError({"msg":"Could not send info to email, an error occured. Contact admin for verification."})
         return user
 
 
@@ -448,5 +439,24 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
             news1.picture2 = info.get('picture2', news1.picture2)
             news1.save()
 
-        #return Response("Could not send info to email, an error occured. Contact admin for verification.", status=status.HTTP_400_BAD_REQUEST)
         return user
+
+
+
+
+
+
+class PasswordSerializer(serializers.ModelSerializer):
+    confirm = serializers.CharField(
+        label=_("Confirm password"),
+        style={'input_type': 'password'},
+        trim_whitespace=False,
+        max_length=128,
+        write_only=True
+    )
+
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'password', 'confirm')
+        extra_kwargs = {'password': {'write_only': True}}
+
