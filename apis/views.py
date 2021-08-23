@@ -608,33 +608,45 @@ def verify_code(request):
 @api_view(['GET', 'POST'])
 def login(request):
     serializer = LoginSerializers(data=request.data, context={'request': request})
-    if serializer.is_valid(raise_exception=True):
-        # user = serializer.validated_data['user']
-        email = request.data.get('email')
-        user = User.objects.get(email=email)
-        queryset = User.objects.filter(email=user)
+    if serializer.is_valid():
+	    email = request.data.get('email')
+	    password = request.data.get('password')
 
-        if UserProfile.objects.filter(user=user).exists():
-	        prof = UserProfile.objects.get(user=user)
-	        try:
-	            if prof.status == 'approved' and prof.email_status == 'verified':
-	                # print ('ver')
-	                # print('yes')
-	                update_last_login(None, user)
-	                user.is_active = True
-	                user.save()
-	                (token, created) = Token.objects.get_or_create(user=user)
-	                
-	                # job =  JobInfo.objects.get(user=user)
 
-	                return Response({"status":status.HTTP_200_OK, 'token': token.key, "alldata": serializer.data})
-	              
-	            else:
-	                return Response({'status': status.HTTP_400_BAD_REQUEST, 'msg': 'You have not yet been verified.'})
-	        except Exception as e:
-	            return Response({'status': status.HTTP_500_INTERNAL_SERVER_ERROR})
-	    # else:
-	    # 	return Response({'status': status.HTTP_400_BAD_REQUEST})
+	    if email and password:
+	        user = authenticate(username=email, password=password)
+
+	        if not user:
+	            raise serializers.ValidationError({'status':status.HTTP_400_BAD_REQUEST, 'msg':'invalid credentials.'})
+
+	        else:
+	        	user = User.objects.get(email=email)
+	        	queryset = User.objects.filter(email=user)
+	        	datas = LoginSerializers(queryset, many=True)
+
+	        	if UserProfile.objects.filter(user=user).exists():
+			        prof = UserProfile.objects.get(user=user)
+			        try:
+			            if prof.status == 'approved' and prof.email_status == 'verified':
+			                # print ('ver')
+			                # print('yes')
+			                update_last_login(None, user)
+			                user.is_active = True
+			                user.save()
+			                (token, created) = Token.objects.get_or_create(user=user)
+			                
+			                # job =  JobInfo.objects.get(user=user)
+
+			                return Response({"status":status.HTTP_200_OK, 'token': token.key, "alldata": datas.data})
+			              
+			            else:
+			                return Response({'status': status.HTTP_400_BAD_REQUEST, 'msg': 'not verified.'})
+			        except Exception as e:
+			            return Response({'status': status.HTTP_500_INTERNAL_SERVER_ERROR})
+
+	    else:
+	        raise serializers.ValidationError({'status':'401', 'msg':'not authorised.'})
+      
 
     return Response({'status': status.HTTP_400_BAD_REQUEST})
 
@@ -670,7 +682,7 @@ def get_profile(request):
 					return Response({"status":status.HTTP_200_OK, "alldata": serializered.data, "msg":"A verification code has been sent to your email"})
 					
 				except Exception as e:
-					print(e)
+					# print(e)
 					return Response({"status":status.HTTP_500_INTERNAL_SERVER_ERROR, "msg":"Could not send info to email, an error occured. Contact admin for verification."})
 			else:
 				print('verified')
@@ -709,14 +721,14 @@ def v_code(request):
 				print(prof.email_status)
 				# token, created = Token.objects.get_or_create(user=user)
 			# 	return Response({"status": status.HTTP_200_OK, "Token": token.key})
-				return Response({"msg":"Verification code is valid. You may login.", "status":status.HTTP_200_OK})
+				return Response({"status":status.HTTP_200_OK, "msg":"Verification code is valid. You may login."})
 			
 		else:
-			return Response({"msg":"This verification code does not exist.", "status":status.HTTP_400_BAD_REQUEST})
+			return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"This verification code does not exist."})
 
 	except Exception as e:
 		print(e)
-		return Response({"msg":"This verification code does not exist.", "status":status.HTTP_400_BAD_REQUEST})
+		return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"This verification code does not exist."})
 
 
 

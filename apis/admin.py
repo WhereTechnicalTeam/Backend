@@ -36,8 +36,10 @@ class DistrictsAdmin(admin.ModelAdmin):
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-	list_display = ['id', 'title', 'surname', 'firstname', 'status', 'sex', 'phone1', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 'institution_enrolled_at_frontline', 'job_title_at_enroll_frontline', 'is_trained_intermediate', 'cohort_number_intermediate', 'yr_completed_intermediate', 'institution_enrolled_at_intermediate', 'job_title_at_enroll_intermediate', 'is_trained_advanced', 'cohort_number_advanced', 'yr_completed_advanced', 'institution_enrolled_at_advanced', 'job_title_at_enroll_advanced', 'created_at', 'updated_at']
-	list_filter = ['title']
+	list_display = ['id', 'title', 'surname', 'firstname', 'status', 'sex', '_phone1', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 'institution_enrolled_at_frontline',
+	 'job_title_at_enroll_frontline', 'is_trained_intermediate', 'cohort_number_intermediate', 'yr_completed_intermediate', 'institution_enrolled_at_intermediate', 'job_title_at_enroll_intermediate', 
+	 'is_trained_advanced', 'cohort_number_advanced', 'yr_completed_advanced', 'institution_enrolled_at_advanced', 'job_title_at_enroll_advanced', 'created_at', 'updated_at']
+	list_filter = ['_title']
 	search_fields = ['title', 'surname', 'firstname',]
 	ordering = ('id',)
 
@@ -46,7 +48,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 class JobInfoAdmin(admin.ModelAdmin):
 	list_display = ['id', 'current_institution', 'job_title', 'region_id', 'district_id', 'level_of_health_system', 'employment_status', 'is_current', 'created_at', 'updated_at']
-	list_filter = ['job_title']
+	list_filter = ['_job_title']
 	search_fields = ['job_title', 'level_of_health_system',]
 	ordering = ('id',)
 

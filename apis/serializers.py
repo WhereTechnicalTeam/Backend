@@ -234,19 +234,19 @@ class LoginSerializers(serializers.Serializer):
         extra_kwargs = {'password': {'write_only': True}}
 
 
-    def validate(self, data):
-        email = data.get('email')
-        password = data.get('password')
+    # def validate(self, data):
+    #     email = data.get('email')
+    #     password = data.get('password')
 
-        if email and password:
-            user = authenticate(username=email, password=password)
+    #     if email and password:
+    #         user = authenticate(username=email, password=password)
 
-            if not user:
-                raise serializers.ValidationError({'status':'400', 'msg':'Unable to log in with provided credentials.'})
-        else:
-            raise serializers.ValidationError({'status':'401', 'msg':'You are not authorised yet.'})
+    #         if not user:
+    #             raise serializers.ValidationError({'status':status.HTTP_400_BAD_REQUEST, 'msg':'Unable to log in with provided credentials.'})
+    #     else:
+    #         raise serializers.ValidationError({'status':'401', 'msg':'You are not authorised yet.'})
 
-        return user
+    #     return user
 
 
 
