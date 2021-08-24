@@ -51,8 +51,8 @@ urlpatterns = [
 
     #    jobs  crud
     path('jobdetail', JobsList.as_view(), name='joblist'),
-    path('jobdetail/<int:pk>/', JobsDetail.as_view(), name='jobdetail'),
-    path('jobdetail/<int:pk>/edit', JobsUpdate.as_view(), name='jobupdate'),
+    # path('jobdetail/<int:pk>/', JobsDetail.as_view(), name='jobdetail'),
+    # path('jobdetail/<int:pk>/edit', JobsUpdate.as_view(), name='jobupdate'),
     path('jobdetail/<int:pk>/delete', JobsDelete.as_view(), name='jobdelete'),
     path('jobcreate', JobsCreate.as_view(), name='jobcreate'),
 
@@ -69,6 +69,8 @@ urlpatterns = [
     path('verifycode', views.v_code, name='verifycode'),
     path('statistics', views.statistics, name='statistics'),
     path('tokenvalidate', views.tokenValidate, name='tokenvalidate'),
+    path('jobdetail/<int:pk>/', views.fetch_jobs, name='alljobs'),
+    path('jobdetail/<int:pk>/update', UpdateJobs.as_view(), name='jobupdate'),
     path('useredit/<int:pk>/updatepassword', updatePassword.as_view(), name='updatepassword'),
 
 

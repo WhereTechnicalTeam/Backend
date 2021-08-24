@@ -169,21 +169,6 @@ class VerificationSerializer(serializers.ModelSerializer):
 
 
 
-'''We want to ensure that tokens are created when user is created in UserCreate view, so we update the UserSerializer. Change your serializers.py like this'''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -234,21 +219,6 @@ class LoginSerializers(serializers.Serializer):
         extra_kwargs = {'password': {'write_only': True}}
 
 
-    # def validate(self, data):
-    #     email = data.get('email')
-    #     password = data.get('password')
-
-    #     if email and password:
-    #         user = authenticate(username=email, password=password)
-
-    #         if not user:
-    #             raise serializers.ValidationError({'status':status.HTTP_400_BAD_REQUEST, 'msg':'Unable to log in with provided credentials.'})
-    #     else:
-    #         raise serializers.ValidationError({'status':'401', 'msg':'You are not authorised yet.'})
-
-    #     return user
-
-
 
 
 class AlldataSerializer(serializers.ModelSerializer):
@@ -286,8 +256,62 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
             msg = ({"msg":'Passwords are not the same'})
             raise serializers.ValidationError(msg)
 
-        if validated_data['main_user']['surname'] == '' or validated_data['main_user']['firstname'] == '' or validated_data['main_user']['is_trained_frontline'] == '' or validated_data['job_to_user'][0]['is_current'] == '':
-            raise serializers.ValidationError({'status':'400', "msg":'Fill required fileds'})
+        if User.objects.filter(email__contains=validated_data['email']).exists():
+            raise serializers.ValidationError({"status":400, "msg":'email already exists'})
+       
+        if validated_data['main_user']['surname'] == '':
+            raise serializers.ValidationError({"status":400, "msg":'fill surname'})
+
+        if validated_data['main_user']['firstname'] == '':
+            raise serializers.ValidationError({"status":400, "msg":'fill firstname'})
+
+        if validated_data['main_user']['sex'] == '':
+            raise serializers.ValidationError({"status":400, "msg":'fill sex'})
+
+
+       
+        if validated_data['main_user']['title'] == '':
+            validated_data['main_user']['title'] = None
+
+        if validated_data['main_user']['phone1'] == '':
+            validated_data['main_user']['phone1'] = None
+
+        if validated_data['main_user']['institution_enrolled_at_frontline'] == '':
+            validated_data['main_user']['institution_enrolled_at_frontline'] = None
+
+        if validated_data['main_user']['job_title_at_enroll_frontline'] == '':
+            validated_data['main_user']['job_title_at_enroll_frontline'] = None
+
+        if validated_data['main_user']['institution_enrolled_at_intermediate'] == '':
+            validated_data['main_user']['institution_enrolled_at_intermediate'] = None
+
+        if validated_data['main_user']['job_title_at_enroll_intermediate'] == '':
+            validated_data['main_user']['job_title_at_enroll_intermediate'] = None
+
+        if validated_data['main_user']['institution_enrolled_at_advanced'] == '':
+            validated_data['main_user']['institution_enrolled_at_advanced'] = None
+
+        if validated_data['main_user']['job_title_at_enroll_advanced'] == '':
+            validated_data['main_user']['job_title_at_enroll_advanced'] = None
+
+        if validated_data['main_user']['image'] == '':
+            validated_data['main_user']['image'] = None
+
+
+        for a in range(len(validated_data['job_to_user'])):
+
+            if validated_data['job_to_user'][a]['is_current'] == '':
+                validated_data['job_to_user'][a]['is_current'] = None
+
+            if validated_data['job_to_user'][a]['current_institution'] == '':
+                validated_data['job_to_user'][a]['current_institution'] = None
+
+            if validated_data['job_to_user'][a]['job_title'] == '':
+                validated_data['job_to_user'][a]['job_title'] = None
+
+            if validated_data['job_to_user'][a]['employment_status'] == '':
+                validated_data['job_to_user'][a]['employment_status'] = None
+
 
         user = User(
             email=validated_data['email'],
@@ -328,14 +352,14 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
             
 
         created = verificationTbl.objects.create(email=validated_data['email'], code=codes())
-        try:
-            send_mail('Your Verifcation Code',
-                """Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [validated_data['email']],)
-            return user
-        except Exception as e:
-            print(e)
-            raise serializers.ValidationError({"msg":"Could not send info to email, an error occured. Contact admin for verification."})
-        return user
+        # try:
+        #     send_mail('Your Verifcation Code',
+        #         """Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [validated_data['email']],)
+        # except Exception as e:
+        #     print(e)
+        #     raise serializers.ValidationError({"msg":"Could not send info to email, an error occured. Contact admin for verification."})
+        raise serializers.ValidationError({"status":200, "id":user.id, "email":user})
+        #return user
 
 
 
@@ -345,7 +369,6 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
 class UpdateProfileSerializer(serializers.ModelSerializer):
     job_to_user = JobInfoSerializer(many=True)
     main_user = UpdateUserProfileSerializer()
-    # news_to_user = NewsSerializer(many=True)
 
 
     class Meta:
@@ -374,31 +397,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
             prof = UserProfile.objects.filter(user_id=user.id).create(**main, user=user)
         # print(prof[0].id)
 
-        # profile = prof.pop(0)
-        # profile.title = validated_data.get('title', profile.title)
-        # profile.surname = validated_data.get('surname', profile.surname)
-        # profile.firstname = validated_data.get('firstname', profile.firstname)
-        # profile.sex = validated_data.get('sex', profile.sex)
-        # profile.date_of_birth = validated_data.get('date_of_birth', profile.date_of_birth)
-        # profile.phone1 = validated_data.get('phone1', profile.phone1)
-        # profile.phone2 = validated_data.get('phone2', profile.phone2)
-        # profile.is_trained_frontline = validated_data.get('is_trained_frontline', profile.is_trained_frontline)
-        # profile.cohort_number_frontline = validated_data.get('cohort_number_frontline', profile.cohort_number_frontline)
-        # profile.yr_completed_frontline = validated_data.get('yr_completed_frontline', profile.yr_completed_frontline)
-        # profile.institution_enrolled_at_frontline = validated_data.get('institution_enrolled_at_frontline', profile.institution_enrolled_at_frontline)
-        # profile.job_title_at_enroll_frontline = validated_data.get('job_title_at_enroll_frontline', profile.job_title_at_enroll_frontline)
-        # profile.is_trained_intermediate = validated_data.get('is_trained_intermediate', profile.is_trained_intermediate)
-        # profile.cohort_number_intermediate = validated_data.get('cohort_number_intermediate', profile.cohort_number_intermediate)
-        # profile.yr_completed_intermediate = validated_data.get('yr_completed_intermediate', profile.yr_completed_intermediate)
-        # profile.institution_enrolled_at_intermediate = validated_data.get('institution_enrolled_at_intermediate', profile.institution_enrolled_at_intermediate)
-        # profile.job_title_at_enroll_intermediate = validated_data.get('job_title_at_enroll_intermediate', profile.job_title_at_enroll_intermediate)
-        # profile.is_trained_advanced = validated_data.get('is_trained_advanced', profile.is_trained_advanced)
-        # profile.cohort_number_advanced = validated_data.get('cohort_number_advanced', profile.cohort_number_advanced)
-        # profile.yr_completed_advanced = validated_data.get('yr_completed_advanced', profile.yr_completed_advanced)
-        # profile.institution_enrolled_at_advanced = validated_data.get('institution_enrolled_at_advanced', profile.institution_enrolled_at_advanced)
-        # profile.job_title_at_enroll_advanced = validated_data.get('job_title_at_enroll_advanced', profile.job_title_at_enroll_advanced)
-        # # profile.image = validated_data.get('image', profile.image)
-        # profile.save()
+
 
         if len(jobs_data1) > 0:
             for datas in job:
@@ -416,28 +415,6 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
 
         else:
             new_job = JobInfo.objects.create(**job[0], user=user, user_profile_id=prof[0].id)
-
-
-            # jobs = jobs_data1.pop(0)
-            # jobs.current_institution = job.get('current_institution', jobs.current_institution)
-            # jobs.job_title = job.get('job_title', jobs.job_title)
-            # jobs.region = job.get('region', jobs.region)
-            # jobs.district = job.get('district', jobs.district)
-            # jobs.level_of_health_system = job.get('level_of_health_system', jobs.level_of_health_system)
-            # jobs.employment_status = job.get('employment_status', jobs.employment_status)
-            # jobs.is_current = job.get('is_current', jobs.is_current)
-            # jobs.longitude = job.get('longitude', jobs.longitude)
-            # jobs.latitude = job.get('latitude', jobs.latitude)
-            # jobs.save()
-
-
-        for info in news_data1:
-            news1 = news_data1.pop(0)
-            news1.title = info.get('title', news1.title)
-            news1.content = info.get('content', news1.content)
-            news1.picture1 = info.get('picture1', news1.picture1)
-            news1.picture2 = info.get('picture2', news1.picture2)
-            news1.save()
 
         return user
 
@@ -459,4 +436,49 @@ class PasswordSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'email', 'password', 'confirm')
         extra_kwargs = {'password': {'write_only': True}}
+
+
+
+
+class AllJobsSerializer(serializers.ModelSerializer):
+    
+    job_to_user = JobInfoSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = ('id','email', 'job_to_user')
+
+    def update(self, instance, validated_data):
+        job = validated_data.pop('job_to_user')
+
+        jobs_data1 = instance.job_to_user.all()
+
+        jobs_data1 = list(jobs_data1)
+
+        user = User.objects.get(email=validated_data['email'])
+        # print(user)
+
+        prof = None
+        if UserProfile.objects.filter(user_id=user.id).exists():
+            prof = UserProfile.objects.filter(user_id=user.id)
+
+
+        if len(jobs_data1) > 0:
+            for datas in job:
+                jobs = jobs_data1.pop(0)
+                jobs.current_institution = datas.get('current_institution', jobs.current_institution)
+                jobs.job_title = datas.get('job_title', jobs.job_title)
+                jobs.region = datas.get('region', jobs.region)
+                jobs.district = datas.get('district', jobs.district)
+                jobs.level_of_health_system = datas.get('level_of_health_system', jobs.level_of_health_system)
+                jobs.employment_status = datas.get('employment_status', jobs.employment_status)
+                jobs.is_current = datas.get('is_current', jobs.is_current)
+                jobs.longitude = datas.get('longitude', jobs.longitude)
+                jobs.latitude = datas.get('latitude', jobs.latitude)
+                jobs.save()
+
+        else:
+            new_job = JobInfo.objects.create(**job[0], user=user, user_profile_id=prof[0].id)
+
+        return user
 

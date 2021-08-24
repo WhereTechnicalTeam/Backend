@@ -420,17 +420,18 @@ class JobsList(ListAPIView):
 
 
 class JobsDetail(RetrieveAPIView):
-	queryset = JobInfo.objects.all()
-	serializer_class = JobInfoSerializer
+	queryset = User.objects.all()
+	serializer_class = AllJobsSerializer
 	lookup_field = 'pk'
-	permission_classes = [IsAuthenticated]
+	#permission_classes = [IsAuthenticated]
 
 
 	def get(self, request, pk):
 		# Note the use of `get_queryset()` instead of `self.queryset`
-		queryset = self.get_queryset()
-		queryset = queryset.get(pk=pk)
-		serializer = JobInfoSerializer(queryset)
+		queryset0 = self.get_queryset()
+		queryset1 = queryset0.filter(pk=pk)
+		# queryset = JobInfo.objects.filter(user_id=pk)
+		serializer = AllJobsSerializer(queryset1, many=True)
 		return Response({"status":status.HTTP_200_OK, "job": serializer.data})
 
 
@@ -439,7 +440,7 @@ class JobsUpdate(RetrieveUpdateAPIView):
 	queryset = JobInfo.objects.all()
 	serializer_class = JobInfoSerializer
 	lookup_field = 'pk'
-	permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+	#permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
@@ -484,7 +485,7 @@ class JobsCreate(CreateAPIView):
 class UserDetailViewList(ListAPIView):
 	queryset = User.objects.all()[:20]
 	serializer_class = UserDetailSerializer
-	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('username', 'email',)
 
@@ -502,7 +503,7 @@ class UserDetailViewDetail(RetrieveAPIView):
 	queryset = User.objects.all()
 	serializer_class = UserDetailSerializer
 	lookup_field = 'pk'
-	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
 	def get(self, request, pk):
 		# Note the use of `get_queryset()` instead of `self.queryset`
@@ -734,6 +735,41 @@ def v_code(request):
 
 
 @api_view(['GET'])
+def fetch_jobs(request, pk):
+	all_profile = User.objects.filter(id=pk)
+
+	serializer = AllJobsSerializer(all_profile, many=True)
+	if len(serializer.data) == 1:
+		return Response(serializer.data[0], status=status.HTTP_200_OK)
+	return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"Does not exist"})
+
+
+
+class UpdateJobs(RetrieveUpdateAPIView):
+	queryset = User.objects.all()
+	serializer_class = AllJobsSerializer
+	permission_classes = [IsAuthenticated, IsUserOrNot]
+
+	def perform_update(self, serializer):
+		serializer.save(user=self.request.user)
+		return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+	def get(self, request, pk):
+		# Note the use of `get_queryset()` instead of `self.queryset`
+		queryset0 = self.get_queryset()
+		queryset1 = queryset0.filter(pk=pk)
+		# queryset = JobInfo.objects.filter(user_id=pk)
+		serializer = AllJobsSerializer(queryset1, many=True)
+		return Response(serializer.data[0], status=status.HTTP_200_OK)
+
+
+
+
+
+
+@api_view(['GET'])
 def statistics(request):
 	all_profile = UserProfile.objects.all()
 	alumni = all_profile.count()
@@ -745,6 +781,7 @@ def statistics(request):
 	'intermediate':intermediate, 'advanced':advanced}
 
 	return Response({"status":status.HTTP_200_OK, "stats": context})
+
 
 
 
@@ -768,13 +805,14 @@ class UserAndProfileCreate(CreateAPIView):
 	def list(self, request):
 		# Note the use of `get_queryset()` instead of `self.queryset`
 		queryset = self.get_queryset()
-		serializer = AlldataSerializer(queryset, many=True)
+		serializer = UpdateProfileSerializer(queryset, many=True)
 		return Response({"status":status.HTTP_200_OK, "alldata": serializer.data})
 
 
 	def perform_create(self, serializer):
-		serializer.save()
-		return Response({"status":status.HTTP_200_OK, "alldata": serializer.data})
+		a=serializer.save()
+		# print(serializer.data)
+		return Response({"status":status.HTTP_201_CREATED, "alldata": serializer.data})
 	
 
 
@@ -782,7 +820,7 @@ class UserAndProfileCreate(CreateAPIView):
 class UserAndProfileUpdate(RetrieveUpdateAPIView):
 	queryset = User.objects.all()
 	serializer_class = UpdateProfileSerializer
-	#permission_classes = [IsAuthenticated, IsUserOrNot]
+	permission_classes = [IsAuthenticated, IsUserOrNot]
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
@@ -802,7 +840,7 @@ class UserAndProfileUpdate(RetrieveUpdateAPIView):
 class updatePassword(RetrieveUpdateAPIView):
 	queryset = User.objects.values('id', 'email')
 	serializer_class = PasswordSerializer
-	#permission_classes = [IsAuthenticated, IsUserOrNot]
+	permission_classes = [IsAuthenticated, IsUserOrNot]
 
 	def perform_update(self, serializer):
 		serializer.save()

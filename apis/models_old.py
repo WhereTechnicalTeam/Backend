@@ -48,7 +48,7 @@ STATE = (
 
 
 
-# User._meta.get_field('email')._unique = False
+User._meta.get_field('email')._unique = True
 
 
 class Region(models.Model):
@@ -81,30 +81,30 @@ class District(models.Model):
 class UserProfile(models.Model):
     # id = models.IntegerField(primary_key=True)
     user = models.OneToOneField(User, related_name='main_user', on_delete=models.CASCADE, null=True)
-    title = models.CharField(max_length=10, blank=True, null=True, default=None, db_column='title')
-    surname = models.CharField(max_length=50, default=None,  blank=True, null=True, db_column='surname')
-    firstname = models.CharField(max_length=50, default=None,  blank=True, null=True, db_column='firstname')
-    sex = models.CharField(max_length=50, default=None, blank=True, null=True, db_column='sex')
+    _title = models.CharField(max_length=10, blank=True, null=True, default=None, db_column='title')
+    _surname = models.CharField(max_length=50, default=None, db_column='surname')
+    _firstname = models.CharField(max_length=50, default=None, db_column='firstname')
+    _sex = models.CharField(max_length=50, default=None, null=True, db_column='sex')
     date_of_birth = models.DateField(blank=True, null=True, default=None)
-    phone1 = models.CharField(max_length=13, blank=True, null=True, default=None, db_column='phone1')
-    phone2 = models.CharField(max_length=13, blank=True, null=True, default=None, db_column='phone2')
+    _phone1 = models.CharField(max_length=13, blank=True, null=True, default=None, db_column='phone1')
+    _phone2 = models.CharField(max_length=13, blank=True, null=True, default=None, db_column='phone2')
     is_trained_frontline = models.CharField(max_length=5, blank=True, null=True, choices=CURRENT, default=None)
     cohort_number_frontline = models.IntegerField(blank=True, null=True, default=None)
     yr_completed_frontline = models.DateField(blank=True, null=True, default=None)
-    institution_enrolled_at_frontline = models.CharField(max_length=100, blank=True, null=True, default=None, db_column='institution_enrolled_at_frontline')
-    job_title_at_enroll_frontline = models.CharField(db_column='job_title_at_enroll_frontline', max_length=100, blank=True, null=True, default=None)
+    _institution_enrolled_at_frontline = models.CharField(max_length=100, blank=True, null=True, default=None, db_column='institution_enrolled_at_frontline')
+    _job_title_at_enroll_frontline = models.CharField(db_column='job_title_at_enroll_frontline', max_length=100, blank=True, null=True, default=None)
     is_trained_intermediate = models.CharField(max_length=5, blank=True, null=True, choices=CURRENT, default=None)
     cohort_number_intermediate = models.IntegerField(blank=True, null=True, default=None)
     yr_completed_intermediate = models.DateField(blank=True, null=True, default=None)
-    institution_enrolled_at_intermediate = models.CharField(db_column='institution__enrolled_at_intermediate', max_length=100, blank=True, null=True, default=None)  # Field renamed because it contained more than one '_' in a row.
-    job_title_at_enroll_intermediate = models.CharField(db_column='job_title_at_enroll_intermediate', max_length=100, blank=True, null=True, default=None)
+    _institution_enrolled_at_intermediate = models.CharField(db_column='institution__enrolled_at_intermediate', max_length=100, blank=True, null=True, default=None)  # Field renamed because it contained more than one '_' in a row.
+    _job_title_at_enroll_intermediate = models.CharField(db_column='job_title_at_enroll_intermediate', max_length=100, blank=True, null=True, default=None)
     is_trained_advanced = models.CharField(max_length=5, blank=True, null=True, choices=CURRENT, default=None)
     cohort_number_advanced = models.IntegerField(blank=True, null=True, default=None)
     yr_completed_advanced = models.DateField(blank=True, null=True, default=None)
-    institution_enrolled_at_advanced = models.CharField(max_length=100, blank=True, null=True, default=None, db_column='institution_enrolled_at_advanced')
-    job_title_at_enroll_advanced = models.CharField(db_column='job_title_at_enroll_advanced', max_length=100, blank=True, null=True, default=None)
+    _institution_enrolled_at_advanced = models.CharField(max_length=100, blank=True, null=True, default=None, db_column='institution_enrolled_at_advanced')
+    _job_title_at_enroll_advanced = models.CharField(db_column='job_title_at_enroll_advanced', max_length=100, blank=True, null=True, default=None)
     status = models.CharField(max_length=20, choices=STATUS, default='pending approval')
-    email_status = models.CharField(max_length=100, blank=True, default='not verified')
+    email_status = models.CharField(max_length=100, blank=True, null=True, default='not verified')
     image = models.ImageField(upload_to='api_images/profile/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -115,14 +115,108 @@ class UserProfile(models.Model):
         db_table = 'userprofile'
 
     def __str__(self):
-        return '{} {}'.format(self.firstname, self.surname)
+        return '{} {}'.format(self._firstname, self._surname)
 
 
-    def aa(self):
-        if self.job_title_at_enroll_advanced == "":
-            self.job_title_at_enroll_advanced = None
+    @property
+    def title(self):
+        if self._title == "":
+            self._title = None
+            return self._title 
+        return self._title 
 
-   
+    @property
+    def surname(self):
+        if self._surname == "":
+            self._surname = None
+            return self._surname 
+        return self._surname 
+
+
+    @property
+    def firstname(self):
+        if self._firstname == "":
+            self._firstname = None
+            return self._firstname 
+        return self._firstname 
+
+
+    @property
+    def sex(self):
+        if self._sex == "":
+            self._sex = None
+            return self._sex 
+        return self._sex 
+
+
+    @property
+    def phone1(self):
+        if self._phone1 == "":
+            self._phone1 = None
+            return self._phone1 
+        return self._phone1 
+
+    @property
+    def phone2(self):
+        if self._phone2 == "":
+            self._phone2 = None
+            return self._phone2 
+        return self._phone2 
+
+
+    @property
+    def institution_enrolled_at_frontline(self):
+        if self._institution_enrolled_at_frontline == "":
+            self._institution_enrolled_at_frontline = None
+            return self._institution_enrolled_at_frontline 
+        return self._institution_enrolled_at_frontline 
+
+
+    @property
+    def job_title_at_enroll_frontline(self):
+        if self._job_title_at_enroll_frontline == "":
+            self._job_title_at_enroll_frontline = None
+            return self._job_title_at_enroll_frontline 
+        return self._job_title_at_enroll_frontline 
+
+
+    @property
+    def institution_enrolled_at_intermediate(self):
+        if self._institution_enrolled_at_intermediate == "":
+            self._institution_enrolled_at_intermediate = None
+            return self._institution_enrolled_at_intermediate 
+        return self._institution_enrolled_at_intermediate 
+
+
+    @property
+    def job_title_at_enroll_intermediate(self):
+        if self._job_title_at_enroll_intermediate == "":
+            self._job_title_at_enroll_intermediate = None
+            return self._job_title_at_enroll_intermediate 
+        return self._job_title_at_enroll_intermediate 
+
+
+    @property
+    def institution_enrolled_at_advanced(self):
+        if self._institution_enrolled_at_advanced == "":
+            self._institution_enrolled_at_advanced = None
+            return self._institution_enrolled_at_advanced 
+        return self._institution_enrolled_at_advanced 
+
+
+    @property
+    def job_title_at_enroll_advanced(self):
+        if self._job_title_at_enroll_advanced == "":
+            self._job_title_at_enroll_advanced = None
+            return self._job_title_at_enroll_advanced 
+        return self._job_title_at_enroll_advanced 
+
+    # @property
+    # def phone2(self):
+    #     if self._phone2 == "":
+    #         self._phone2 = None
+    #         return self._phone2 
+    #     return self._phone2 
 
 
 
@@ -145,13 +239,13 @@ class JobInfo(models.Model):
     # id = models.IntegerField(primary_key=True)
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, related_name='job_to_profile')
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='job_to_user')
-    current_institution = models.CharField(max_length=100, blank=True, null=True, default=None, db_column='current_institution')
-    job_title = models.CharField(max_length=100, blank=True, null=True, default=None, db_column='job_title')
+    _current_institution = models.CharField(max_length=100, blank=True, null=True, default=None, db_column='current_institution')
+    _job_title = models.CharField(max_length=100, blank=True, null=True, default=None, db_column='job_title')
     region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
     district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
     level_of_health_system = models.ForeignKey(LevelOfHealthSystem, on_delete=models.CASCADE, null=True)
-    employment_status = models.CharField(max_length=100, blank=True, null=True, default=None, db_column='employment_status')
-    is_current = models.CharField(max_length=5,  default=None, blank=True, null=True)
+    _employment_status = models.CharField(max_length=100, blank=True, null=True, default=None, db_column='employment_status')
+    is_current = models.CharField(max_length=5,  default=None)
     longitude = models.FloatField(blank=True, null=True, default=None)
     latitude = models.FloatField(blank=True, null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -167,7 +261,45 @@ class JobInfo(models.Model):
         return str(self.current_institution)
 
 
-   
+    @property
+    def job_title(self):
+        if self._job_title == "":
+            self._job_title = None
+            return self._job_title 
+        return self._job_title 
+
+    @property
+    def employment_status(self):
+        if self._employment_status == "":
+            self._employment_status = None
+            return self._employment_status 
+        return self._employment_status 
+
+
+    @property
+    def current_institution(self):
+        if self._current_institution == "":
+            self._current_institution = None
+            return self._current_institution 
+        return self._current_institution 
+
+
+    # @my_date.setter
+    # def my_date(self, value):
+    #     if value > datetime.date.today():
+    #         logger.warning("The date chosen was in the future.")
+    #     self._my_date = value 
+
+
+    # @receiver(post_save, sender=UserProfile)
+    # def create_user_profile(sender, instance, created, **kwargs):
+    #     if created:
+    #         JobInfo.objects.create(userprofile=instance)
+
+    # @receiver(post_save, sender=UserProfile)
+    # def save_user_profile(sender, instance, **kwargs):
+    #     instance.jobinfo.save()
+
 
 
 
@@ -192,6 +324,16 @@ class New(models.Model):
 
     def __str__(self):
         return str(self.content)
+
+
+    # @receiver(post_save, sender=UserProfile)
+    # def create_user_profile(sender, instance, created, **kwargs):
+    #     if created:
+    #         New.objects.create(user=instance)
+
+    # @receiver(post_save, sender=UserProfile)
+    # def save_user_profile(sender, instance, **kwargs):
+    #     instance.news.save()
 
 
 

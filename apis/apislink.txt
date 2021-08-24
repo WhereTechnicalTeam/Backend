@@ -49,6 +49,21 @@ Token Validation
 
 
 
+Update Jobs
+/api/jobdetail/<int:pk>/update
+
+
+Fetch Jobs
+/api/jobdetail/<int:pk>/
+
+
+
+
+Update Password
+/api/useredit/<int:pk>/updatepassword
+
+
+
 All the fields currently have no required fields except for the username, email and password.
 
 
