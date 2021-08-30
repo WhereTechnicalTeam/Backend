@@ -748,7 +748,7 @@ def fetch_jobs(request, pk):
 class UpdateJobs(RetrieveUpdateAPIView):
 	queryset = User.objects.all()
 	serializer_class = AllJobsSerializer
-	permission_classes = [IsAuthenticated, IsUserOrNot]
+	#permission_classes = [IsAuthenticated,]
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
@@ -820,7 +820,7 @@ class UserAndProfileCreate(CreateAPIView):
 class UserAndProfileUpdate(RetrieveUpdateAPIView):
 	queryset = User.objects.all()
 	serializer_class = UpdateProfileSerializer
-	permission_classes = [IsAuthenticated, IsUserOrNot]
+	#permission_classes = [IsAuthenticated,]
 
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)

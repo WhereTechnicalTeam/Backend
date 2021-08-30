@@ -352,12 +352,12 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
             
 
         created = verificationTbl.objects.create(email=validated_data['email'], code=codes())
-        # try:
-        #     send_mail('Your Verifcation Code',
-        #         """Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [validated_data['email']],)
-        # except Exception as e:
-        #     print(e)
-        #     raise serializers.ValidationError({"msg":"Could not send info to email, an error occured. Contact admin for verification."})
+        try:
+            send_mail('Your Verifcation Code',
+                """Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [validated_data['email']],)
+        except Exception as e:
+            print(e)
+            raise serializers.ValidationError({"msg":"Could not send info to email, an error occured. Contact admin for verification."})
         raise serializers.ValidationError({"status":200, "id":user.id, "email":user})
         #return user
 
@@ -370,13 +370,38 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
     job_to_user = JobInfoSerializer(many=True)
     main_user = UpdateUserProfileSerializer()
 
+    password = serializers.CharField(
+        label=_("password"),
+        style={'input_type': 'password'},
+        trim_whitespace=False,
+        max_length=128,
+        required=False,
+        read_only=True
+    )
+    cpassword = serializers.CharField(
+        label=_("Confirm password"),
+        style={'input_type': 'password'},
+        trim_whitespace=False,
+        max_length=128,
+        required=False,
+        read_only=True
+    )
+
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'main_user', 'job_to_user')
+        fields = ('id', 'email', 'password', 'cpassword', 'main_user', 'job_to_user')
 
 
     def update(self, instance, validated_data):
+
+        # if validated_data['password'] == '':
+        #     validated_data['password'] = 'None'
+
+        # if validated_data['password'] == '':
+        #     validated_data['password'] = 'None'
+
+
         job = validated_data.pop('job_to_user')
         main = validated_data.pop('main_user')
         # news = validated_data.pop('news_to_user')
@@ -478,7 +503,7 @@ class AllJobsSerializer(serializers.ModelSerializer):
                 jobs.save()
 
         else:
-            new_job = JobInfo.objects.create(**job[0], user=user, user_profile_id=prof[0].id)
+            new_job = JobInfo.objects.filter(id=job[0]['id']).update(**job[0], user=user, user_profile_id=prof[0].id)
 
         return user
 
