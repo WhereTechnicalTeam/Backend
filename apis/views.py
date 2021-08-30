@@ -740,7 +740,7 @@ def fetch_jobs(request, pk):
 
 	serializer = AllJobsSerializer(all_profile, many=True)
 	if len(serializer.data) == 1:
-		return Response(serializer.data[0], status=status.HTTP_200_OK)
+		return Response({"status":status.HTTP_200_OK, "alldata":serializer.data[0]})
 	return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"Does not exist"})
 
 

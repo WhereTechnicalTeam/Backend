@@ -503,7 +503,7 @@ class AllJobsSerializer(serializers.ModelSerializer):
                 jobs.save()
 
         else:
-            new_job = JobInfo.objects.filter(id=job[0]['id']).update(**job[0], user=user, user_profile_id=prof[0].id)
+            new_job = JobInfo.objects.filter(id=job['id']).update(**job[0], user=user, user_profile_id=prof[0].id)
 
         return user
 
