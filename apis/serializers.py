@@ -210,6 +210,13 @@ class LoginSerializers(serializers.Serializer):
         write_only=True
     )
 
+    id = serializers.CharField(
+        label=_("id"),
+        trim_whitespace=False,
+        max_length=128,
+        read_only=True
+    )
+
     main_user = UserProfileSerializer(read_only=True)
     job_to_user = JobInfoSerializer(read_only=True, many=True)
 
@@ -217,6 +224,7 @@ class LoginSerializers(serializers.Serializer):
         model = User
         fields = ('id', 'username', 'email', 'password', 'main_user', 'job_to_user')
         extra_kwargs = {'password': {'write_only': True}}
+        read_only_fields = ('id')
 
 
 
@@ -488,7 +496,7 @@ class AllJobsSerializer(serializers.ModelSerializer):
             prof = UserProfile.objects.filter(user_id=user.id)
 
 
-        if len(jobs_data1) > 0:
+        if  jobs_data1:
             for datas in job:
                 jobs = jobs_data1.pop(0)
                 jobs.current_institution = datas.get('current_institution', jobs.current_institution)
@@ -503,7 +511,8 @@ class AllJobsSerializer(serializers.ModelSerializer):
                 jobs.save()
 
         else:
-            new_job = JobInfo.objects.filter(id=job['id']).update(**job[0], user=user, user_profile_id=prof[0].id)
+            #new_job = JobInfo.objects.filter(id=job['id']).update(**job[0], user=user, user_profile_id=prof[0].id)
+            new_job = JobInfo.objects.create(**job[0], user=user, user_profile_id=prof[0].id)
 
         return user
 

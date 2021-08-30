@@ -461,7 +461,7 @@ class JobsDelete(DestroyAPIView):
 class JobsCreate(CreateAPIView):
 	queryset = JobInfo.objects.all()
 	serializer_class = JobInfoSerializer
-	permission_classes = [IsAuthenticated]
+	#permission_classes = [IsAuthenticated]
 
 
 
