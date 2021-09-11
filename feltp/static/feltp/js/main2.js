@@ -22,7 +22,7 @@ function initMap() {
  $.get('/queryjson', function(result){
     // queryjson = querydata
     // result = JSON.parse(JSON.stringify(queryjson))
-    // console.log(result)
+    console.log(result)
 
     for (i = 0; i < result.length; i++) {
       if (['user_profile__is_trained_frontline'] in result[i]){
@@ -64,6 +64,7 @@ function setMarkers(marker, map) {
     var region = marker.region__region_name;
     var pos = new google.maps.LatLng(marker['latitude'], marker['longitude']);
     var content = marker;
+    var anchor = pos;
 
     markerMap = new google.maps.Marker({
         position: pos,
@@ -88,6 +89,7 @@ function setMarkers(marker, map) {
         return function() {
           infowindow.setContent(contentString);
           infowindow.open(map, markerMap);
+          infowindow.setPosition(pos);
           // map.panTo(this.getPosition());
         }
       })(markerMap, content));

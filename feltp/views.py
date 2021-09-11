@@ -571,33 +571,45 @@ def queryjson(request):
 	 'district__district_name', 'longitude', 'latitude', 'user_profile__is_trained_frontline', 'job_title',
 	  'user_profile__is_trained_intermediate', 'user_profile__is_trained_advanced', 'user_profile__firstname', 'user_profile__surname'))
 	# print(query)
-	for a in query:
+	for a in range(1, len(query)):
 		# print(a)
-		if a['user_profile__is_trained_advanced'] == 'Yes' and a['user_profile__is_trained_frontline'] == 'Yes' and a['user_profile__is_trained_intermediate'] == 'Yes':
-			del a['user_profile__is_trained_frontline']
-			del a['user_profile__is_trained_intermediate']
-			# print('ad')
-		elif a['user_profile__is_trained_advanced'] == 'Yes':
-			del a['user_profile__is_trained_frontline']
-			del a['user_profile__is_trained_intermediate']
+		# if a['user_profile__is_trained_advanced'] == 'Yes' and a['user_profile__is_trained_frontline'] == 'Yes' and a['user_profile__is_trained_intermediate'] == 'Yes':
+		# 	del a['user_profile__is_trained_frontline']
+		# 	del a['user_profile__is_trained_intermediate']
+		# 	# print('ad')
 
-		elif a['user_profile__is_trained_intermediate'] == 'Yes':
-			del a['user_profile__is_trained_frontline']
-			del a['user_profile__is_trained_advanced']
-			# print('in')
+		if set(('user_profile__is_trained_advanced', 'user_profile__is_trained_intermediate', 'user_profile__is_trained_frontline')).issubset(query[a]):
+			if query[a]['user_profile__is_trained_frontline'] != 'Yes' and query[a]['user_profile__is_trained_intermediate'] != 'Yes' and query[a]['user_profile__is_trained_advanced'] != 'Yes':
+				query[a]['level'] = None
+				del query[a]['user_profile__is_trained_intermediate']
+				del query[a]['user_profile__is_trained_advanced']
+				del query[a]['user_profile__is_trained_frontline']
 
-		elif a['user_profile__is_trained_frontline'] == 'Yes':
-			del a['user_profile__is_trained_intermediate']
-			del a['user_profile__is_trained_advanced']
-			# print('fr')
 
-		elif a['user_profile__is_trained_frontline'] != 'Yes' and a['user_profile__is_trained_intermediate'] != 'Yes' and a['user_profile__is_trained_advanced'] != 'Yes':
-			del a['user_profile__is_trained_intermediate']
-			del a['user_profile__is_trained_advanced']
-			del a['user_profile__is_trained_frontline']
+		if 'user_profile__is_trained_advanced' in query[a]:
+			if query[a]['user_profile__is_trained_advanced'] == 'Yes':
+				del query[a]['user_profile__is_trained_frontline']
+				del query[a]['user_profile__is_trained_intermediate']
+
+		if 'user_profile__is_trained_intermediate' in query[a]:
+			if query[a]['user_profile__is_trained_intermediate'] == 'Yes':
+				del query[a]['user_profile__is_trained_frontline']
+				del query[a]['user_profile__is_trained_advanced']
+		# 	# print('in')
+
+		if 'user_profile__is_trained_frontline' in query[a]:
+			if query[a]['user_profile__is_trained_frontline'] == 'Yes':
+				del query[a]['user_profile__is_trained_intermediate']
+				del query[a]['user_profile__is_trained_advanced']
+		# 	# print('fr')
+
+		# if query[a]['user_profile__is_trained_frontline'] != 'Yes' and a['user_profile__is_trained_intermediate'] != 'Yes' and a['user_profile__is_trained_advanced'] != 'Yes':
+		# 	del query[a]['user_profile__is_trained_intermediate']
+		# 	del query[a]['user_profile__is_trained_advanced']
+		# 	del query[a]['user_profile__is_trained_frontline']
 			# print('all')
-		# print(a)
-	return JsonResponse(query[:], safe=False)
+		# print(a['user_profile__is_trained_frontline'])
+	return JsonResponse(query, safe=False)
 	# return render(request, 'public_index.html', {'query':query})
 
 
