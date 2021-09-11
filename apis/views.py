@@ -149,16 +149,6 @@ class UserList(ListAPIView):
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('username', 'email',)
 
-	# def get_queryset(self, *args, **kwargs):
-	# 	queryset_list = User.objects.all()
-	# 	query = self.request.GET.get('q')
-	# 	if query:
-	# 		queryset_list = queryset_list.filter(
-	# 			Q(username__icontains=query)|
-	# 			Q(email__icontains=query)
-	# 			).distinct()
-	# 	return queryset_list
-
 
 	def list(self, request):
 		# Note the use of `get_queryset()` instead of `self.queryset`
@@ -485,7 +475,7 @@ class JobsCreate(CreateAPIView):
 class UserDetailViewList(ListAPIView):
 	queryset = User.objects.all()[:20]
 	serializer_class = UserDetailSerializer
-	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('username', 'email',)
 
@@ -503,7 +493,7 @@ class UserDetailViewDetail(RetrieveAPIView):
 	queryset = User.objects.all()
 	serializer_class = UserDetailSerializer
 	lookup_field = 'pk'
-	permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
 	def get(self, request, pk):
 		# Note the use of `get_queryset()` instead of `self.queryset`
@@ -702,7 +692,6 @@ def get_profile(request):
 @api_view(['POST'])
 def v_code(request):
 	print(request.data['code'])
-	print(request.data)
 
 	try:
 		query = verificationTbl.objects.get(code__contains=request.data['code'])
@@ -731,6 +720,23 @@ def v_code(request):
 		print(e)
 		return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"This verification code does not exist."})
 
+
+
+
+@api_view(['POST'])
+def send_code(request):
+	print(request.data['email'])
+
+	created = verificationTbl.objects.create(email=request.data['email'], code=codes())
+	print(created)
+	try:
+		send_mail('Your Verifcation Code',
+			"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [request.data['email']],)
+		return Response({"status":status.HTTP_200_OK, "msg":"A verification code has been sent to your email"})
+		
+	except Exception as e:
+		# print(e)
+		return Response({"status":status.HTTP_500_INTERNAL_SERVER_ERROR, "msg":"Could not send info to email, an error occured. Contact admin for verification."})
 
 
 

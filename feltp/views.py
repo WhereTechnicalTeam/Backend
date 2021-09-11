@@ -46,6 +46,8 @@ def gold():
 
 
 
+
+
 def index(request):
 	d = date.today() - timedelta(days=14)
 
@@ -73,7 +75,7 @@ def edit_user(request, obj_id):
 	if UserProfile.objects.filter(user=user).exists():
 		prof = UserProfile.objects.get(user=user)
 		if JobInfo.objects.filter(user=user).exists():
-			job = JobInfo.objects.get(user=user)
+			job = JobInfo.objects.filter(user=user)[0]
 
 	if request.method == 'POST':
 		user.email = request.POST.get('email')
@@ -448,7 +450,7 @@ def login_view(request):
 			if user.is_superuser:
 				return HttpResponseRedirect(reverse('admindashboard'))
 			messages.success(request, user)
-			return HttpResponseRedirect(reverse('home'))
+			return HttpResponseRedirect('https://ghanafeltp.net/')
 
 		else:
 			messages.info(request, 'done')
@@ -461,7 +463,7 @@ def login_view(request):
 # ##################   Logout view   ##########################################
 def logout_view(request):
 	logout(request)
-	return HttpResponseRedirect(reverse('home'))
+	return HttpResponseRedirect('https://ghanafeltp.net/')
 
 
 def forgot_password(request):
@@ -566,10 +568,36 @@ class jobsLayer(GeoJSONLayerView):
 
 def queryjson(request):
 	query = list(JobInfo.objects.exclude(longitude__isnull=True).exclude(latitude__isnull=True).values('current_institution', 'region__region_name',
-	 'district__district_name', 'longitude', 'latitude', 'user_profile__is_trained_frontline',
+	 'district__district_name', 'longitude', 'latitude', 'user_profile__is_trained_frontline', 'job_title',
 	  'user_profile__is_trained_intermediate', 'user_profile__is_trained_advanced', 'user_profile__firstname', 'user_profile__surname'))
 	# print(query)
-	return JsonResponse(query, safe=False)
+	for a in query:
+		# print(a)
+		if a['user_profile__is_trained_advanced'] == 'Yes' and a['user_profile__is_trained_frontline'] == 'Yes' and a['user_profile__is_trained_intermediate'] == 'Yes':
+			del a['user_profile__is_trained_frontline']
+			del a['user_profile__is_trained_intermediate']
+			# print('ad')
+		elif a['user_profile__is_trained_advanced'] == 'Yes':
+			del a['user_profile__is_trained_frontline']
+			del a['user_profile__is_trained_intermediate']
+
+		elif a['user_profile__is_trained_intermediate'] == 'Yes':
+			del a['user_profile__is_trained_frontline']
+			del a['user_profile__is_trained_advanced']
+			# print('in')
+
+		elif a['user_profile__is_trained_frontline'] == 'Yes':
+			del a['user_profile__is_trained_intermediate']
+			del a['user_profile__is_trained_advanced']
+			# print('fr')
+
+		elif a['user_profile__is_trained_frontline'] != 'Yes' and a['user_profile__is_trained_intermediate'] != 'Yes' and a['user_profile__is_trained_advanced'] != 'Yes':
+			del a['user_profile__is_trained_intermediate']
+			del a['user_profile__is_trained_advanced']
+			del a['user_profile__is_trained_frontline']
+			# print('all')
+		# print(a)
+	return JsonResponse(query[:], safe=False)
 	# return render(request, 'public_index.html', {'query':query})
 
 
@@ -643,3 +671,111 @@ def contactus(request):
 		return HttpResponse('done')
 
 	return render(request, 'feltp/public_index.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+"email":"aabalekuusimon78@gmail.com",
+"password":"add123456"
+}
+
+
+
+def newMap(request):
+	return render(request, 'feltp/newMap.html')
+
+
+# @login_required(login_url='/login')
+def newsfeed(request):
+	news = New.objects.all().order_by('-created_at')[:6]
+
+	all_profile = UserProfile.objects.all()
+	alumni = all_profile.count()
+	frontline = all_profile.filter(is_trained_frontline='Yes').count()
+	intermediate = all_profile.filter(is_trained_intermediate='Yes').count()
+	advanced = all_profile.filter(is_trained_advanced='Yes').count()
+
+	context = {'alumni':alumni, 'frontline':frontline, 
+	'intermediate':intermediate, 'advanced':advanced, 'news':news}
+
+	return render(request, 'feltp/newNewsfeed.html', context)
+
+
+# @login_required(login_url='/login')
+def newsfeed_detail(request, obj_id):
+	obj = get_object_or_404(New, pk=obj_id)
+	return render(request, 'feltp/newNewsfeeddetail.html', {'obj':obj})
+
+
+
+@login_required(login_url="/login")
+def newedit_user(request, obj_id):
+	regions = Region.objects.all().order_by('region_name')
+	user = get_object_or_404(User, pk=obj_id)
+	prof = {}
+	job = {}
+	# print(obj_id)
+	if UserProfile.objects.filter(user=user).exists():
+		prof = UserProfile.objects.get(user=user)
+		if JobInfo.objects.filter(user=user).exists():
+			job = JobInfo.objects.filter(user=user)[0]
+			# print(job.id)
+			# job = JobInfo.objects.get(user=user)
+
+	if request.method == 'POST':
+		# user.email = request.POST.get('email')
+
+		prof.surname = request.POST.get('surname')
+		prof.firstname = request.POST.get('firstname')
+		prof.date_of_birth = request.POST.get('date_of_birth')
+		prof.phone1phone2 = request.POST.get('phone1phone2')
+		prof.phone2 = request.POST.get('phone2')
+		prof.is_trained_frontline = request.POST.get('is_trained_frontline')
+		prof.cohort_number_frontline = request.POST.get('cohort_number_frontline')
+		prof.yr_completed_frontline = request.POST.get('yr_completed_frontline')
+		prof.institution_enrolled_at_frontline = request.POST.get('institution_enrolled_at_frontline')
+		prof.job_title_at_enroll_frontline = request.POST.get('job_title_at_enroll_frontline')
+		prof.is_trained_intermediate = request.POST.get('is_trained_intermediate')
+		prof.cohort_number_intermediate = request.POST.get('cohort_number_intermediate')
+		prof.yr_completed_intermediate = request.POST.get('yr_completed_intermediate')
+		prof.institution_enrolled_at_intermediate = request.POST.get('institution_enrolled_at_intermediate')
+		prof.job_title_at_enroll_intermediate = request.POST.get('job_title_at_enroll_intermediate')
+		prof.is_trained_advanced = request.POST.get('is_trained_advanced')
+		prof.cohort_number_advanced = request.POST.get('cohort_number_advanced')
+		prof.yr_completed_advanced = request.POST.get('yr_completed_advanced')
+		prof.institution_enrolled_at_advanced = request.POST.get('institution_enrolled_at_advanced')
+		prof.job_title_at_enroll_advanced = request.POST.get('job_title_at_enroll_advanced')
+		prof.image = request.FILES.get('image')
+
+		jobs = JobInfo.objects.filter(id=job.id).update_or_create(
+			current_institution=request.POST.get('current_institution'),
+			job_title=request.POST.get('job_title'),
+			region_id=request.POST.get('region'),
+			district_id=request.POST.get('district'),
+			is_current=request.POST.get('is_current'),
+			longitude=request.POST.get('longitude'),
+			latitude=request.POST.get('latitude'),
+			user_id=obj_id,
+			level_of_health_system_id=request.POST.get('level_of_health_system')
+			# jobs.save()
+		)
+
+		job = JobInfo.objects.filter(is_current='Yes').order_by('-updated_at').first() or JobInfo.objects.all().order_by('-updated_at').first()
+
+		prof.save()
+		# user.save()
+
+		return render(request, 'feltp/newprofile_edit.html', {'regions':regions, 'prof':prof, 'job':job})
+
+	return render(request, 'feltp/newprofile_edit.html', {'regions':regions, 'prof':prof, 'job':job})

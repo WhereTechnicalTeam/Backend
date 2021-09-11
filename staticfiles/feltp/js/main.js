@@ -68,7 +68,7 @@
 
 
         function clusterManager(array) {
-            markerCluster.clearMarkers();
+            // markerCluster.clearMarkers();
             
             for (i=0; i < array.length; i++) {
               markerCluster.addMarker(array[i]);

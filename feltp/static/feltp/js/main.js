@@ -32,7 +32,7 @@
         $.get('/queryjson', function(querydata){
             queryjson = querydata
             // alert(queryjson)
-            // alert(querydata[1]['user_profile__is_trained_intermediate'])
+            //alert(querydata[1]['user_profile__is_trained_intermediate'])
 
             for (i = 0; i < queryjson.length; i++) {
               queryjson[i]['user_profile__is_trained_frontline'] = 'frontline'
@@ -44,7 +44,7 @@
             map: map
           });
 
-        // markerCluster = new MarkerClusterer(map, markers, {ignoreHiddenMarkers: true, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+        //markerCluster = new MarkerClusterer(map, markers, {ignoreHiddenMarkers: true, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
         markers.push(marker);
         // alert(markers)
           const contentString="<div><p>Name: "+ queryjson[i]['user_profile__firstname']+' &nbsp'+ queryjson[i]['user_profile__surname']+ "</p><p>Institution: "+ queryjson[i]['current_institution']+"</p><p>Region:  "+ queryjson[i]['region__region_name']+"</p><p>District:  "+ queryjson[i]['district__district_name']+"</p></div>"
@@ -68,7 +68,7 @@
 
 
         function clusterManager(array) {
-            markerCluster.clearMarkers();
+            // markerCluster.clearMarkers();
             
             for (i=0; i < array.length; i++) {
               markerCluster.addMarker(array[i]);
@@ -76,10 +76,14 @@
         }
 
 
+         
+
+
         //@todo add inputsearch
         function newFilter() {
           
             var filteredMarkers = [];
+
           
             $.each(markers, function(index, markerl) { // on parcourt les markers
               //console.log('maker ', index);
@@ -88,6 +92,7 @@
             
                 if (marker['user_profile__is_trained_frontline'] == categoryFilter) {//si le marker est l'une des categories, on l'ajoute au filteredMarkers
                   filteredMarkers.push(markerl);
+                  alert(categoryFilter)
                 }
                 if (marker['user_profile__is_trained_intermediate'] == categoryFilter) {//si le marker est l'une des categories, on l'ajoute au filteredMarkers
                   filteredMarkers.push(markerl);
@@ -116,6 +121,13 @@
             newFilter(filters);
             // console.log('filters selected : ', filters);
             // alert(filters)
+
+            // if($('.check-filters input').prop('checked', 'false')) {
+            //   // Clear out the old markers.
+            //   markers.forEach(function(marker) {
+            //       marker.setMap(null);
+            //   });
+            // };
             
             //si tous les filtres sont cochés
             if($('.check-filters input').length == $('.check-filters input:checked').length) {

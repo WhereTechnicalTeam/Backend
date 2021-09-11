@@ -72,6 +72,7 @@ urlpatterns = [
     path('jobdetail/<int:pk>/', views.fetch_jobs, name='alljobs'),
     path('jobdetail/<int:pk>/update', UpdateJobs.as_view(), name='jobupdate'),
     path('useredit/<int:pk>/updatepassword', updatePassword.as_view(), name='updatepassword'),
+    path('sendcode', views.send_code, name='sendcode'),
 
 
 ] 

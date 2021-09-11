@@ -75,8 +75,62 @@ class NewsSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'content', 'picture1', 'picture2', 'picture3']
             
 
+  
+
+class Base64ImageField(serializers.ImageField):
+    """
+    A Django REST framework field for handling image-uploads through raw post data.
+    It uses base64 for encoding and decoding the contents of the file.
+
+    Heavily based on
+    https://github.com/tomchristie/django-rest-framework/pull/1268
+
+    Updated for Django REST framework 3.
+    """
+
+    def to_internal_value(self, data):
+        from django.core.files.base import ContentFile
+        import base64
+        import six
+        import uuid
+
+        # Check if this is a base64 string
+        if isinstance(data, six.string_types):
+            # Check if the base64 string is in the "data:" format
+            if 'data:' in data and ';base64,' in data:
+                # Break out the header from the base64 content
+                header, data = data.split(';base64,')
+
+
+            # Try to decode the file. Return validation error if it fails.
+            try:
+                decoded_file = base64.b64decode(data)
+            except TypeError:
+                self.fail('invalid_image')
+
+            # Generate file name:
+            file_name = str(uuid.uuid4())[:12] # 12 characters are more than enough.
+            # Get the file name extension:
+            file_extension = self.get_file_extension(file_name, decoded_file)
+
+            complete_file_name = "%s.%s" % (file_name, file_extension, )
+
+            data = ContentFile(decoded_file, name=complete_file_name)
+
+        return super(Base64ImageField, self).to_internal_value(data)
+
+
+    def get_file_extension(self, file_name, decoded_file):
+        import imghdr
+
+        extension = imghdr.what(file_name, decoded_file)
+        extension = "jpg" if extension == "jpeg" else extension
+
+        return extension
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    #image = Base64ImageField(max_length=None, use_url=True, allow_null=True,)
 
 
     class Meta:
@@ -90,6 +144,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class UpdateUserProfileSerializer(serializers.ModelSerializer):
+    #image = Base64ImageField(max_length=None, use_url=True, allow_null=True,)
 
 
     class Meta:
@@ -339,7 +394,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
 
         job = validated_data.pop('job_to_user')
 
-        if len(job) > 0:
+        if len(job) >= 0:
             for datas in job:
                 JobInfo.objects.create(
                     user_profile_id=prof.id,
@@ -414,7 +469,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         main = validated_data.pop('main_user')
         # news = validated_data.pop('news_to_user')
 
-        # profile = instance.main_user
+        profile = instance.main_user
         jobs_data1 = instance.job_to_user.all()
         news_data1 = instance.news_to_user.all()
 
@@ -423,16 +478,45 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
 
         user = User.objects.get(email=validated_data['email'])
         # print(user)
-
+        
         if UserProfile.objects.filter(user_id=user.id).exists():
-            prof = UserProfile.objects.filter(user_id=user.id).update(**main)
+            try:
+                UserProfile.objects.filter(user_id=user.id).update(**main)
+            except Exception:
+                profile = prof.pop(0)
+                profile.title = validated_data.get('title', profile.title)
+                profile.surname = validated_data.get('surname', profile.surname)
+                profile.firstname = validated_data.get('firstname', profile.firstname)
+                profile.sex = validated_data.get('sex', profile.sex)
+                profile.date_of_birth = validated_data.get('date_of_birth', profile.date_of_birth)
+                profile.phone1 = validated_data.get('phone1', profile.phone1)
+                profile.phone2 = validated_data.get('phone2', profile.phone2)
+                profile.is_trained_frontline = validated_data.get('is_trained_frontline', profile.is_trained_frontline)
+                profile.cohort_number_frontline = validated_data.get('cohort_number_frontline', profile.cohort_number_frontline)
+                profile.yr_completed_frontline = validated_data.get('yr_completed_frontline', profile.yr_completed_frontline)
+                profile.institution_enrolled_at_frontline = validated_data.get('institution_enrolled_at_frontline', profile.institution_enrolled_at_frontline)
+                profile.job_title_at_enroll_frontline = validated_data.get('job_title_at_enroll_frontline', profile.job_title_at_enroll_frontline)
+                profile.is_trained_intermediate = validated_data.get('is_trained_intermediate', profile.is_trained_intermediate)
+                profile.cohort_number_intermediate = validated_data.get('cohort_number_intermediate', profile.cohort_number_intermediate)
+                profile.yr_completed_intermediate = validated_data.get('yr_completed_intermediate', profile.yr_completed_intermediate)
+                profile.institution_enrolled_at_intermediate = validated_data.get('institution_enrolled_at_intermediate', profile.institution_enrolled_at_intermediate)
+                profile.job_title_at_enroll_intermediate = validated_data.get('job_title_at_enroll_intermediate', profile.job_title_at_enroll_intermediate)
+                profile.is_trained_advanced = validated_data.get('is_trained_advanced', profile.is_trained_advanced)
+                profile.cohort_number_advanced = validated_data.get('cohort_number_advanced', profile.cohort_number_advanced)
+                profile.yr_completed_advanced = validated_data.get('yr_completed_advanced', profile.yr_completed_advanced)
+                profile.institution_enrolled_at_advanced = validated_data.get('institution_enrolled_at_advanced', profile.institution_enrolled_at_advanced)
+                profile.job_title_at_enroll_advanced = validated_data.get('job_title_at_enroll_advanced', profile.job_title_at_enroll_advanced)
+                # profile.image = validated_data.get('image', profile.image)
+                profile.save()
+                # prof.image = op
+                # prof.save()
         else:
             prof = UserProfile.objects.filter(user_id=user.id).create(**main, user=user)
         # print(prof[0].id)
 
 
-
-        if len(jobs_data1) > 0:
+        
+        if len(jobs_data1) >= 0:
             for datas in job:
                 jobs = jobs_data1.pop(0)
                 jobs.current_institution = datas.get('current_institution', jobs.current_institution)
@@ -446,8 +530,8 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
                 jobs.latitude = datas.get('latitude', jobs.latitude)
                 jobs.save()
 
-        else:
-            new_job = JobInfo.objects.create(**job[0], user=user, user_profile_id=prof[0].id)
+        # else:
+        #     new_job = JobInfo.objects.create(**job[0], user=user, user_profile_id=prof[0].id)
 
         return user
 

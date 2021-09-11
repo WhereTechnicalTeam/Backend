@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Home GFELTP</title>
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/static/feltp/css/font-awesome.css">
+	<link rel="stylesheet" href="/static/feltp/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/feltp/css/animate.css">
+	<link rel="stylesheet" href="/static/feltp/css/prettyPhoto.css">
+	<!-- <link href="/static/feltp/css/public_style.css" rel="stylesheet"> -->
+	<link href="/static/feltp/css/style2.css" rel="stylesheet">
+	<link href="/static/feltp/css/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-dFHYjTqEVLndbN2gdvXsx09jfJHmNc8&callback=myMap"></script>    
+
+
+</head>
+<body>
+<header>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><img src="img/gflep_logo.jpg" alt=""></a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav navbar-right">
+
+					<li class="active smooth-scroll"><a href="https://ghanafeltp.net/">HOME</a></li>
+					
+					<!-- <li class="smooth-scroll"><a href="#service">DASHBOARD</a></li> -->
+					<li class="smooth-scroll"><a href="{% url 'newsfeed' %}">DASHBOARD</a></li>
+					
+					<!-- <li class="smooth-scroll"><a href="#gallery">GALLERY</a></li>
+					
+					<li class="smooth-scroll"><a href="#price">EVENT</a></li>
+					<li class="smooth-scroll"><a href="#news">NEWS</a></li>
+					<li class="smooth-scroll"><a href="#contact">MAP</a></li> -->
+					
+                <li>
+				<!-- user profile -->
+				<div class="profile">
+					{% if not user.is_authenticated %}
+					<a href="{% url 'login' %}" class="name">Login</a>
+					{% endif %}
+					{% if user.is_authenticated %}
+					<a href="" class="name">{{user}}</a>
+					<!-- more menu -->
+					<ul class="menu">
+						<li><a href="{% url 'newedituser' user.id %}" >Edit</a></li>
+						<li><a href="{% url 'logout_view' %}">Log out</a></li>
+					</ul>
+					{% endif %}
+				</div>
+			</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<br><br><br><br>
+</header>
+
+<!--Home Section-->
+<section id="home">
+	<!-- <div class="overlay"></div> -->
+
+
+<!--contact heading-->
+<section id="contact">
+	<div class="check-filters" style="">
+      <button type="button" class="js-check-all active jss"> All</button>
+      <label><input type="checkbox" class="jss" value="frontline" checked> Front Line</label>
+      
+      <label><input type="checkbox" class="jss" value="intermediate" checked> Intermediate</label>
+      <label><input type="checkbox" class="jss" value="advanced" checked> Advanced</label>
+    </div>
+	<div id="map">
+
+
+	</div>
+	
+	
+	</div>
+</section>
+
+<!-- footer-area-->
+<!-- <footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-2 text-center">
+				<a href=""><img src="/static/feltp/img/gflep_logo.jpg" alt="logo"></a>
+			</div>
+			<div class="col-sm-8">
+				<div class="footer-p text-center">
+					<p>© Copyright 2021, All Rights Reserved,GFELTP</p>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="footer-social text-center">
+					<a href=""><i class="fa fa-facebook"></i></a>
+					<a href=""><i class="fa fa-twitter"></i></a>
+					<a href=""><i class="fa fa-instagram"></i></a>
+					<a href=""><i class="fa fa-google-plus"></i></a>
+					<a href=""><i class="fa fa-rss"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer> -->
+<script src="/static/feltp/js/jquery-1.11.3.min.js"></script>
+<script src="/static/feltp/js/bootstrap.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer.js'></script>
+<script src="/static/feltp/js/isotope.2.2.2min.js"></script>
+
+<script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
+<script src="/static/feltp/js/wow.min.js"></script>
+<script src="/static/feltp/js/jquery.prettyPhoto.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="/static/feltp/js/main2.js"></script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {	
+
+
+// ########################   search populate
+    $('#search').click(function(e) {
+    	e.preventDefault()
+        if($('#inp').val()==''){
+            alert('type a name to initiate a search')
+        } else{
+            $.get('/profilesearchquery?data='+$('#inp').val(), function(data){
+
+            $('#datas').html(data)
+           });
+        }
+ 	});
+
+
+
+var form = document.getElementById('contactt');
+
+$("#sub").click(function(e){
+
+
+if (form.checkValidity() == true) {
+
+    e.preventDefault();
+    var data = new FormData(form);
+    // console.log(data)
+    var token = '{{csrf_token}}';
+
+    $.ajax({
+        url: "/contactus", // same url 'action' in form
+        type: 'POST',
+        headers: { "X-CSRFToken": token },
+        data: data,
+        contentType: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        success: function(data) {
+        	form.reset()
+            if(data=="done"){
+
+                Swal.fire('Saved', 'Message has been sent', 'success')
+                // .then(function () {
+                //         window.location.href="/admincreatenews"
+                    
+                // })
+
+            }
+        }
+    });
+    return false;
+ } 
+
+else {
+            var list = form.querySelectorAll(':invalid');
+            for (var item of list) {
+                item.focus();
+            }
+            $("form#saforms :input").each(function () {
+                $(this).valid();
+            });
+            Swal.fire("Hold on...", "Please ensure all required fields are filled", "warning")
+        }
+})
+
+})
+
+</script>
+
+
+</body>
+</html>

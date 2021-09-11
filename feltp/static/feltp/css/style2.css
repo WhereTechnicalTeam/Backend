@@ -72,16 +72,16 @@ header .navbar {
 }
 
 .navbar-inverse {
-	background: rgba(0, 0, 0, 0.65) !important;
+	background: white !important;
 }
 
 #myNavbar ul li {
-	padding: 40px 15px 30px;
+	padding: 0px 10px 30px;
 	text-transform: uppercase;
 }
 
 #myNavbar ul li.active a {
-	color: #EB0000;
+	color: rgba(102,102,102,0.85);
 }
 
 #myNavbar ul li.active > a::after {
@@ -99,14 +99,14 @@ header .navbar {
 }
 
 .navbar-inverse #myNavbar li:hover a::after, #myNavbar ul li a:hover {
-	border-bottom: 2px solid #B70808;
-	color: #120BFF;
+	/*border-bottom: 2px solid #B70808;*/
+	color: color: rgba(102,102,102,0.85);
 }
 
 #myNavbar ul li a {
 	padding: 0 0 5px;
 	font-size: 16px;
-	color: #fff;
+	color: color: rgba(102,102,102,0.85);
 	transition: all 0.2s ease-in 0.2s;
 }
 
@@ -121,13 +121,13 @@ header .navbar {
 /************ Home css ************/
 
 #home {
-	background: url(img/back.png) no-repeat center center;
-	background-size: cover;
-	position: relative;
+	/*background: url(img/back.png) no-repeat center center;
+	background-size: cover;*/
+/*	position: relative;
 	justify-content: center;
 	flex-direction: column;
-	display: flex;
-	height: 700px;
+	display: flex;*/
+	/*height: 100%;*/
 }
 
 .home-text {
@@ -138,13 +138,13 @@ header .navbar {
 
 .home-text h1 {
 	font-size: 115px;
-	color: #fff;
+	color: #ffff;
 	font-weight: 500;
 
 }
 
 .home-text h3 {
-	padding: 10px;
+/*	padding: 10px;*/
 	font-size: 30px;
 	font-weight: 500;
 }
@@ -156,11 +156,11 @@ header .navbar {
 
 .overlay {
 	position: absolute;
-	background: rgba(0, 117, 242, 0.22);
-	top: 0;
+	/*background: rgba(0, 117, 242, 0.22);*/
+/*	top: 0;
 	left: 0;
 	right: 0;
-	bottom: 0;
+	bottom: 0;*/
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -375,9 +375,16 @@ header .navbar {
 	margin-bottom: 30px;
 }
 
+
+
+.fa-group:before, .fa-users:before {
+    content: "\f0c0";}
+
+
+
 .section-heading p {
 	padding: 30px 0;
-	font-size: 14px;
+	font-size: 15px!important;
 	color: #fff;
 	line-height: 24px;
 	text-transform: capitalize;
@@ -531,38 +538,52 @@ h1 sup {
 
 /**************news area ****************/
 .news-heading {
-	padding: 0 0 40px 0;
+/*	padding: 0 0 40px 0;*/
 }
 
 #news {
-	padding: 130px 0;
+	/*padding: 130px 0;*/
 	background: url(img/photo1.png) no-repeat;
 	background-size: cover;
 }
 
 .latest-news {
-	position: relative;
+	/*position: relative;*/
 	z-index: 1;
-	color: #fff;
+	color: grey;
+	width: 80%;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border: 1px solid;
+  padding: 20px;
 }
 
 .latest-news h3 {
-	padding: 40px 20px;
+	/*padding: 40px 20px;*/
 	text-transform: capitalize;
-	color: #fff;
+	color: grey;
 
 }
+
+
+.small-box{
+	border-radius: 10px;
+}
+
 
 .latest-news:after {
 	content: "";
 	position: absolute;
 	height: 100%;
 	top: 0;
-	background: rgba(1, 1, 1, 0.65);
+	background: white;
 	left: -90px;
 	right: 0;
 	bottom: 0;
 	z-index: -1;
+	color: grey;
 }
 
 .news-content {
@@ -667,7 +688,7 @@ h1 sup {
 
 /************* our contact area *********/
 #contact {
-	padding: 70px 0 0;
+	padding: 15px 0 0;
 	background-color: #000000;
 	position: relative;
 }
@@ -677,7 +698,7 @@ h1 sup {
 }
 
 #map {
-	height: 300px;
+	height: 750px;
 	width: 100%;
 
 }
@@ -704,7 +725,7 @@ h1 sup {
 
 /******** contact form *******/
 .contact-form {
-	padding: 70px 0;
+	/*padding: 70px 0;*/
 	color: #fff;
 }
 
@@ -754,6 +775,7 @@ label {
 	margin-bottom: 10px;
 	font-weight: 400;
 	font-size: 18px;
+	color: grey;
 }
 
 .red-btn {
@@ -896,12 +918,12 @@ a {text-decoration:none;}
 .menu {
 	display:none;
 	clear:both;
-	margin:20px 0 0 0;
+	margin:5px 0 0 0;
 }
 .menu li {
 	font-size:12px;
 	margin:0;
-  padding: 10px 4px;
+  padding: 5px 4px;
 }
 .menu li a {
 	color:#555;
@@ -951,7 +973,9 @@ $dark-red: #FD3D08;
 }
 
 .container {
-  padding: 2rem 0rem;
+  padding-top: 25px;
+  width: 100%;
+  background-color: white;
 }
 
 h4 {

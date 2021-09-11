@@ -6,8 +6,13 @@ from . import views
 # app_name = 'feltp'
 
 urlpatterns = [
-    path('', views.index, name='home'),
-    # path('about', views.about, name='about'),
+    # path('', views.index, name='home'),
+    path('', views.newMap, name='newMap'),
+    path('newedituser/<int:obj_id>', views.newedit_user, name='newedituser'),
+    path('newsfeed', views.newsfeed, name='newsfeed'),
+    path('newsfeed/<int:obj_id>/', views.newsfeed_detail, name='newsfeed'),
+
+
     path('news', views.news, name='news'),
     path('edituser/<int:obj_id>', views.edit_user, name='edituser'),
     path('events', views.events, name='events'),

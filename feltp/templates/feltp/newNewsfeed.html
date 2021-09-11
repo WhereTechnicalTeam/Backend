@@ -1,0 +1,241 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Home GFELTP</title>
+  <!-- Google Font: Source Sans Pro -->
+ <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/static/feltp/css/font-awesome.css">
+	<link rel="stylesheet" href="/static/feltp/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/feltp/css/animate.css">
+	<link rel="stylesheet" href="/static/feltp/css/prettyPhoto.css">
+	<!-- <link href="/static/feltp/css/public_style.css" rel="stylesheet"> -->
+	<link href="/static/feltp/css/style2.css" rel="stylesheet">
+	<link href="/static/feltp/css/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="/static/feltp/dist/css/adminlte.min.css">  
+<style type="text/css">
+  #example1_filter{
+    width: fit-content;
+    padding: 5px;
+    float: right;
+  }
+  .small-bxo{
+  	font-size: 15px;
+  }
+</style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid	" style="padding-top: 20px;">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right" style="display: inline;">
+
+          <li class="active smooth-scroll"><a href="https://ghanafeltp.net/">HOME</a></li>
+     
+          <li class="smooth-scroll"><a href="{% url 'newsfeed' %}">DASHBOARD</a></li>
+   
+                <li>
+        <!-- user profile -->
+        <div class="profile">
+          {% if not user.is_authenticated %}
+          <a href="{% url 'login' %}" class="name">Login</a>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <a href="" class="name">{{user}}</a>
+          <!-- more menu -->
+          <ul class="menu">
+            <li><a href="{% url 'newedituser' user.id %}" >Edit</a></li>
+            <li><a href="{% url 'logout_view' %}">Log out</a></li>
+          </ul>
+          {% endif %}
+        </div>
+      </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <br><br>
+</header>
+
+<!--Home Section-->
+
+<!--SERVICES AREA-->
+
+<!--team section-->
+
+<!--our price area-->
+
+<!--our news area-->
+
+
+		<section class="content">
+			<div class="section-heading news-heading text-left text-uppercase" style="background-color: white;">
+			<br><br>
+      <div class="container-fluid" style="background-color: white; width: 30%; border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border: 1px solid; padding: 30px;">
+      	<h3 style="color: grey;">Registered Users</h3>
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-6 col-md-6">
+            <!-- small box -->
+            <div class="small-box text-light" style="background-color: rgb(40, 45, 228)">
+              <div class="inner">
+                <h3 id="alumnis">{{alumni}}</h3>
+
+                <p>Alumni</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+              <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+            </div>
+          </div>
+          
+
+          <div class="col-lg-6 col-md-6">
+            <!-- small box -->
+            <div class="small-box text-light" style="background-color: rgb(240, 138, 35)">
+              <div class="inner">
+                <h3 id="front">{{frontline}}</h3>
+
+                <p>Trained at Frontline</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+              <!-- <a href="#" class="small-box-footer">Info<i class=""></i></a> -->
+            </div>
+          </div>
+
+
+          <div class="col-lg-6 col-md-6">
+            <!-- small box -->
+            <div class="small-box text-light" style="background-color: rgb(19, 160, 14)">
+              <div class="inner">
+                <h3 id="inter">{{intermediate}}</h3>
+
+                <p>Trained  at Intermediate</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+              <!-- <a href="#" class="small-box-footer"> <i class="">Info</i></a> -->
+            </div>
+          </div>
+
+
+          <div class="col-lg-6 col-md-6">
+            <!-- small box -->
+            <div class="small-box bg-secondary" style="background-color:#59281D;">
+              <div class="inner">
+                <h3 id="advance">{{advanced}}</h3>
+
+                <p>Trained at Advanced</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+              <!-- <a href="#" class="small-box-footer">Info<i class=""></i></a> -->
+            </div>
+          </div>
+
+
+
+        <div class="d-none" id="stats_data"></div>
+  
+      </div><br>
+    </section>
+
+
+
+<!-- <section id="news"> -->
+	
+	<div class="container">
+		<div class="row no-gutter" style="margin-bottom: 50px;">
+			<div class="col-md-12	">
+
+				<div class="latest-news text-left">
+
+					<h3>Latest News</h3>
+
+					
+					<div class="news-content">
+            {% for new in news %}
+						<div class="new-date">
+							<img src="/media/{{new.picture1}}" alt="">
+						</div>
+						<div class="news-text">
+							<h4>{{new.title|safe}} </h4>
+
+							<p style="font-size: 12px!important">{{new.content|truncatewords:30|safe}}</p>
+
+							<a href="{% url 'newsfeed' new.id %}" class="btn text" style="color: #635f5f; font-size: 14px!important;">Read...</a>
+
+							<p><!-- Button trigger modal --></p>
+							
+						</div>
+					</div>
+					{% endfor %}
+
+					</div>
+
+					
+
+				</div>
+			</div>
+			
+		</div>
+		<br><br><br>
+	</div>
+
+<!-- </section> -->
+<!--contact heading-->
+
+<!-- footer-area-->
+<!-- <footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-2 text-center">
+				<a href=""><img src="/static/feltp/img/gflep_logo.jpg" alt="logo"></a>
+			</div>
+			<div class="col-sm-8">
+				<div class="footer-p text-center">
+					<p>© Copyright 2021, All Rights Reserved,GFELTP</p>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="footer-social text-center">
+					<a href=""><i class="fa fa-facebook"></i></a>
+					<a href=""><i class="fa fa-twitter"></i></a>
+					<a href=""><i class="fa fa-instagram"></i></a>
+					<a href=""><i class="fa fa-google-plus"></i></a>
+					<a href=""><i class="fa fa-rss"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer> -->
+<script src="/static/feltp/js/jquery-1.11.3.min.js"></script>
+<script src="/static/feltp/js/bootstrap.min.js"></script>
+<script src="/static/feltp/js/isotope.2.2.2min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="/static/feltp/js/wow.min.js"></script>
+<script src="/static/feltp/js/jquery.prettyPhoto.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="/static/feltp/js/main.js"></script>
+</body>
+</html>
