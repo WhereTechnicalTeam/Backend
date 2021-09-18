@@ -138,7 +138,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'surname', 'date_of_birth', 'firstname', 'sex', 'phone1', 'phone2', 'is_trained_frontline', 'cohort_number_frontline', 'yr_completed_frontline', 
         'institution_enrolled_at_frontline', 'job_title_at_enroll_frontline', 'is_trained_intermediate', 'cohort_number_intermediate', 'yr_completed_intermediate', 
         'institution_enrolled_at_intermediate', 'job_title_at_enroll_intermediate', 'is_trained_advanced', 'cohort_number_advanced', 'yr_completed_advanced', 
-        'institution_enrolled_at_advanced', 'image', 'email_status', 'job_title_at_enroll_advanced', 'status']
+        'institution_enrolled_at_advanced', 'email_status', 'job_title_at_enroll_advanced', 'status']
 
 
 
@@ -235,11 +235,11 @@ class VerificationSerializer(serializers.ModelSerializer):
 class UserDetailSerializer(serializers.ModelSerializer):
     main_user = UserProfileSerializer(read_only=True)
     job_to_user = JobInfoSerializer(many=True, read_only=True)
-    news_to_user = NewsSerializer(many=True, read_only=True)
+    # news_to_user = NewsSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'main_user', 'job_to_user', 'news_to_user')
+        fields = ('id', 'username', 'email', 'password', 'main_user', 'job_to_user')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -319,6 +319,8 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
             msg = ({"msg":'Passwords are not the same'})
             raise serializers.ValidationError(msg)
 
+        # print(validated_data['main_user'])
+
         if User.objects.filter(email__contains=validated_data['email']).exists():
             raise serializers.ValidationError({"status":400, "msg":'email already exists'})
        
@@ -357,8 +359,8 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         if validated_data['main_user']['job_title_at_enroll_advanced'] == '':
             validated_data['main_user']['job_title_at_enroll_advanced'] = None
 
-        if validated_data['main_user']['image'] == '':
-            validated_data['main_user']['image'] = None
+        # if validated_data['main_user']['image'] == '':
+        #     validated_data['main_user']['image'] = None
 
 
         for a in range(len(validated_data['job_to_user'])):
@@ -388,6 +390,7 @@ class UserAndProfileSerializer(serializers.ModelSerializer):
         user.save()
 
         prof = UserProfile.objects.create(**validated_data['main_user'])
+
         prof.user = user
         prof.save()
 
@@ -458,23 +461,14 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
 
-        # if validated_data['password'] == '':
-        #     validated_data['password'] = 'None'
-
-        # if validated_data['password'] == '':
-        #     validated_data['password'] = 'None'
-
-
         job = validated_data.pop('job_to_user')
         main = validated_data.pop('main_user')
         # news = validated_data.pop('news_to_user')
 
-        profile = instance.main_user
+        prof = instance.main_user
         jobs_data1 = instance.job_to_user.all()
-        news_data1 = instance.news_to_user.all()
 
         jobs_data1 = list(jobs_data1)
-        # jobs_data1 = list(prof)
 
         user = User.objects.get(email=validated_data['email'])
         # print(user)
@@ -482,32 +476,33 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         if UserProfile.objects.filter(user_id=user.id).exists():
             try:
                 UserProfile.objects.filter(user_id=user.id).update(**main)
-            except Exception:
-                profile = prof.pop(0)
-                profile.title = validated_data.get('title', profile.title)
-                profile.surname = validated_data.get('surname', profile.surname)
-                profile.firstname = validated_data.get('firstname', profile.firstname)
-                profile.sex = validated_data.get('sex', profile.sex)
-                profile.date_of_birth = validated_data.get('date_of_birth', profile.date_of_birth)
-                profile.phone1 = validated_data.get('phone1', profile.phone1)
-                profile.phone2 = validated_data.get('phone2', profile.phone2)
-                profile.is_trained_frontline = validated_data.get('is_trained_frontline', profile.is_trained_frontline)
-                profile.cohort_number_frontline = validated_data.get('cohort_number_frontline', profile.cohort_number_frontline)
-                profile.yr_completed_frontline = validated_data.get('yr_completed_frontline', profile.yr_completed_frontline)
-                profile.institution_enrolled_at_frontline = validated_data.get('institution_enrolled_at_frontline', profile.institution_enrolled_at_frontline)
-                profile.job_title_at_enroll_frontline = validated_data.get('job_title_at_enroll_frontline', profile.job_title_at_enroll_frontline)
-                profile.is_trained_intermediate = validated_data.get('is_trained_intermediate', profile.is_trained_intermediate)
-                profile.cohort_number_intermediate = validated_data.get('cohort_number_intermediate', profile.cohort_number_intermediate)
-                profile.yr_completed_intermediate = validated_data.get('yr_completed_intermediate', profile.yr_completed_intermediate)
-                profile.institution_enrolled_at_intermediate = validated_data.get('institution_enrolled_at_intermediate', profile.institution_enrolled_at_intermediate)
-                profile.job_title_at_enroll_intermediate = validated_data.get('job_title_at_enroll_intermediate', profile.job_title_at_enroll_intermediate)
-                profile.is_trained_advanced = validated_data.get('is_trained_advanced', profile.is_trained_advanced)
-                profile.cohort_number_advanced = validated_data.get('cohort_number_advanced', profile.cohort_number_advanced)
-                profile.yr_completed_advanced = validated_data.get('yr_completed_advanced', profile.yr_completed_advanced)
-                profile.institution_enrolled_at_advanced = validated_data.get('institution_enrolled_at_advanced', profile.institution_enrolled_at_advanced)
-                profile.job_title_at_enroll_advanced = validated_data.get('job_title_at_enroll_advanced', profile.job_title_at_enroll_advanced)
-                # profile.image = validated_data.get('image', profile.image)
-                profile.save()
+            except Exception as e:
+                print(e)
+                UserProfile.objects.filter(user_id=user.id).update(**main)
+                # profile = prof.pop(0)
+                # profile.title = validated_data.get('title', profile.title)
+                # profile.surname = validated_data.get('surname', profile.surname)
+                # profile.firstname = validated_data.get('firstname', profile.firstname)
+                # profile.sex = validated_data.get('sex', profile.sex)
+                # profile.date_of_birth = validated_data.get('date_of_birth', profile.date_of_birth)
+                # profile.phone1 = validated_data.get('phone1', profile.phone1)
+                # profile.phone2 = validated_data.get('phone2', profile.phone2)
+                # profile.is_trained_frontline = validated_data.get('is_trained_frontline', profile.is_trained_frontline)
+                # profile.cohort_number_frontline = validated_data.get('cohort_number_frontline', profile.cohort_number_frontline)
+                # profile.yr_completed_frontline = validated_data.get('yr_completed_frontline', profile.yr_completed_frontline)
+                # profile.institution_enrolled_at_frontline = validated_data.get('institution_enrolled_at_frontline', profile.institution_enrolled_at_frontline)
+                # profile.job_title_at_enroll_frontline = validated_data.get('job_title_at_enroll_frontline', profile.job_title_at_enroll_frontline)
+                # profile.is_trained_intermediate = validated_data.get('is_trained_intermediate', profile.is_trained_intermediate)
+                # profile.cohort_number_intermediate = validated_data.get('cohort_number_intermediate', profile.cohort_number_intermediate)
+                # profile.yr_completed_intermediate = validated_data.get('yr_completed_intermediate', profile.yr_completed_intermediate)
+                # profile.institution_enrolled_at_intermediate = validated_data.get('institution_enrolled_at_intermediate', profile.institution_enrolled_at_intermediate)
+                # profile.job_title_at_enroll_intermediate = validated_data.get('job_title_at_enroll_intermediate', profile.job_title_at_enroll_intermediate)
+                # profile.is_trained_advanced = validated_data.get('is_trained_advanced', profile.is_trained_advanced)
+                # profile.cohort_number_advanced = validated_data.get('cohort_number_advanced', profile.cohort_number_advanced)
+                # profile.yr_completed_advanced = validated_data.get('yr_completed_advanced', profile.yr_completed_advanced)
+                # profile.institution_enrolled_at_advanced = validated_data.get('institution_enrolled_at_advanced', profile.institution_enrolled_at_advanced)
+                # profile.job_title_at_enroll_advanced = validated_data.get('job_title_at_enroll_advanced', profile.job_title_at_enroll_advanced)
+                # profile.save()
                 # prof.image = op
                 # prof.save()
         else:

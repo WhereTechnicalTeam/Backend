@@ -710,7 +710,7 @@ def newMap(request):
 
 # @login_required(login_url='/login')
 def newsfeed(request):
-	news = New.objects.all().order_by('-created_at')[:6]
+	news = New.objects.all().order_by('-created_at')[:10]
 
 	all_profile = UserProfile.objects.all()
 	alumni = all_profile.count()

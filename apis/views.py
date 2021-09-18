@@ -30,7 +30,7 @@ from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
 from rest_framework.parsers import FormParser
 from rest_framework.renderers import JSONRenderer
-
+from .paginations import AlldataPagination
 
 
 
@@ -473,19 +473,38 @@ class JobsCreate(CreateAPIView):
 
 #         all data from users to news apis
 class UserDetailViewList(ListAPIView):
-	queryset = User.objects.all()[:20]
+	queryset = User.objects.all().order_by('id')
 	serializer_class = UserDetailSerializer
 	#permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 	filter_backends = (filters.SearchFilter,)
 	search_fields = ('username', 'email',)
+	pagination = AlldataPagination
 
 
 
 	def list(self, request):
 		# Note the use of `get_queryset()` instead of `self.queryset`
-		queryset = self.get_queryset()
-		serializer = UserDetailSerializer(queryset, many=True)
-		return Response({"status":status.HTTP_200_OK, "alldata": serializer.data})
+		# queryset = self.get_queryset()
+		# serializer = UserDetailSerializer(queryset, many=True)
+
+		queryset = self.filter_queryset(self.get_queryset())
+		page = self.paginate_queryset(queryset)
+		if page is not None:
+			serializer = self.get_serializer(page, many=True)
+			result = self.get_paginated_response(serializer.data)
+			data = result.data # pagination data
+		else:
+			print(page)
+			serializer = self.get_serializer(queryset, many=True)
+			data = 'Null'
+			print(data)
+			return Response({"status":status.HTTP_404_NOT_FOUND, "alldata": data})
+		# payload = {
+		# 	'return_code': '0000',
+		# 	'return_message': 'Success',
+		# 	'data': data
+		# }
+		return Response({"status":status.HTTP_200_OK, "alldata": data})
 
 
 
@@ -816,6 +835,7 @@ class UserAndProfileCreate(CreateAPIView):
 
 
 	def perform_create(self, serializer):
+		# print(serializer.data.image)
 		a=serializer.save()
 		# print(serializer.data)
 		return Response({"status":status.HTTP_201_CREATED, "alldata": serializer.data})
@@ -831,6 +851,77 @@ class UserAndProfileUpdate(RetrieveUpdateAPIView):
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
 		return Response({"status":status.HTTP_200_OK, "alldata": serializer.data})
+
+
+	# def update(self, validated_data, pk):
+
+	# 	print(validated_data.data['main_user']['image'])
+	# 	print(pk)
+
+	# 	if User.objects.get(id=pk):
+	# 		# user = User.objects.get(id=pk)
+	# 		# print(user)
+
+	# 		if UserProfile.objects.filter(user_id=pk).exists():
+	# 			profile = UserProfile.objects.get(user_id=pk)
+	# 			profile.title = validated_data.data['main_user']['title']
+	# 			profile.surname = validated_data.data['main_user']['surname']
+	# 			profile.firstname = validated_data.data['main_user']['firstname']
+	# 			profile.sex = validated_data.data['main_user']['sex']
+	# 			profile.date_of_birth = validated_data.data['main_user']['date_of_birth']
+	# 			profile.phone1 = validated_data.data['main_user']['phone1']
+	# 			profile.phone2 = validated_data.data['main_user']['phone2']
+	# 			profile.is_trained_frontline = validated_data.data['main_user']['is_trained_frontline']
+	# 			profile.cohort_number_frontline = validated_data.data['main_user']['cohort_number_frontline']
+	# 			profile.yr_completed_frontline = validated_data.data['main_user']['yr_completed_frontline']
+	# 			profile.institution_enrolled_at_frontline = validated_data.data['main_user']['institution_enrolled_at_frontline']
+	# 			profile.job_title_at_enroll_frontline = validated_data.data['main_user']['job_title_at_enroll_frontline']
+	# 			profile.is_trained_intermediate = validated_data.data['main_user']['is_trained_intermediate']
+	# 			profile.cohort_number_intermediate = validated_data.data['main_user']['cohort_number_intermediate']
+	# 			profile.yr_completed_intermediate = validated_data.data['main_user']['yr_completed_intermediate']
+	# 			profile.institution_enrolled_at_intermediate = validated_data.data['main_user']['institution_enrolled_at_intermediate']
+	# 			profile.job_title_at_enroll_intermediate = validated_data.data['main_user']['job_title_at_enroll_intermediate']
+	# 			profile.is_trained_advanced = validated_data.data['main_user']['is_trained_advanced']
+	# 			profile.cohort_number_advanced = validated_data.data['main_user']['cohort_number_advanced']
+	# 			profile.yr_completed_advanced = validated_data.data['main_user']['yr_completed_advanced']
+	# 			profile.institution_enrolled_at_advanced = validated_data.data['main_user']['institution_enrolled_at_advanced']
+	# 			profile.job_title_at_enroll_advanced = validated_data.data['main_user']['job_title_at_enroll_advanced']
+
+	# 			import base64
+	# 			from django.core.files.base import ContentFile
+	# 			import os
+
+	# 			dd = validated_data.data['main_user']['image']
+	# 			image = os.path.join('api_images/profile/', dd)
+
+	# 			profile.image = image
+	# 			profile.save()
+	# 			    # prof.image = op
+	# 			    # prof.save()
+	# 		else:
+	# 			prof = UserProfile.objects.filter(user_id=user.id).create(**main, user=user)
+	# 			# print(prof[0].id)
+
+
+
+	# 		# if len(jobs_data1) >= 0:
+	# 		# 	for datas in job:
+	# 		# 	    jobs = jobs_data1.pop(0)
+	# 		# 	    jobs.current_institution = datas.get('current_institution', jobs.current_institution)
+	# 		# 	    jobs.job_title = datas.get('job_title', jobs.job_title)
+	# 		# 	    jobs.region = datas.get('region', jobs.region)
+	# 		# 	    jobs.district = datas.get('district', jobs.district)
+	# 		# 	    jobs.level_of_health_system = datas.get('level_of_health_system', jobs.level_of_health_system)
+	# 		# 	    jobs.employment_status = datas.get('employment_status', jobs.employment_status)
+	# 		# 	    jobs.is_current = datas.get('is_current', jobs.is_current)
+	# 		# 	    jobs.longitude = datas.get('longitude', jobs.longitude)
+	# 		# 	    jobs.latitude = datas.get('latitude', jobs.latitude)
+	# 		# 	    jobs.save()
+
+	# 			# else:
+	# 			#     new_job = JobInfo.objects.create(**job[0], user=user, user_profile_id=prof[0].id)
+
+	# 	return user
 
 
 
