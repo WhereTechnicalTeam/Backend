@@ -1,0 +1,67 @@
+
+
+
+
+<div class="col-sm-4">
+	<label for="usr">Current Institution/ Department</label>
+	<input type="text" class="form-control" id="" name="current_institution" value="{{job.current_institution}}">
+</div>
+
+<div class="col-sm-4">
+	<label for="usr">Current Job Title</label>
+	<input type="text" class="form-control" id="" name="job_title" value="{{job.job_title}}">
+</div>
+
+<div class="col-sm-4">
+	<label for="usr">Region(Current)</label>
+	<select class="form-control" name="region" id="region">
+			<option value="{{job.region.id}}">{{job.region.region_name}}</option>
+			{% for a in regions %}
+			<option value="{{a.id}}">{{a.region_name}}</option>
+			{% endfor %}
+		
+    </select><br><br>
+</div>
+
+<div class="col-sm-4">
+	<label for="district">District (Current)</label>
+	<select class="form-control" name="district" id="district">
+			<option value="{{job.district.id}}">{{job.district.district_name}}</option>
+     </select>
+</div>
+
+<div class="col-sm-4">
+	<label for="is_current">Is this your current job</label>
+	<select class="form-control" id="trainedAdvance" name="is_current">
+		<option value="{{job.is_current}}">{{job.is_current}}</option>
+			<option value="Yes">Yes</option>
+			<option value="No">No</option>
+    </select><br><br>
+</div>
+
+<div class="col-sm-4">
+	<label for="levelHealthSys">Level of Health System(Nat/Reg/District)</label>
+	<select class="form-control" id="levelHealthSys" name="level_of_health_system">
+		<option value="{{job.level_of_health_system.id}}">{{job.level_of_health_system.level}}</option>
+			<option value=1>National</option>
+			<option value=2>Regional</option>
+			<option value=3>District</option>
+       </select><br><br>
+</div>
+
+<div class="col-sm-4">
+	<label for="usr">Longitude</label>
+	<input type="text" class="form-control" id="" name="longitude" value="{{job.longitude}}">
+</div>
+
+<div class="col-sm-4">
+	<label for="usr">Latitude</label>
+	<input type="text" class="form-control" id="" name="latitude" value="{{job.latitude}}">
+</div>
+
+<div class="col-sm-12">
+	<button type="submit" class="btn btn-primary sub" id="{{job.id}}">Submit</button>
+</div>
+
+
+	

@@ -28,7 +28,7 @@ from rest_framework.renderers import (HTMLFormRenderer, JSONRenderer, BrowsableA
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
-from rest_framework.parsers import FormParser
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.renderers import JSONRenderer
 from .paginations import AlldataPagination
 
@@ -957,3 +957,27 @@ class updatePassword(RetrieveUpdateAPIView):
 
 		else:
 			return Response({"status":status.HTTP_404_BAD_REQEUST, "msg":"Passwords do not match"})
+
+
+
+class ImageUpload(APIView):
+	parser_classes = [MultiPartParser, FormParser]
+
+	def put(self, request, format=None):
+		# print(request.data)
+
+		data, updated = ImageProfile.objects.filter(user_profile_id=request.data.get('user_profile')).update_or_create(
+			user_profile_id=request.data.get('user_profile'),
+			defaults = dict(
+				image=request.data.get('image'),
+				user_profile_id=request.data.get('user_profile')
+				)
+			)
+		return Response({"status":status.HTTP_200_OK, "msg":"Image uploaded"})
+
+		# serializer = ImageSerializer(data=request.data)
+		# if serializer.is_valid():
+		# 	serializer.save()
+		# 	return Response({"status":status.HTTP_200_OK, "msg":"Image uploaded"})
+		# else:
+		# 	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

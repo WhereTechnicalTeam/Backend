@@ -157,10 +157,41 @@ function newFilter() {
     clusterManager(filteredMarkers);
 
 }
+
+
+function regFilter(categoryFilter) {
   
+    var filteredMarkers = [];
+  
+    $.each(markers, function(index, marker) { // on parcourt les markers
+      
+      if (marker.region == categoryFilter) {//si le marker est l'une des categories, on l'ajoute au filteredMarkers
+        // alert(categoryFilter)
+          filteredMarkers.push(marker);
+      }
+      // $.each(regfilters, function(i, categoryFilter) { // on parcourt les différentes catégories présentes dans les filtres
+
+      //   if (marker.Region == categoryFilter) {//si le marker est l'une des categories, on l'ajoute au filteredMarkers
+      //     filteredMarkers.push(marker);
+ 
+      //   }
+      // });
+    });
+
+    clusterManager(filteredMarkers);
+
+}
+
+  
+// region filter
+  $('#reg').on('change', function(){
+    regfilters = $('#reg option:selected').val()
+    regFilter(regfilters);
+  })
 
 
-    
+
+//   level filter
   $('.check-filters input').on('change', function(){
     filters = [];
     $('.check-filters input:checked').each(function(index, elem) {

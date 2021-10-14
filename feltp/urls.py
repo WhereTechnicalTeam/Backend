@@ -11,6 +11,10 @@ urlpatterns = [
     path('newedituser/<int:obj_id>', views.newedit_user, name='newedituser'),
     path('newsfeed', views.newsfeed, name='newsfeed'),
     path('newsfeed/<int:obj_id>/', views.newsfeed_detail, name='newsfeed'),
+    path('createuser', views.createUser, name='createuser'),
+    path('jobsedit/<int:obj_id>', views.jobsedit, name='jobsedit'),
+    path('verifyCode', views.verifyCode, name='verifyCode'),
+    path('resendCode', views.resendCode, name='resendCode'),
 
 
     path('news', views.news, name='news'),

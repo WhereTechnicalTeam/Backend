@@ -252,3 +252,8 @@ class contactUs(models.Model):
         managed = True
         db_table = 'contactus'
         verbose_name_plural = ' Contact Us'
+
+
+class ImageProfile(models.Model):
+    image = models.ImageField(upload_to='api_images/profile/', blank=True, null=True)
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

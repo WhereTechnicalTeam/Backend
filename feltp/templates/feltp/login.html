@@ -40,10 +40,10 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form method="POST" action="{% url 'login_view' %}">
+      <form method="POST" enctype="multipart/form-data" action="{% url 'login_view' %}" id="login">
         {% csrf_token %}
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Email" name="username" required>
+          <input type="text" class="form-control" placeholder="Email" name="email" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -69,7 +69,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="button" class="btn btn-primary btn-block" id="sub">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
@@ -79,7 +79,10 @@
 
       <p class="mb-1">
         <a href="#" id="forgot" data-toggle="modal" data-target="#myModal">I forgot my password</a>
-      </p>
+      </p><br>
+
+
+      <div style="border-radius: 5px; background-color: lightgreen; padding:5px; text-align:center;"><a href="{% url 'createuser' %}" style="text-align:center; color: grey; text-decoration: underline;">Sign up here if you dont have an account.</a></div>
 
       <!-- Modal 1 -->
       <div class="modal fade" id="myModal" role="dialog">
@@ -160,9 +163,74 @@
 <script type="text/javascript">
    $(document).ready(function(){
 
-if($('#add').val() =='done'){
-    Swal.fire('Wrong credential', 'Username or Password is incorrect', 'error')
-  }
+// if($('#add').val() =='done'){
+//     Swal.fire('Wrong credential', 'Username or Password is incorrect', 'error')
+//   }
+
+
+    $("#sub").click(function(e){
+    e.preventDefault();
+    var data = new FormData($('#login').get(0));
+    // console.log(data)
+    
+var token = '{{csrf_token}}';
+
+    $.ajax({
+        url: "/login_view", // same url 'action' in form
+        type: 'POST',
+        headers: { "X-CSRFToken": token },
+        data: data,
+        contentType: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if(data=="public"){
+                window.location.href="https://ghanafeltp.net/"
+
+            }
+
+            else if(data=="superuser") {
+               window.location.href="/admindashboard"
+            }
+
+            else if(data=="not_approved") {
+              Swal.fire('info', 'You are not yet authorised.', 'error')
+                .then(function () {
+                        return false
+                    
+                })
+            }
+
+
+            else if(data=="no_profile") {
+              Swal.fire('info', 'Your profile was not saved. Kindly contact admin.', 'error')
+                .then(function () {
+                        return false
+                    
+                })
+            }
+
+
+            else if(data=="not_user") {
+              Swal.fire('info', 'You have not registered as a user.', 'error')
+                .then(function () {
+                        return false
+                    
+                })
+            }
+
+            else if(data=="credential") {
+              Swal.fire('Wrong credential', 'Username or Password is incorrect', 'error')
+                .then(function () {
+                        return false
+                    
+                })
+            }
+
+        }
+    });
+    return false;
+})
 
 
   $('#cancel').click(function(e){

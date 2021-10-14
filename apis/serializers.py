@@ -231,6 +231,11 @@ class VerificationSerializer(serializers.ModelSerializer):
 
 
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImageProfile
+        fields = ('id', 'image', 'user_profile')
+
 
 class UserDetailSerializer(serializers.ModelSerializer):
     main_user = UserProfileSerializer(read_only=True)

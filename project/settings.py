@@ -130,30 +130,6 @@ DATABASES = {
 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'feltp_dev',
-#         'USER': 'appuser',
-#         'PASSWORD': 'EwpvKyq8aFse3TJ9',
-#         'HOST': 'wheregeospatial.com',
-#         'PORT': 6432,
-#     }
-# }
-
-
-
-
-# DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'HOST': 'localhost',
-#             'PORT': '5432',
-#             'NAME': 'test_feltp',
-#             'USER': 'postgres',
-#             'PASSWORD': 'postgres1234',
-#         }
-#     }
 
     
 

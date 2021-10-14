@@ -26,7 +26,7 @@ from django.db.models import Q
 from datetime import date, timedelta
 from djgeojson.views import GeoJSONLayerView
 from django.core.serializers import serialize
-
+from apis.views import codes
 
 
 
@@ -431,9 +431,12 @@ def loginPage(request):
 # ##################   Login view   ##########################################
 def login_view(request):
 	if request.method == 'POST':
-		username = request.POST.get('username')
+		email = request.POST.get('email')
 		password =  request.POST.get('password')
 		remember = request.POST.get('remember_me')
+
+		# print(email)
+		# print(password)
 
 		if remember:
 			request.session['username'] = username
@@ -443,17 +446,28 @@ def login_view(request):
 			0 seconds. So it will automatically close the session after the browser is closed.'''
 			request.session.set_expiry(0)
 
-		user = authenticate(request, username=username, password=password)
+		user = authenticate(request, username=email, password=password)
 		# print(user)
 		if user is not None:
-			login(request, user)
 			if user.is_superuser:
-				return HttpResponseRedirect(reverse('admindashboard'))
-			messages.success(request, user)
-			return HttpResponseRedirect('https://ghanafeltp.net/')
-
+				login(request, user)
+				return HttpResponse('superuser')
+			if UserProfile.objects.filter(user=user).exists():
+				prof = UserProfile.objects.get(user=user)
+				try:
+					if prof.status == 'approved' and prof.email_status == 'verified':
+						login(request, user)
+						return HttpResponse('public')
+						
+					else:
+						return HttpResponse('not_approved')
+				except Exception as e:
+					print(e)
+					return HttpResponse('not_approved')
+			else:
+				return HttpResponse('no_profile')
 		else:
-			messages.info(request, 'done')
+			return HttpResponse('credential')
 					
 	return render(request, 'feltp/login.html')
 
@@ -751,7 +765,7 @@ def newedit_user(request, obj_id):
 		prof.surname = request.POST.get('surname')
 		prof.firstname = request.POST.get('firstname')
 		prof.date_of_birth = request.POST.get('date_of_birth')
-		prof.phone1phone2 = request.POST.get('phone1phone2')
+		prof.phone1 = request.POST.get('phone1')
 		prof.phone2 = request.POST.get('phone2')
 		prof.is_trained_frontline = request.POST.get('is_trained_frontline')
 		prof.cohort_number_frontline = request.POST.get('cohort_number_frontline')
@@ -770,24 +784,269 @@ def newedit_user(request, obj_id):
 		prof.job_title_at_enroll_advanced = request.POST.get('job_title_at_enroll_advanced')
 		prof.image = request.FILES.get('image')
 
-		jobs = JobInfo.objects.filter(id=job.id).update_or_create(
-			current_institution=request.POST.get('current_institution'),
-			job_title=request.POST.get('job_title'),
-			region_id=request.POST.get('region'),
-			district_id=request.POST.get('district'),
-			is_current=request.POST.get('is_current'),
-			longitude=request.POST.get('longitude'),
-			latitude=request.POST.get('latitude'),
-			user_id=obj_id,
-			level_of_health_system_id=request.POST.get('level_of_health_system')
-			# jobs.save()
-		)
+		# jobs, created = JobInfo.objects.filter(id=job.id).update_or_create(
+		# 	current_institution=request.POST.get('current_institution'),
+		# 	job_title=request.POST.get('job_title'),
+		# 	region_id=request.POST.get('region'),
+		# 	district_id=request.POST.get('district'),
+		# 	is_current=request.POST.get('is_current'),
+		# 	longitude=request.POST.get('longitude'),
+		# 	latitude=request.POST.get('latitude'),
+		# 	user_id=obj_id,
+		# 	level_of_health_system_id=request.POST.get('level_of_health_system')
+		# 	# jobs.save()
+		# )
 
-		job = JobInfo.objects.filter(is_current='Yes').order_by('-updated_at').first() or JobInfo.objects.all().order_by('-updated_at').first()
+		# job = JobInfo.objects.filter(is_current='Yes').order_by('-updated_at').first() or JobInfo.objects.all().order_by('-updated_at').first()
 
 		prof.save()
 		# user.save()
 
-		return render(request, 'feltp/newprofile_edit.html', {'regions':regions, 'prof':prof, 'job':job})
+		return render(request, 'feltp/newprofile_edit.html', {'regions':regions, 'prof':prof})
 
 	return render(request, 'feltp/newprofile_edit.html', {'regions':regions, 'prof':prof, 'job':job})
+
+
+
+
+
+#   returns the value should we have a '' or null value
+def is_none(obj):
+	if obj == '':
+		obj == None
+	else:
+		return obj
+
+
+
+
+
+def createUser(request):
+	regions = Region.objects.all().order_by('region_name')
+	if request.method == 'POST':
+
+		email = request.POST.get('email')
+
+		surname = request.POST.get('surname')
+		firstname = request.POST.get('firstname')
+		date_of_birth = request.POST.get('date_of_birth')
+		sex = request.POST.get('sex')
+		phone1 = request.POST.get('phone1')
+		phone2 = request.POST.get('phone2')
+		is_trained_frontline = request.POST.get('is_trained_frontline')
+		cohort_number_frontline = request.POST.get('cohort_number_frontline')
+		yr_completed_frontline = request.POST.get('yr_completed_frontline')
+		institution_enrolled_at_frontline = request.POST.get('institution_enrolled_at_frontline')
+		job_title_at_enroll_frontline = request.POST.get('job_title_at_enroll_frontline')
+		is_trained_intermediate = request.POST.get('is_trained_intermediate')
+		cohort_number_intermediate = request.POST.get('cohort_number_intermediate')
+		yr_completed_intermediate = request.POST.get('yr_completed_intermediate')
+		institution_enrolled_at_intermediate = request.POST.get('institution_enrolled_at_intermediate')
+		job_title_at_enroll_intermediate = request.POST.get('job_title_at_enroll_intermediate')
+		is_trained_advanced = request.POST.get('is_trained_advanced')
+		cohort_number_advanced = request.POST.get('cohort_number_advanced')
+		yr_completed_advanced = request.POST.get('yr_completed_advanced')
+		institution_enrolled_at_advanced = request.POST.get('institution_enrolled_at_advanced')
+		job_title_at_enroll_advanced = request.POST.get('job_title_at_enroll_advanced')
+
+		image = request.FILES.get('image')
+
+		if surname == '':
+			return HttpResponse('surname')
+
+		if firstname == '':
+			return HttpResponse('firstname')
+
+		if sex == '':
+			return HttpResponse('sex')
+
+		print('start')
+		if request.POST.get('password') != request.POST.get('cpassword'):
+			return HttpResponse('match')
+
+		if User.objects.filter(email=email).exists():
+			return HttpResponse('exists')
+
+		usr = User.objects.create(
+			username=email,
+			email=email,
+			first_name = firstname,
+			last_name = surname
+			)
+		
+		usr.set_password(request.POST.get('password'))
+		usr.save()
+
+		
+		prof = UserProfile.objects.create(
+			surname = surname,
+			firstname = firstname,
+			date_of_birth = date_of_birth,			
+			phone1 =  is_none(phone1),
+			phone2 =  is_none(phone2),
+			user_id =  is_none(usr.id),
+			is_trained_frontline =  is_none(is_trained_frontline),
+			cohort_number_frontline =  is_none(cohort_number_frontline),
+			yr_completed_frontline =  is_none(yr_completed_frontline),
+			institution_enrolled_at_frontline =  is_none(institution_enrolled_at_frontline),
+			job_title_at_enroll_frontline =  is_none(job_title_at_enroll_frontline), 
+			is_trained_intermediate =  is_none(is_trained_intermediate),
+			cohort_number_intermediate =  is_none(cohort_number_intermediate),
+			yr_completed_intermediate =  is_none(yr_completed_intermediate),
+			institution_enrolled_at_intermediate =  is_none(institution_enrolled_at_intermediate),
+			job_title_at_enroll_intermediate =  is_none(job_title_at_enroll_intermediate),
+			is_trained_advanced =  is_none(is_trained_advanced),
+			cohort_number_advanced = is_none(cohort_number_advanced),
+			yr_completed_advanced =  is_none(yr_completed_advanced),
+			institution_enrolled_at_advanced =  is_none(institution_enrolled_at_advanced),
+			job_title_at_enroll_advanced =  is_none(job_title_at_enroll_advanced)
+			)
+
+		created = verificationTbl.objects.create(email=email, code=codes())
+		try:
+			send_mail('Your Verifcation Code',
+				"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [email],)
+		except Exception as e:
+			print(e)
+
+		
+
+		jobs, created = JobInfo.objects.get_or_create(
+			user_id= usr.id,
+			current_institution=request.POST.get('current_institution'),
+			job_title=request.POST.get('job_title'),
+			is_current=request.POST.get('is_current'),
+			defaults = {
+				'region_id':request.POST.get('region'),
+				'district_id':request.POST.get('district'),
+				# 'is_current':request.POST.get('is_current'),
+				'longitude':request.POST.get('longitude'),
+				'latitude':request.POST.get('latitude'),
+				'level_of_health_system_id':request.POST.get('level_of_health_system'),
+				'user_profile_id': prof.id
+			}
+			
+		)
+		return HttpResponse('done')
+
+	return render(request, 'feltp/signup.html', {'regions':regions})
+
+
+
+@login_required(login_url="/login")
+def jobsedit(request, obj_id=None):
+	user = request.user.id
+	print(user)
+	regions = Region.objects.all().order_by('region_name')
+	jobs = JobInfo.objects.filter(user_id=user)
+	# print(jobs)
+	print(obj_id)
+
+	if request.method == "POST":
+
+		current_institution = request.POST.get('current_institution')
+		job_title=request.POST.get('job_title')
+		region=request.POST.get('region')
+		district=request.POST.get('district')
+		is_current=request.POST.get('is_current')
+		longitude=request.POST.get('longitude')
+		latitude=request.POST.get('latitude')
+		level_of_health_system=request.POST.get('level_of_health_system')
+
+		user_profile= UserProfile.objects.get(user_id=request.user.id)
+
+		if obj_id == 0:
+
+			jobss, created = JobInfo.objects.get_or_create(
+				
+				current_institution=current_institution,
+				job_title=request.POST.get('job_title'),
+				defaults = {
+					'user_id': user,
+					'region_id':region,
+					'district_id':district,
+					'is_current':is_current,
+					'longitude':longitude,
+					'latitude':latitude,
+					'level_of_health_system_id':level_of_health_system,
+					'user_profile_id': user_profile.id
+				}
+				
+			)
+
+			return HttpResponse('done')
+
+
+		else:
+			job, created = JobInfo.objects.filter(user_id=user, pk=obj_id).update_or_create(
+				# user_id= user_profile.user_id,
+				current_institution=current_institution,
+				job_title=request.POST.get('job_title'),
+				defaults = {
+					'region_id':region,
+					'district_id':district,
+					'is_current':is_current,
+					'longitude':longitude,
+					'latitude':latitude,
+					'level_of_health_system_id':level_of_health_system,
+					# 'user_profile': user_profile.id
+				}
+			)
+
+			jobd = JobInfo.objects.get(user_id=user, pk=obj_id)
+
+			return render(request, 'feltp/ind_job.html', {'job':jobd})
+
+	return render(request, 'feltp/jobs.html', {'jobs':jobs, 'regions':regions})
+
+
+
+def verifyCode(request):
+	data = request.GET.get('data')
+	# print(data)
+	if data:
+		try:
+			query = verificationTbl.objects.get(code__contains=data)
+			print(query)
+
+			if query:
+				# print(query.email)
+				if User.objects.get(email__contains=query.email):
+					query.status = 'used'
+					query.user_id = User.objects.get(email=query.email).id
+					query.save()
+
+					prof = UserProfile.objects.get(user_id=query.user_id)
+					# print(prof)
+					prof.email_status='verified'
+					prof.status = 'approved'
+					prof.save()
+					print(prof.email_status)
+					# token, created = Token.objects.get_or_create(user=user)
+				# 	return Response({"status": status.HTTP_200_OK, "Token": token.key})
+					return HttpResponse("login")
+				
+				return HttpResponse('not_user')
+				
+			else:
+				return HttpResponse("not_exist")
+
+		except Exception as e:
+			print(e)
+
+	return render(request, 'feltp/v_code.html')
+
+
+
+
+def resendCode(request):
+	data = request.GET.get('data')
+	email = data
+	created = verificationTbl.objects.create(email=email, code=codes())
+	try:
+		send_mail('Your Verifcation Code',
+			"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [email],)
+	except Exception as e:
+		print(e)
+
+	return HttpResponse('sent')

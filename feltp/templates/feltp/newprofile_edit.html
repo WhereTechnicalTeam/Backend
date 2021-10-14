@@ -40,11 +40,11 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
 
-					<li class="active smooth-scroll"><a href="https://ghanafeltp.net/">HOME</a></li>
-				<!-- 	{% if user.is_authenticated %} -->
-					<!-- <li class="smooth-scroll"><a href="#service">DASHBOARD</a></li> -->
+					<li class=" smooth-scroll"><a href="https://ghanafeltp.net/">Public Site</a></li>
+					
 					<li class="smooth-scroll"><a href="{% url 'newsfeed' %}">DASHBOARD</a></li>
-					<!-- {% endif %} -->
+					<li class="smooth-scroll"><a href="{% url 'newMap' %}">Map</a></li>
+					
 					<!-- <li class="smooth-scroll"><a href="#gallery">GALLERY</a></li>
 					
 					<li class="smooth-scroll"><a href="#price">EVENT</a></li>
@@ -61,7 +61,11 @@
 					<a href="" class="name">{{user}}</a>
 					<!-- more menu -->
 					<ul class="menu">
-						<!-- <li><a href="{% url 'newedituser' user.id %}" >Edit</a></li> -->
+						{% if job%}
+						<li><a href="{% url 'jobsedit' job.pk %}" >Edit Jobs</a></li>
+						{% else %}
+						<li><a href="{% url 'jobsedit' 1 %}" >Edit Jobs</a></li>
+						{% endif%}
 						<li><a href="{% url 'logout_view' %}">Log out</a></li>
 					</ul>
 					{% endif %}
@@ -82,8 +86,8 @@
 		<!-- <h3 ><span style="color: white;"0>Your Profile</span></h3> -->
 	</div>
 	<div class="container">
-		<div class="contact-form">
-		<div class="container1" style="margin: 60px; width: 90%; border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border: 1px solid; padding:20px; background-color: #f7f7f7!important;">
+		<div class="contact-form"><br><br><br><br>
+		<div class="container1" style="margin: 0 15%; width: 70%; border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border: 1px solid; padding:20px; background-color: #f7f7f7!important;">
 			<h3 ><span style="color: grey;">Your Profile</span></h3>
 			<div class="row">
 				<form method="POST" enctype="multipart/form-data" id='profile' action="{% url 'newedituser' user.id %}">
@@ -111,7 +115,7 @@
 
 					<div class="col-sm-4">
 						<label for="trainedfront">Trained in Frontline</label>
-    					<select class="form-control" id="trainedfront" name="is_trained_frontline">
+    					<select class="form-control" id="trainedfront" name="is_trained_frontline" style="height: 40px;">
     						<option value="{{prof.is_trained_frontline}}">{{prof.is_trained_frontline}}</option>
       						<option value="Yes">Yes</option>
       						<option value="No">No</option>
@@ -125,7 +129,7 @@
 
 					<div class="col-sm-4">
 						<label for="usr">Year of Completion(Frontline)</label>
-						<input type="year" class="form-control" id="" name="yr_completed_frontline" value="{{prof.yr_completed_frontline}}">
+						<input type="text" class="form-control" id="" name="yr_completed_frontline" value="{{prof.yr_completed_frontline}}">
 					</div>
 
                     <div class="col-sm-4">
@@ -140,21 +144,21 @@
 
 					<div class="col-sm-4">
 						<label for="trainedInter">Trained at Intermediate level</label>
-    					<select class="form-control" id="trainedInter" name="is_trained_intermediate">
+    					<select class="form-control" id="trainedInter" name="is_trained_intermediate" style="height: 40px;">
     						<option value="{{prof.is_trained_frontline}}">{{prof.is_trained_intermediate}}</option>
       						<option value="Yes">Yes</option>
       						<option value="No">No</option>
                         </select><br>
 					</div>
 
-					<div class="col-sm-4" style="float: right;">
+					<div class="col-sm-4">
 						<label for="usr">Cohort (Intermediate) </label>
 						<input type="text" class="form-control" id="" name="cohort_number_intermediate" value="{{prof.cohort_number_intermediate}}">
 					</div>
 
 					<div class="col-sm-4">
 						<label for="usr">Year of Completion(Intermediate)</label>
-						<input type="year" class="form-control" id="" name="yr_completed_intermediate" value="{{prof.yr_completed_intermediate}}"><br>
+						<input type="text" class="form-control" id="" name="yr_completed_intermediate" value="{{prof.yr_completed_intermediate}}">
 					</div>
 					
 					<div class="col-sm-4">
@@ -169,21 +173,21 @@
 
 					<div class="col-sm-4">
 						<label for="trainedAdvance">Trained at Advanced level</label>
-    					<select class="form-control" id="trainedAdvance" name="is_trained_advanced">
+    					<select class="form-control" id="trainedAdvance" name="is_trained_advanced" style="height: 40px;">
     						<option value="{{prof.is_trained_advanced}}">{{prof.is_trained_advanced}}</option>
       						<option value="Yes">Yes</option>
       						<option value="No">No</option>
                         </select><br>
 					</div>
 
-					<div class="col-sm-4" style="float: right;">
+					<div class="col-sm-4">
 						<label for="usr">Cohort(Advanced)</label>
 						<input type="text" class="form-control" id="" name="cohort_number_advanced" value="{{prof.cohort_number_advanced}}">
 					</div>
 
 					<div class="col-sm-4">
 						<label for="usr">Year of Completion(Advanced)</label>
-						<input type="year" class="form-control" id="" name="yr_completed_advanced" value="{{prof.yr_completed_advanced}}">
+						<input type="text" class="form-control" id="" name="yr_completed_advanced" value="{{prof.yr_completed_advanced}}">
 					</div>
 
 					<div class="col-sm-4">
@@ -196,7 +200,7 @@
 						<input type="text" class="form-control" id="" name="job_title_at_enroll_advanced" value="{{prof.job_title_at_enroll_advanced}}">
 					</div>
 
-					<div class="col-sm-4">
+<!-- 					<div class="col-sm-4">
 						<label for="usr">Current Institution/ Department</label>
 						<input type="text" class="form-control" id="" name="current_institution" value="{{job.current_institution}}">
 					</div>
@@ -208,7 +212,7 @@
 
 					<div class="col-sm-4">
 						<label for="usr">Region(Current)</label>
-						<select class="form-control" name="region" id="region">
+						<select class="form-control" name="region" id="region" style="height: 40px;">
       						<option value="{{job.region.id}}">{{job.region.region_name}}</option>
       						{% for a in regions %}
       						<option value="{{a.id}}">{{a.region_name}}</option>
@@ -219,23 +223,23 @@
 
 					<div class="col-sm-4">
 						<label for="district">District (Current)</label>
-						<select class="form-control" name="district" id="district">
+						<select class="form-control" name="district" id="district" style="height: 40px;">
       						<option value="{{job.district.id}}">{{job.district.district_name}}</option>
                          </select><br>
 					</div>
 					
 					<div class="col-sm-4">
 						<label for="is_current">Is this your current job</label>
-    					<select class="form-control" id="trainedAdvance" name="is_current">
+    					<select class="form-control" id="trainedAdvance" name="is_current" style="height: 40px;">
     						<option value="{{job.is_current}}">{{job.is_current}}</option>
       						<option value="Yes">Yes</option>
       						<option value="No">No</option>
                         </select><br>
-					</div>
+					</div> -->
 
-					<div class="col-sm-4">
+					<!-- <div class="col-sm-4">
 						<label for="levelHealthSys">Level of Health System(Nat/Reg/District)</label>
-    					<select class="form-control" id="levelHealthSys" name="level_of_health_system">
+    					<select class="form-control" id="levelHealthSys" name="level_of_health_system" style="height: 40px;">
     						<option value="{{job.level_of_health_system.id}}">{{job.level_of_health_system.level}}</option>
       						<option value=1>National</option>
       						<option value=2>Regional</option>
@@ -243,26 +247,26 @@
                            </select><br>
 					</div>
 
-					<div class="col-sm-4" style="float: right;">
+					<div class="col-sm-4">
 						<label for="usr">Longitude</label>
 						<input type="text" class="form-control" id="" name="longitude" value="{{job.longitude}}">
 					</div>
 
-					<div class="col-sm-4" style="float: right;">
+					<div class="col-sm-4">
 						<label for="usr">Latitude</label>
 						<input type="text" class="form-control" id="" name="latitude" value="{{job.latitude}}">
-					</div>
+					</div> -->
 
 					<div class="col-sm-4">
 						<label for="email">Your Email</label>
-						<input type="email" class="form-control" id="email" name="email" value="{{user.email}}">
+						<input type="email" class="form-control" id="email" name="email" value="{{user.email}}" readonly>
 					</div>
 
-					 <div class="col-sm-4">
+					 <!-- <div class="col-sm-4">
 						<label class="form-label" for="profile">Upload Profile Picture</label>
 						<input type="file" class="form-control" id="profile" name="image"  value="{{prof.image}}"/>
 						<br><br>
-					</div>
+					</div> -->
     
   
 					<div class="col-sm-12">
@@ -272,36 +276,11 @@
 				</form>
 			</div>
 		</div>
-	</div>
+	</div><br><br><br>
 
 	</div>
 </section>
-<!--contact heading-->
 
-<!-- footer-area-->
-<!-- <footer>
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-2 text-center">
-				<a href=""><img src="/static/feltp/img/gflep_logo.jpg" alt="logo"></a>
-			</div>
-			<div class="col-sm-8">
-				<div class="footer-p text-center">
-					<p>© Copyright 2021, All Rights Reserved,GFELTP</p>
-				</div>
-			</div>
-			<div class="col-sm-2">
-				<div class="footer-social text-center">
-					<a href=""><i class="fa fa-facebook"></i></a>
-					<a href=""><i class="fa fa-twitter"></i></a>
-					<a href=""><i class="fa fa-instagram"></i></a>
-					<a href=""><i class="fa fa-google-plus"></i></a>
-					<a href=""><i class="fa fa-rss"></i></a>
-				</div>
-			</div>
-		</div>
-	</div>
-</footer> -->
 <script src="/static/feltp/js/jquery-1.11.3.min.js"></script>
 <script src="/static/feltp/js/bootstrap.min.js"></script>
 <script src="/static/feltp/js/isotope.2.2.2min.js"></script>

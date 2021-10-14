@@ -35,14 +35,14 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
 
-					<li class="active smooth-scroll"><a href="https://ghanafeltp.net/">HOME</a></li>
+					<li class="smooth-scroll"><a href="https://ghanafeltp.net/">Public Site</a></li>
 					
 					<!-- <li class="smooth-scroll"><a href="#service">DASHBOARD</a></li> -->
 					<li class="smooth-scroll"><a href="{% url 'newsfeed' %}">DASHBOARD</a></li>
 					
-					<!-- <li class="smooth-scroll"><a href="#gallery">GALLERY</a></li>
+					<li class="smooth-scroll"><a href="{% url 'newMap' %}">Map</a></li>
 					
-					<li class="smooth-scroll"><a href="#price">EVENT</a></li>
+					<!-- <li class="smooth-scroll"><a href="#price">EVENT</a></li>
 					<li class="smooth-scroll"><a href="#news">NEWS</a></li>
 					<li class="smooth-scroll"><a href="#contact">MAP</a></li> -->
 					
@@ -82,6 +82,25 @@
       
       <label><input type="checkbox" class="jss" value="intermediate" checked> Intermediate</label>
       <label><input type="checkbox" class="jss" value="advanced" checked> Advanced</label>
+      <select type="checkbox" class="reg" id="reg">
+      	<option value="">Select a region</option>
+      	<option value="AHAFO">AHAFO</option>
+      	<option value="ASHANTI">ASHANTI</option>
+      	<option value="BONO">BONO</option>
+      	<option value="BONO EAST">BONO EAST</option>
+      	<option value="CENTRAL">CENTRAL</option>
+      	<option value="EASTERN">EASTERN</option>
+      	<option value="GREATER ACCRA">GREATER ACCRA</option>
+      	<option value="NORTH EAST">NORTH EAST</option>
+      	<option value="NORTHERN">NORTHERN</option>
+      	<option value="OTI">OTI</option>
+      	<option value="SAVANNAH">SAVANNAH</option>
+      	<option value="UPPER EAST">UPPER EAST</option>
+      	<option value="UPPER WEST">UPPER WEST</option>
+      	<option value="VOLTA">VOLTA</option>
+      	<option value="WESTERN">WESTERN</option>
+      	<option value="WESTERN NORTH">WESTERN NORTH</option>
+      </select>
     </div>
 	<div id="map">
 
