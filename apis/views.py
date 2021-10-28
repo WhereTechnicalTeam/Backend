@@ -689,6 +689,7 @@ def get_profile(request):
 				try:
 					send_mail('Your Verifcation Code',
 						"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [request.data['email']],)
+					#return Response({"status":status.HTTP_200_OK,  "msg":"A verification code has been sent to your email"})
 					return Response({"status":status.HTTP_200_OK, "alldata": serializered.data, "msg":"A verification code has been sent to your email"})
 					
 				except Exception as e:
@@ -966,14 +967,18 @@ class ImageUpload(APIView):
 	def put(self, request, format=None):
 		# print(request.data)
 
-		data, updated = ImageProfile.objects.filter(user_profile_id=request.data.get('user_profile')).update_or_create(
-			user_profile_id=request.data.get('user_profile'),
-			defaults = dict(
-				image=request.data.get('image'),
-				user_profile_id=request.data.get('user_profile')
+		try:
+			data, updated = ImageProfile.objects.filter(user_profile_id=request.data.get('user_profile')).update_or_create(
+				user_profile_id=request.data.get('user_profile'),
+				defaults = dict(
+					image=request.data.get('image'),
+					user_profile_id=request.data.get('user_profile')
+					)
 				)
-			)
-		return Response({"status":status.HTTP_200_OK, "msg":"Image uploaded"})
+			return Response({"status":status.HTTP_200_OK, "msg":"Image uploaded"})
+		except Exception as e:
+			return Response({"status":status.HTTP_404_BAD_REQEUST, "msg1":e, 'data_captured':request.data})
+
 
 		# serializer = ImageSerializer(data=request.data)
 		# if serializer.is_valid():
