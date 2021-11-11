@@ -1,0 +1,727 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Home GFELTP</title>
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/static/feltp/css/font-awesome.css">
+	<link rel="stylesheet" href="/static/feltp/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/feltp/css/animate.css">
+	<link rel="stylesheet" href="/static/feltp/css/prettyPhoto.css">
+	<link href="/static/feltp/css/public_style.css" rel="stylesheet">
+	<link href="/static/feltp/css/style2.css" rel="stylesheet">
+	<link href="/static/feltp/css/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-dFHYjTqEVLndbN2gdvXsx09jfJHmNc8&callback=myMap"></script>    
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		<script type="text/javascript" src="/static/feltp/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/feltp/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/feltp/js/bootstrap.min.js"></script>
+<!--start slider -->
+    <link rel="stylesheet" href="/static/feltp/css/fwslider.css" media="all">
+    <script src="/static/feltp/js/jquery-ui.min.js"></script>
+    <script src="/static/feltp/js/css3-mediaqueries.js"></script>
+    <script src="/static/feltp/js/fwslider.js"></script>
+<!--end slider -->
+<!-- must have -->
+<link href="/static/feltp/css/allinone_carousel.css" rel="stylesheet" type="text/css">
+<link href="static/feltp/css/owl.carousel.css" rel="stylesheet">
+<script src="/static/feltp/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<script src="/static/feltp/js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+<script src="/static/feltp/js/allinone_carousel.js" type="text/javascript"></script>
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<!--[if IE]><script src="js/excanvas.compiled.js" type="text/javascript"></script><![endif]-->
+<!-- must have -->
+
+</head>
+<body>
+<header>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><img src="img/gflep_logo.jpg" alt=""></a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav navbar-right">
+
+					<li class="active smooth-scroll"><a href="#home">HOME</a></li>
+					<li class="smooth-scroll"><a href="#service">ABOUT US</a></li>
+					<li class="smooth-scroll"><a href="#team">ALUMNI</a></li>
+					<li class="smooth-scroll"><a href="#gallery">GALLERY</a></li>
+					
+					<li class="smooth-scroll"><a href="#price">EVENT</a></li>
+					<li class="smooth-scroll"><a href="#news">NEWS</a></li>
+					<li class="smooth-scroll"><a href="#contact">MAP</a></li>
+					{% if user.is_authenticated %}
+					<li class="smooth-scroll"><a href="{% url 'admindashboard' %}">Admin</a></li>
+					{% endif %}
+                <li>
+				<!-- user profile -->
+				<div class="profile">
+					<img src="/static/feltp/img/avatar.jpg" />
+					{% if not user.is_authenticated %}
+					<a href="{% url 'login' %}" class="name">Login</a>
+					{% endif %}
+					{% if user.is_authenticated %}
+					<a href="" class="name">{{user}}</a>
+					<!-- more menu -->
+					<ul class="menu">
+						<li><a href="{% url 'edituser' user.id %}" >Edit</a></li>
+						<li><a href="{% url 'logout_view' %}">Log out</a></li>
+					</ul>
+					{% endif %}
+				</div>
+			</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+
+<!--Home Section-->
+<section id="home">
+	<div class="overlay"></div>
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+		<!--Indicator-->
+		<ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+			<li data-target="#myCarousel" data-slide-to="3"></li>
+		</ol>
+		<div class="carousel-inner" role="listbox">
+			<div class="item active">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 wow bounceInUp">
+							<div class="home-text text-center">
+								<h1>GFELTP<span>AGENDA</span></h1><h1 style="color:#1401f2">PUSHERS</h1>
+
+								<h3>MOVING GHANA FORWARD</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 wow bounceInUp">
+							<div class="home-text text-center">
+								<h1>GFELTP<span>AGENDA</span></h1><h1 style="color:#1401f2">PUSHERS</h1>
+
+								<h3>MOVING GHANA FORWARD</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 wow bounceInUp">
+							<div class="home-text text-center">
+								<h1>GFELTP<span>AGENDA</span></h1><h1 style="color:#1401f2">PUSHERS</h1>
+
+								<h3>MOVING GHANA FORWARD</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 wow bounceInUp">
+							<div class="home-text text-center">
+								<h1>GFELTP<span>AGENDA</span></h1><h1 style="color:#1401f2">PUSHERS</h1>
+
+								<h3>MOVING GHANA FORWARD</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</section>
+<!--SERVICES AREA-->
+<section id="service">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12  wow bounce">
+				<div class="section-heading text-center text-uppercase  wow bounceInUp">
+					<h2>ABOUT US</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<!-- <div class="col-sm-6 col-md-3  wow bounceIn">
+				<div class="single-item text-center">
+					<i class="fa fa-lightbulb-o"></i>
+					<h4 class="text-uppercase">Objective 1</h4>
+
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.</p>
+					<a href="#" class="btn btn-red text-uppercase">more</a>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3 wow bounceInUp">
+				<div class="single-item text-center">
+					<i class="fa fa-lightbulb-o"></i>
+					<h4 class="text-uppercase">ojective 2</h4>
+
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.</p>
+					<a href="#" class="btn btn-red text-uppercase">more</a>
+				</div>
+			</div> -->
+
+			
+			<div class="col-sm-6 col-md-4 wow pulse">
+				<div class="single-item text-center">
+					<i class="fa fa-lightbulb-o"></i>
+					<h4 class="text-uppercase">Vision </h4>
+
+					<p>To improve the health of the people in Ghana.</p>
+				<!-- 	<a href="#" class="btn btn-red text-uppercase">more</a> -->
+				</div>
+			</div>
+
+			<div class="col-sm-6 col-md-4 wow bounceInUp">
+				<div class="single-item text-center">
+					<script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5tx0uun0t7l&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
+				</div>
+			</div>
+
+			<div class="col-sm-6 col-md-4 wow shake">
+				<div class="single-item text-center">
+					<i class="fa fa-lightbulb-o"></i>
+					<h4 class="text-uppercase">Mission Statement</h4>
+
+					<p>To contribute to addressing Ghana's public health needs and priorities through training and service provision in Applied Epidemiology and Public Health Laboratory Management.</p>
+					<!-- <a href="#" class="btn btn-red text-uppercase">more</a> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--team section-->
+<section id="team">
+	<div class="container">
+		<div class="section-heading text-center text-uppercase wow  wow bounceInRight">
+			<h2>FIND ALUMNI</h2>
+		</div>
+		<form class="example" action="">
+		  <input type="text" placeholder="Search.." name="search" id="inp">
+		  <button type="button" id="search"><i class="fa fa-search"></i></button>
+		</form>
+		<div class="row  wow bounceInLeft" id="datas">
+
+			{% for alumni in jobs %}
+			<div class="col-sm-6 col-md-3">
+				<div class="single-team" id="">
+					<img src="/media/{{job.user_profile.picture}}" alt="">
+                    
+					
+
+					Name: {%if alumni.user_profile.title%}{{alumni.user_profile.title}}{% endif%} {{alumni.user_profile.surname}} {{alumni.user_profile.firstname}}<br>
+
+					Job title: {{alumni.job_title}}<br>
+					Email: {{alumni.user.email}}
+
+				</div>
+			</div>
+			{% endfor %}
+
+			<!-- <div class="col-sm-6 col-md-3">
+				<div class="single-team">
+					<img src="/static/feltp/img/avatar.jpg" alt="">
+
+					Dr. Dickson Adomako Kissi<br>
+					Currently working in/as Municipal Health Directorate<br>
+					Email:
+
+					
+
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="single-team">
+					<img src="/static/feltp/img/avatar.jpg" alt="">
+
+					
+
+					Michael Osei Boateng<br> 
+
+					Currently working in/as Municipal Health Directorate<br>
+					Email:
+
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="single-team">
+					<img src="/static/feltp/img/avatar.jpg" alt="">
+
+					Prince Obeng<br>
+					Currently working in/as Municipal Health Directorate<br>
+					Email:
+
+
+					
+
+				</div>
+			</div> -->
+			
+			
+			
+			</div>
+			
+		</div>
+		<div class="skill-heading text-center text-uppercase">
+			<h3></h3>
+		</div>
+		
+	</div>
+</section>
+<!--gallery area-->
+<section id="gallery">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+				<div class="section-heading text-center text-uppercase  wow shake">
+					<h2>OUR GALLERY</h2>
+
+					
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<div class="gallery-btn text-center text-uppercase">
+		<a href="#" class="active btn btn-trans" data-filter="*">ALL</a>
+		<a href="#" class="btn btn-trans" data-filter=".web">PROJECTS</a>
+		<a href="#" class="btn btn-trans" data-filter=".design">ACTIVITIES</a>
+		<a href="#" class="btn btn-trans" data-filter=".app">ELECTIONS</a>
+		<a href="#" class="btn btn-trans" data-filter=".theme">MEETINGS</a>
+		<a href="#" class="btn btn-trans" data-filter=".hosting">SIDE ATTRACTIONS</a>
+	</div>
+	<div class="container-fluid">
+		<div class="row no-gutter">
+			<div class="gellery-item text-center">
+				<div class="single-gl web theme col-md-2 col-sm-3">
+					<img src="/static/feltp/img/img1.jpg" alt="">
+
+					<div class="gl-overlay">
+						<div class="caption">
+							<a href="/static/feltp/img/img1.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
+							
+						</div>
+					</div>
+				</div>
+				<div class="single-gl web col-md-2 col-sm-3">
+					<img src="/static/feltp/img/img2.jpg" alt="">
+
+					<div class="gl-overlay">
+						<div class="caption">
+							<a href="/static/feltp/img/img2.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
+							
+						</div>
+					</div>
+				</div>
+				<div class="single-gl design theme col-md-2 col-sm-3">
+					<img src="/static/feltp/img/img3.jpg" alt="">
+
+					<div class="gl-overlay">
+						<div class="caption">
+							<a href="/static/feltp/img/img3.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
+							
+						</div>
+					</div>
+				</div>
+				
+				<div class="single-gl design web col-md-2 col-sm-3">
+					<img src="/static/feltp/img/img5.jpg" alt="">
+
+					<div class="gl-overlay">
+						<div class="caption">
+							<a href="/static/feltp/img/img5.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
+							
+						</div>
+					</div>
+				</div>
+				<div class="single-gl hosting design col-md-2 col-sm-3">
+					<img src="/static/feltp/img/img6.jpg" alt="">
+
+					<div class="gl-overlay">
+						<div class="caption">
+							<a href="/static/feltp/img/img6.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
+							
+						</div>
+					</div>
+				</div>
+				
+				<div class="single-gl app col-md-2 col-sm-3">
+					<img src="/static/feltp/img/img9.jpg" alt="">
+
+					<div class="gl-overlay">
+						<div class="caption">
+							<a href="/static/feltp/img/img9.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
+							
+						</div>
+					</div>
+				</div>
+				
+				<div class="single-gl app theme col-md-2 col-sm-3">
+					<img src="/static/feltp/img/img11.jpg" alt="">
+
+					<div class="gl-overlay">
+						<div class="caption">
+							<a href="/static/feltp/img/img11.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
+							
+						</div>
+					</div>
+				</div>
+				<div class="single-gl app theme col-md-2 col-sm-3">
+					<img src="/static/feltp/img/img12.jpg" alt="">
+
+					<div class="gl-overlay">
+						<div class="caption">
+							<a href="/static/feltp/img/img12.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
+							
+						</div>
+					</div>
+				</div>
+				
+				<div class="single-gl app theme col-md-2 col-sm-3">
+					<img src="/static/feltp/img/img14.jpg" alt="">
+
+					<div class="gl-overlay">
+						<div class="caption">
+							<a href="/static/feltp/img/img14.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
+							
+						</div>
+					</div>
+				</div>
+				<div class="single-gl app theme col-md-2 col-sm-3">
+					<img src="/static/feltp/img/img15.jpg" alt="">
+
+					<div class="gl-overlay">
+						<div class="caption">
+							<a href="/static/feltp/img/img15.jpg" data-gallery="prettyPhoto"><i class="fa fa-search"></i></a>
+							<a href="/static/feltp/img/img15.jpg"><i class="fa fa-expand"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--our price area-->
+<section id="price">
+	<div class="container">
+		<div class="section-heading text-center text-uppercase">
+
+			<h2>UPCOMING <span>EVENTS</span></h2>
+		</div>
+		<div class="row">
+			{% for eve in events %}
+			<div class="col-sm-4">
+				<div class="single-price text-center wow swing">
+					<div class="price-top">
+						<h3>{{eve.title}}</h3>
+						<i class="fa fa-lightbulb-o"></i>
+
+						
+					</div>
+					<div class="price-bottom">
+						<img src="/static/feltp/img/photo1.png" alt="">
+
+						<p>{{eve.description|truncatewords:20}} </p>
+						<a href="/detailevent/{{eve.id}}/" class="btn text-uppercase">More</a>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+
+			<!-- <div class="col-sm-4">
+				<div class="single-price text-center wow swing">
+					<div class="price-top">
+						<h3>EVENT 2</h3>
+						<i class="fa fa-globe"></i>
+
+						
+					</div>
+					<div class="price-bottom">
+						<img src="/static/feltp/img/photo2.png" alt="">
+
+						<p>annual meeting </p>
+						<a href="events.html" class="btn text-uppercase">More</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="single-price text-center wow swing">
+					<div class="price-top">
+						<h3>EVENT 3</h3>
+						<i class="fa fa-clock-o"></i>
+
+						
+					</div>
+					<div class="price-bottom">
+						<img src="/static/feltp/img/photo1.png" alt="">
+
+						<p>next tour </p>
+						<a href="events.html" class="btn text-uppercase">More</a>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</section>
+<!--our news area-->
+<section id="news">
+	<div class="section-heading news-heading text-center text-uppercase wow swing">
+		<h2>OUR <span>News</span></h2>
+	</div>
+	<div class="container">
+		<div class="row no-gutter">
+			<div class="col-md-7 col-md-offset-1">
+
+				<div class="latest-news">
+
+					<h3>Latest News</h3>
+
+					{% for new in news %}
+					<div class="news-content">
+						<div class="news-date">
+							<h1>{{new.created_at|date:'d'}}</h1>
+
+							<h1>{{new.created_at|date:'b'}}</h1>
+						</div>
+						<div class="news-text">
+							<h5>{{new.title}}</h5>
+
+							<p>{{new.content|truncatewords:20}}</p>
+
+							<p><a href="/detailnews/{{new.id}}/"><h5>More........</h5></a></p>
+							
+						</div>
+					</div>
+					{% endfor %}
+
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-12">
+				<div class="news-list">
+
+					{% for news in news_old %}
+					<div class="single-news">
+						<div class="list-date">
+							<h4>{{news.created_at|date:'d'}}</h4>
+							<h4>{{news.created_at|date:'b'}}</h4>
+						</div>
+						<div class="list-text">
+							<a href="/detailnews/{{news.id}}/"><h5>{{news.title}}</h5></a>
+
+							<p>{{news.content|truncatewords:15}}</p>
+							
+						</div>
+					</div><br><br>
+					{% endfor %}
+					
+					<!-- <div class="single-news">
+						<div class="list-date">
+							<h4>10</h4>
+							<h4>Dec</h4>
+						</div>
+						<div class="list-text">
+							<a href="news.html"><h5>Uenim ad minim veniam</h5></a>
+
+							<p>Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod tempor</p>
+							
+						</div>
+					</div><br> -->
+					
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!--contact heading-->
+<section id="contact">
+	<div class="check-filters">
+      <button type="button" class="js-check-all active"> All</button>
+      <label><input type="checkbox" value="frontline" checked> Front Line</label>
+      
+      <label><input type="checkbox" value="intermediate" checked> Intermediate</label>
+      <label><input type="checkbox" value="advanced" checked> Advanced</label>
+    </div>
+	<div id="map">
+
+
+	</div>
+	
+	<div class="section-heading contact-heading text-center text-uppercase">
+		<h2>Contact<span>Us</span></h2>
+	</div>
+	<!-- contact massage-->
+	<div class="contact-form">
+		<div class="container">
+			<div class="row">
+				<form method="POST" enctype="multipart/form-data" id='contactt'>
+                {% csrf_token %}
+					<div class="col-sm-4">
+						<label for="usr">Your Name</label>
+						<input type="text" class="form-control" id="usr" name="name" required>
+					</div>
+					<div class="col-sm-4">
+						<label for="email">Your Email</label>
+						<input type="email" class="form-control" id="email" name="email" required>
+					</div>
+					<div class="col-sm-4">
+						<label for="number">Your Number</label>
+						<input type="number" class="form-control" id="number" name="number" required> 
+					</div>
+					<div class="col-sm-12">
+						<label for="massage">Your Message</label>
+						<textarea class="form-control" rows="10" id="massage" name="messasge" required></textarea>
+
+						<button type="button" class="btn red-btn" id="sub"> SEND YOUR MESSAGE</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- footer-area-->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-2 text-center">
+				<a href=""><img src="/static/feltp/img/gflep_logo.jpg" alt="logo"></a>
+			</div>
+			<div class="col-sm-8">
+				<div class="footer-p text-center">
+					<p>© Copyright 2021, All Rights Reserved,GFELTP</p>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="footer-social text-center">
+					<a href=""><i class="fa fa-facebook"></i></a>
+					<a href=""><i class="fa fa-twitter"></i></a>
+					<a href=""><i class="fa fa-instagram"></i></a>
+					<a href=""><i class="fa fa-google-plus"></i></a>
+					<a href=""><i class="fa fa-rss"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<script src="/static/feltp/js/jquery-1.11.3.min.js"></script>
+<script src="/static/feltp/js/bootstrap.min.js"></script>
+
+<script src="/static/feltp/js/isotope.2.2.2min.js"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->
+<script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
+<script src="/static/feltp/js/wow.min.js"></script>
+<script src="/static/feltp/js/jquery.prettyPhoto.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="/static/feltp/js/main.js"></script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {	
+
+
+// ########################   search populate
+    $('#search').click(function(e) {
+    	e.preventDefault()
+        if($('#inp').val()==''){
+            alert('type a name to initiate a search')
+        } else{
+            $.get('/profilesearchquery?data='+$('#inp').val(), function(data){
+
+            $('#datas').html(data)
+           });
+        }
+ 	});
+
+
+
+var form = document.getElementById('contactt');
+
+$("#sub").click(function(e){
+
+
+if (form.checkValidity() == true) {
+
+    e.preventDefault();
+    var data = new FormData(form);
+    // console.log(data)
+    var token = '{{csrf_token}}';
+
+    $.ajax({
+        url: "/contactus", // same url 'action' in form
+        type: 'POST',
+        headers: { "X-CSRFToken": token },
+        data: data,
+        contentType: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        success: function(data) {
+        	form.reset()
+            if(data=="done"){
+
+                Swal.fire('Saved', 'Message has been sent', 'success')
+                // .then(function () {
+                //         window.location.href="/admincreatenews"
+                    
+                // })
+
+            }
+        }
+    });
+    return false;
+ } 
+
+else {
+            var list = form.querySelectorAll(':invalid');
+            for (var item of list) {
+                item.focus();
+            }
+            $("form#saforms :input").each(function () {
+                $(this).valid();
+            });
+            Swal.fire("Hold on...", "Please ensure all required fields are filled", "warning")
+        }
+})
+
+})
+
+</script>
+
+
+</body>
+</html>

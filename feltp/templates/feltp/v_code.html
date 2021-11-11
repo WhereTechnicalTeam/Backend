@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FELTP | Verification</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/feltp/plugins/fontawesome-free/css/all.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="/static/feltp/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/feltp/dist/css/adminlte.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+</head>
+<body class="hold-transition login-page">
+  <a href="index.html" class="brand-link">
+      <img src="/static/feltp/dist/img/gflep_logo.jpg" alt="GFELTP Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      
+    </a>
+<div class="login-box">
+  <div class="login-logo">
+
+    <a href="index.html"><b>GFELTP</b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+       <input class="d-none" type="text" id="add" value={{message}}></input>
+        {% endfor %}
+    </ul>
+    {% endif %}<br>
+
+    <div class="card-body login-card-body">
+      <h2 class="login-box-msg">Verification Code</h2>
+
+      <form method="POST" action="{% url 'verifyCode' %}">
+        {% csrf_token %}
+
+        <div class="input-group mb-3">
+        <label>Please enter the verification code we sent via email:
+			(we want to make sure it's you.)<br><br></label>
+          <input type="text" class="" placeholder="verification code" name="verify" required style="border-radius:5px" id="verify">
+          <div class="col-4">
+            <button type="button" class="btn btn-primary btn-block" id="send">Send</button>
+          </div>
+        </div>
+
+        
+      </form>
+
+
+      <div style="border-radius: 5px; background-color: lightgreen; padding:5px; text-align:center;"><a href="#" id="resend" style="text-align:center; color: grey;">Resend Code.</a></div>
+
+
+  
+      
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="/static/feltp/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/static/feltp/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/feltp/dist/js/adminlte.min.js"></script>
+
+<script type="text/javascript">
+
+
+const queryString = window.location.search
+const urlParams = new URLSearchParams(queryString)
+const email = urlParams.get('data')
+
+
+// alert(email)
+if (email){
+  history.pushState({}, '', "/verifyCode");
+}
+
+
+
+   $('#send').click(function(){
+   	$.get('/verifyCode?data='+ $('#verify').val(), function(data){
+   		if(data=='login'){
+   			Swal.fire('Verified', 'Verification code has been confirmed', 'success')
+                .then(function () {
+                        window.location.href="/login/"
+                    
+                })
+   		}
+      else if(data=='not_user'){
+          Swal.fire('Info', 'You are not a regstered user. Kindly register before you can be verified.', 'error')
+                .then(function () {
+                        return false
+                    
+                })
+      }
+      else if(data=='not_exist'){
+          Swal.fire('Info', 'User does not exist.', 'error')
+                .then(function () {
+                        return false
+                    
+                })
+      }
+   	})
+   })
+
+
+   $('#resend').click(function(){
+   	$.get('/resendCode?data='+ email, function(data){
+   		if(data=='sent'){
+   			Swal.fire('Sent', 'Verification code has been sent to your email', 'success')
+                .then(function () {
+                        return false
+                    
+                })
+   		}
+   	})
+   })
+
+
+  $('#mod_enter').click(function(){
+    $('#myModal').modal('toggle');
+    $('#myModal').modal('show');
+
+    $.get('/feltp/forgotpassword?data='+$('#defaultForm-pass').val(), function(data){
+      if(data['status']=="Email sent"){
+        $('#serverMessage').modal('toggle');
+        $('#serverMessage').modal('show');
+      }
+    })
+  })
+
+
+// query = location.href.split('?').pop()
+// if(history.replaceState) history.replaceState({}, "", "/");
+
+
+
+
+
+
+</script>
+</body>
+</html>

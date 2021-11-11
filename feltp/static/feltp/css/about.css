@@ -1,0 +1,77 @@
+#just {
+	font-family: "Open sans", Lato,Verdana, Geneva, sans-serif;
+	display: block;
+	font-size: 14px;
+	color: #666666;
+	/*width: 900px;*/
+}
+
+blockquote {
+	background: #ffffff;
+	border-left: none;
+	margin: 1.5em 10px;
+	padding: 0.5em 10px;
+	font-family: 'Times New Roman';
+	quotes: "\201C""\201D""\2018""\2019";
+}
+
+/*.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}/*
+*/
+/*.row .clearfix {
+    zoom: 1;
+*/}
+*/
+h1 {
+	margin-top: 0;
+	padding: 5px;
+}
+
+img {
+	margin: 0;
+}
+
+#content-col {
+	font-family: "Roboto Condensed";
+    font-weight: normal;
+    font-style: normal;
+}
+
+.page-content {
+	margin-left: 420px;
+	margin-right: 530px;
+
+}
+
+#abt {
+	margin-top: -5px;
+	border-radius: 5px;
+	border: 5px solid transparent;
+	border-color:	#fafafa;
+	box-shadow: 0 2px 0 rgba(0,0,0,.07);
+	background-color: #fafafa!important;
+}
+
+#pd {
+	margin-top: -5;
+}
+
+h4 {
+	font-family: Lato,Verdana, Geneva, sans-serif;
+    word-spacing: 0px;
+    letter-spacing: 0px;
+    font-size: 24px;
+    color: #090d11;
+}
+
+
+@media (max-width: 500px) {
+  #wordarea {
+    width: 100%!important;
+    margin: 0 0!important;
+/*    margin-bottom: 40px!important;*/
+  }
+}
+

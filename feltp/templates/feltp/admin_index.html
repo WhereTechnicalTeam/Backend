@@ -1,0 +1,215 @@
+{% extends 'feltp/admin_base.html' %}
+{% load static %}
+
+{% block head %}
+
+<!-- {% block title %} Home | Dashboard {% endblock title %} -->
+
+{% endblock %}
+
+
+{% block body %}
+ <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Dashboard</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="https://ghanafeltp.net">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3 id="alumnis"></h3>
+
+                <p>Alumni</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+              <a href="{% url 'admin_alumni' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          
+
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-primary" style="background-color:#DBFF33;">
+              <div class="inner">
+                <h3 id="front"></h3>
+
+                <p>Trained at Frontline</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+              <a href="/statsdetail?data=front" class="small-box-footer">Info<i class=""></i></a>
+            </div>
+          </div>
+
+
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-light ">
+              <div class="inner">
+                <h3 id="inter"></h3>
+
+                <p>Trained  at Intermediate</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+              <a href="/statsdetail?data=inter" class="small-box-footer"> <i class="">Info</i></a>
+            </div>
+          </div>
+
+
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-secondary" style="background-color:#59281D;">
+              <div class="inner">
+                <h3 id="advance"></h3>
+
+                <p>Trained at Advanced</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+              <a href="/statsdetail?data=advance" class="small-box-footer">Info<i class=""></i></a>
+            </div>
+          </div>
+
+
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box  text-light" style="background-color:#4E591D;">
+              <div class="inner">
+                <h3 id="unapprove"></h3>
+
+                <p>Users Pending Approval</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+              <a href="/statsdetail?data=pending" class="small-box-footer"> <i class="">Info</i></a>
+            </div>
+          </div>
+
+
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box text-light" style="background-color:#b2c0d6">
+              <div class="inner">
+                <h3 id="unverify"></h3>
+
+                <p>Number of Unverified</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+              <a href="/statsdetail?data=unverified" class="small-box-footer">Info <i class=""></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <!-- <div class="col-lg-3 col-6">
+            
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3 id="events"><sup style="font-size: 20px"></sup></h3>
+
+                <p>Events</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <a href="{% url 'admin_eventlist' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div> -->
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-dark">
+              <div class="inner">
+                <h3 id="news"></h3>
+
+                <p>News</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-newspaper"></i>
+              </div>
+              <a href="{% url 'admin_newslist' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <!-- <div class="col-lg-3 col-6">
+            <div class="small-box text-light" style="background-color:#809c6e;">
+              <div class="inner">
+                <h3 id="gal">20</h3>
+
+                <p>Gallery</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-image"></i>
+              </div>
+              <a href="{% url 'admin_gallerylist' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div> -->
+          <!-- ./col -->
+        </div>
+        <div class="d-none" id="stats_data"></div>
+        <!-- /.row -->
+        <!-- Main row -->
+        
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+  </div>
+
+
+
+
+{% endblock %}
+
+
+{% block js %}
+
+
+
+<script type="text/javascript">
+  
+
+$.get('/stats', function(data){
+  document.getElementById("alumnis").innerHTML = data['alumni']
+  // document.getElementById('events').innerHTML = data['events']
+  // document.getElementById('gal').innerHTML = data['galery']
+  document.getElementById('news').innerHTML = data['news']
+  document.getElementById("unverify").innerHTML = data['not_verified']
+  document.getElementById('unapprove').innerHTML = data['not_approved']
+  document.getElementById('advance').innerHTML = data['advanced']
+  document.getElementById('inter').innerHTML = data['intermediate']
+  document.getElementById('front').innerHTML = data['frontline']
+})
+
+
+
+</script>
+{% endblock %}

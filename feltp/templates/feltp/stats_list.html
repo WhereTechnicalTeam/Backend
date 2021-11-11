@@ -1,0 +1,419 @@
+{% extends 'feltp/admin_base.html' %}
+{% load static %}
+
+{% block head %}
+{% block title %} GFELTP | Alumni {% endblock title %}
+
+<style type="text/css">
+/*.div_before_table {
+    overflow:hidden;
+    overflow-y: scroll;
+    height: 900px;
+}*/
+
+/*#example1_wrapper{
+  overflow-x: auto;
+}*/
+</style>
+{% endblock %}
+
+
+{% block body %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Manage Alumni</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Alumni List</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- <div class="card-header">
+                <h3 class="card-title">Alumni</h3>
+              </div> -->
+              <!-- /.card-header -->
+              
+            <!-- /.card -->
+
+            <div class="card" style="overflow-x: auto;">
+              <div class="card-header">
+                <h3 class="card-title">{{title}} List</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body div_before_table">
+
+
+                <table id="example1" class="table table-bordered table-responsive table-striped">
+                  <thead>
+                    <tr>
+                      <th class="all">Title</th>
+                      <th class="all">First Name</th>
+                      <th class="all">Last Name</th>
+                      <th class="all">Sex</th>
+                      <th class="all">Date of Birth</th>
+                      <th class="all">Phone Number 1</th>
+                      <th class="all">Phone Number 2</th>
+                      <th class="all">Undertaken Frontline Training</th>
+                      <th class="all">Frontline Cohort Number</th>
+                      <th class="all">Year Completed Frontline</th>
+                      <th class="all">Institution Enrolled at Frontline</th>
+                      <th class="all">Job Title at Frontline</th>
+                      <th class="all">Undertaken Intermediate Training</th>
+                      <th class="all">Intermediate Cohort Number</th>
+                      <th class="all">Year Completed Intermediate</th>
+                      <th class="all">Institution Enrolled at Intermediate</th>
+                      <th class="all">Job Title at Intermediate</th>
+                      <th class="all">Undertaken Advanced Training</th>
+                      <th class="all">Advanced Cohort Number</th>
+                      <th class="all">Year Completed Advanced</th>
+                      <th class="all">Institution Enrolled at Advanced</th>
+                      <th class="all">Job Title at Advanced</th>
+                      <th class="all">Approved Status</th>
+                      {% if not_approved %}
+                      <th class="all">Delete</th>
+                      {% endif %}
+                       <th class="all">Email Status</th>
+                      }
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for ob in frontline %}
+                      <tr>
+                          <td>{{ob.title}}</td>
+                          <td>{{ob.firstname}}</td>
+                          <td>{{ob.surname}}</td>
+                          <td>{{ob.sex}}</td>
+                          <td>{{ob.date_of_birth}}</td>
+                          <td>{{ob.phone1}}</td>
+                          <td>{{ob.phone2}}</td>
+                          <td>{{ob.is_trained_frontline}}</td>
+                          <td>{{ob.cohort_number_frontline}}</td>
+                          <td>{{ob.yr_completed_frontline}}</td>
+                          <td>{{ob.institution_enrolled_at_frontline}}</td>
+                          <td>{{ob.job_title_at_enroll_frontline}}</td>
+                          <td>{{ob.is_trained_intermediate}}</td>
+                          <td>{{ob.cohort_number_intermediate}}</td>
+                          <td>{{ob.yr_completed_intermediate}}</td>
+                          <td>{{ob.institution_enrolled_at_intermediate}}</td>
+                          <td>{{ob.job_title_at_enroll_intermediate}}</td>
+                          <td>{{ob.is_trained_advanced}}</td>
+                          <td>{{ob.cohort_number_advanced}}</td>
+                          <td>{{ob.yr_completed_advanced}}</td>
+                          <td>{{ob.institution_enrolled_at_advanced}}</td>
+                          <td>{{ob.job_title_at_enroll_advanced}}</td>
+                          <td>{{ob.status}}</td>
+                         <td>{{obj.email_status}}</td> 
+                      </tr>
+                     {% endfor %}
+
+                      {% for ob in intermediate %}
+                      <tr>
+                          <td>{{ob.title}}</td>
+                          <td>{{ob.firstname}}</td>
+                          <td>{{ob.surname}}</td>
+                          <td>{{ob.sex}}</td>
+                          <td>{{ob.date_of_birth}}</td>
+                          <td>{{ob.phone1}}</td>
+                          <td>{{ob.phone2}}</td>
+                          <td>{{ob.is_trained_frontline}}</td>
+                          <td>{{ob.cohort_number_frontline}}</td>
+                          <td>{{ob.yr_completed_frontline}}</td>
+                          <td>{{ob.institution_enrolled_at_frontline}}</td>
+                          <td>{{ob.job_title_at_enroll_frontline}}</td>
+                          <td>{{ob.is_trained_intermediate}}</td>
+                          <td>{{ob.cohort_number_intermediate}}</td>
+                          <td>{{ob.yr_completed_intermediate}}</td>
+                          <td>{{ob.institution_enrolled_at_intermediate}}</td>
+                          <td>{{ob.job_title_at_enroll_intermediate}}</td>
+                          <td>{{ob.is_trained_advanced}}</td>
+                          <td>{{ob.cohort_number_advanced}}</td>
+                          <td>{{ob.yr_completed_advanced}}</td>
+                          <td>{{ob.institution_enrolled_at_advanced}}</td>
+                          <td>{{ob.job_title_at_enroll_advanced}}</td>
+                          <td>{{ob.status}}</td>
+                         <td>{{obj.email_status}}</td> 
+                      </tr>
+                     {% endfor %}
+
+                      {% for ob in advanced %}
+                      <tr>
+                          <td>{{ob.title}}</td>
+                          <td>{{ob.firstname}}</td>
+                          <td>{{ob.surname}}</td>
+                          <td>{{ob.sex}}</td>
+                          <td>{{ob.date_of_birth}}</td>
+                          <td>{{ob.phone1}}</td>
+                          <td>{{ob.phone2}}</td>
+                          <td>{{ob.is_trained_frontline}}</td>
+                          <td>{{ob.cohort_number_frontline}}</td>
+                          <td>{{ob.yr_completed_frontline}}</td>
+                          <td>{{ob.institution_enrolled_at_frontline}}</td>
+                          <td>{{ob.job_title_at_enroll_frontline}}</td>
+                          <td>{{ob.is_trained_intermediate}}</td>
+                          <td>{{ob.cohort_number_intermediate}}</td>
+                          <td>{{ob.yr_completed_intermediate}}</td>
+                          <td>{{ob.institution_enrolled_at_intermediate}}</td>
+                          <td>{{ob.job_title_at_enroll_intermediate}}</td>
+                          <td>{{ob.is_trained_advanced}}</td>
+                          <td>{{ob.cohort_number_advanced}}</td>
+                          <td>{{ob.yr_completed_advanced}}</td>
+                          <td>{{ob.institution_enrolled_at_advanced}}</td>
+                          <td>{{ob.job_title_at_enroll_advanced}}</td>
+                          <td>{{ob.status}}</td>
+                         <td>{{obj.email_status}}</td> 
+                      </tr>
+                     {% endfor %}
+
+                     {% for ob in not_approved %}
+                      <tr>
+                          <td>{{ob.title}}</td>
+                          <td>{{ob.firstname}}</td>
+                          <td>{{ob.surname}}</td>
+                          <td>{{ob.sex}}</td>
+                          <td>{{ob.date_of_birth}}</td>
+                          <td>{{ob.phone1}}</td>
+                          <td>{{ob.phone2}}</td>
+                          <td>{{ob.is_trained_frontline}}</td>
+                          <td>{{ob.cohort_number_frontline}}</td>
+                          <td>{{ob.yr_completed_frontline}}</td>
+                          <td>{{ob.institution_enrolled_at_frontline}}</td>
+                          <td>{{ob.job_title_at_enroll_frontline}}</td>
+                          <td>{{ob.is_trained_intermediate}}</td>
+                          <td>{{ob.cohort_number_intermediate}}</td>
+                          <td>{{ob.yr_completed_intermediate}}</td>
+                          <td>{{ob.institution_enrolled_at_intermediate}}</td>
+                          <td>{{ob.job_title_at_enroll_intermediate}}</td>
+                          <td>{{ob.is_trained_advanced}}</td>
+                          <td>{{ob.cohort_number_advanced}}</td>
+                          <td>{{ob.yr_completed_advanced}}</td>
+                          <td>{{ob.institution_enrolled_at_advanced}}</td>
+                          <td>{{ob.job_title_at_enroll_advanced}}</td>
+                          <!-- <td>{{ob.status}}</td> -->
+                           <td><span class="check">
+                                  <label>
+                                      <input type="checkbox" value="approved" name='status' id='{{ob.pk}}' class="icheck {{ob.pk}}" {% if ob.status == "approved" %}checked{%endif%}>
+                                      <span class="checkbox-material"></span>
+                                      <!-- <button type='button' id='{{ob.pk}}' class='' style='border: none;'> -->
+                                  <!--    <i class='fa fa-window-close'></i></button> -->
+                                  </label>
+                              </span>
+                          </td>
+                          <td><span class="check">
+                                  <label>
+                                      <!-- <input type="checkbox" value="approved" name='status' id='{{ob.pk}}' class="icheck" {% if ob.status == "approved" %}checked{%endif%}> -->
+                                      <span class="checkbox-material"></span>
+                                      <button type='button' id='{{ob.pk}}' class='bg-danger but' style='border: none;'>
+                                     <i class='fa fa-window-close'></i></button>
+                                  </label>
+                              </span>
+                          </td>
+                         <td>{{obj.email_status}}</td> 
+                      </tr>
+                     {% endfor %}
+
+                     {% for ob in not_verified %}
+                      <tr>
+                          <td>{{ob.title}}</td>
+                          <td>{{ob.firstname}}</td>
+                          <td>{{ob.surname}}</td>
+                          <td>{{ob.sex}}</td>
+                          <td>{{ob.date_of_birth}}</td>
+                          <td>{{ob.phone1}}</td>
+                          <td>{{ob.phone2}}</td>
+                          <td>{{ob.is_trained_frontline}}</td>
+                          <td>{{ob.cohort_number_frontline}}</td>
+                          <td>{{ob.yr_completed_frontline}}</td>
+                          <td>{{ob.institution_enrolled_at_frontline}}</td>
+                          <td>{{ob.job_title_at_enroll_frontline}}</td>
+                          <td>{{ob.is_trained_intermediate}}</td>
+                          <td>{{ob.cohort_number_intermediate}}</td>
+                          <td>{{ob.yr_completed_intermediate}}</td>
+                          <td>{{ob.institution_enrolled_at_intermediate}}</td>
+                          <td>{{ob.job_title_at_enroll_intermediate}}</td>
+                          <td>{{ob.is_trained_advanced}}</td>
+                          <td>{{ob.cohort_number_advanced}}</td>
+                          <td>{{ob.yr_completed_advanced}}</td>
+                          <td>{{ob.institution_enrolled_at_advanced}}</td>
+                          <td>{{ob.job_title_at_enroll_advanced}}</td>
+                          <td>{{ob.status}}</td>
+                         <td>{{obj.email_status}}</td> 
+                      </tr>
+                     {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+              <h4 class="modal-title">Action Alert</h4>
+            </div>
+            <div class="modal-body">
+
+             <div class="md-form mb-4">
+               <p id="check">
+                You are about to approve this user as part of the group.
+              </p>
+              <p style="display: none;" id="uncheck">
+                You are about to disapprove a user from this group.
+              </p><p style="display: none;" id="dell">
+                You are about to delete this user from the group
+              </p>
+             </div>
+
+            <div class="modal-footer">
+              <button type="button" id="cancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" id="ok" class="btn btn-success" value="" data-dismiss="modal">Approve</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+{% endblock %}
+
+{% block js %}
+<script src="/static/feltp/plugins/jszip/jszip.min.js"></script>
+<script src="/static/feltp/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/static/feltp/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="/static/feltp/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/static/feltp/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/static/feltp/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/feltp/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/static/feltp/dist/js/demo.js"></script>
+
+<script type="text/javascript">
+	
+	$('.icheck').on('click', function(){
+      idd = $(this).attr('id')
+        if($(this).is(':checked')){
+          vall = $(this).val()
+            // alert('You are about to approve this user as part of the group')
+            $('#check').css('display', '')
+            $('#uncheck').css('display', 'none')
+            $('#dell').css('display', 'none')
+            $('#ok').text('Approve')
+            document.getElementById("ok").style.background="green"
+            $('#myModal').modal('toggle')
+            $('#myModal').modal('show')
+            // $('#ok').val(idd)
+            $('#ok').click(function(){
+            $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
+           if(data=="done"){                
+                 Swal.fire("Success!", "The user has been successfully approved!", "success")
+                .then(function () {
+                        window.location.href="/admin_alumni"
+                    
+                })
+            }
+
+    })                  
+  })
+   $('#cancel').click(function(){
+    $(`#${idd}`).prop('checked', false)
+    return
+    })
+       }
+       else {
+        $('#check').css('display', 'none')
+        $('#uncheck').css('display', '')
+        $('#dell').css('display', 'none')
+        $('#ok').text('Disapprove')
+        document.getElementById("ok").style.background="red"
+        $('#myModal').modal('toggle')
+        $('#myModal').modal('show')
+        // $('#ok').val(idd)
+        // $('#cancel').val(idd)
+        $('#ok').click(function(){
+            // idd = $(this).attr('id')
+            vall = 'not_confirmed'
+            $.get('/setstatus?data='+ idd + '&val=' + vall, function(data) {
+           if(data=="done"){                  
+                  Swal.fire("Success", "The user has been successfully disapproved!", "success")
+                .then(function () {
+                        window.location.href="/admin_alumni"
+                    
+                })
+              
+            }
+
+            })
+        })
+   $('#cancel').click(function(){
+    $(`#${idd}`).prop('checked', true)
+    // document.querySelector(`#${idd}`).checked = true
+    return
+    })
+       }
+    
+       return false
+  
+  })
+
+
+  $('.but').click(function(){
+        idd = $(this).attr('id')
+        vall = 'denied'
+         $('#dell').css('display', '')
+         $('#check').css('display', 'none')
+         $('#uncheck').css('display', 'none')
+         $('#ok').text('Delete')
+         document.getElementById("ok").style.background="red"
+         $('#myModal').modal('toggle')
+        $('#myModal').modal('show')
+        // alert('You are about to delete this user from the group')
+        $('#ok').click(function(){
+
+        $.get('/deleteuser/'+ idd, function(data) {
+           if(data=="done"){
+                $('#dell').css('display', 'none')
+                Swal.fire("Success!", "The user has been successfully deleted this user from the system!", "success")
+                .then(function () {
+                        window.location.href="/admin_alumni"
+                    
+                })
+                }
+            })
+       })
+    })
+</script>
+
+{% endblock %}

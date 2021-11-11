@@ -1,0 +1,16 @@
+{% if dsf_edit.region.region %}
+
+	<option value='{{dsf_edit.region.region}}'>{{dsf_edit.region.region_name}}</option>
+	{% for region in regions %}
+    <option value='{{region.region}}'>{{region.region_name}}</option>
+    {% endfor %}
+
+{% else%}
+
+	<option value=''>Select an Option</option>
+	{% for region in regions %}
+    <option value='{{region.region}}'>{{region.region_name}}</option>
+    {% endfor %}
+
+
+{%endif%}
