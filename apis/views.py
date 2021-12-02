@@ -709,7 +709,7 @@ def get_profile(request):
 
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def v_code(request):
 	print(request.data['code'])
 
@@ -743,7 +743,7 @@ def v_code(request):
 
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def send_code(request):
 	print(request.data['email'])
 
@@ -753,7 +753,7 @@ def send_code(request):
 		send_mail('Your Verifcation Code',
 			"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [request.data['email']],)
 		return Response({"status":status.HTTP_200_OK, "msg":"A verification code has been sent to your email"})
-		
+			
 	except Exception as e:
 		# print(e)
 		return Response({"status":status.HTTP_500_INTERNAL_SERVER_ERROR, "msg":"Could not send info to email, an error occured. Contact admin for verification."})
