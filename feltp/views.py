@@ -752,6 +752,7 @@ def newedit_user(request, obj_id):
 	prof = {}
 	job = {}
 	img = {}
+
 	# print(obj_id)
 	if UserProfile.objects.filter(user=user).exists():
 		prof = UserProfile.objects.get(user=user)
@@ -759,6 +760,7 @@ def newedit_user(request, obj_id):
 			job = JobInfo.objects.filter(user=user)[0]
 			# print(job.id)
 			# job = JobInfo.objects.get(user=user)
+
 		if ImageProfile.objects.filter(user_profile_id=prof.id): img = ImageProfile.objects.get(user_profile_id=prof.id)
 
 	if request.method == 'POST':
@@ -799,7 +801,6 @@ def newedit_user(request, obj_id):
 		return render(request, 'feltp/newprofile_edit.html', {'regions':regions, 'prof':prof, 'img':img})
 
 	return render(request, 'feltp/newprofile_edit.html', {'regions':regions, 'prof':prof, 'job':job, 'img':img})
-
 
 
 
@@ -896,13 +897,6 @@ def createUser(request):
 			job_title_at_enroll_advanced =  is_none(job_title_at_enroll_advanced)
 			)
 
-		# ImageProfile.objects.filter(user_profile_id=prof.id).update_or_create(
-		# 	user_profile_id=prof.id,
-		# 	defaults = dict(
-		# 		image=image,
-		# 		user_profile_id=prof.id
-		# 		)
-		# 	)
 
 		created = verificationTbl.objects.create(email=email, code=codes())
 		try:

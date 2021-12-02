@@ -709,6 +709,7 @@ def get_profile(request):
 
 
 
+
 @api_view(['GET', 'POST'])
 def v_code(request):
 	print(request.data['code'])
@@ -743,6 +744,7 @@ def v_code(request):
 
 
 
+
 @api_view(['GET', 'POST'])
 def send_code(request):
 	print(request.data['email'])
@@ -753,7 +755,8 @@ def send_code(request):
 		send_mail('Your Verifcation Code',
 			"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [request.data['email']],)
 		return Response({"status":status.HTTP_200_OK, "msg":"A verification code has been sent to your email"})
-			
+
+
 	except Exception as e:
 		# print(e)
 		return Response({"status":status.HTTP_500_INTERNAL_SERVER_ERROR, "msg":"Could not send info to email, an error occured. Contact admin for verification."})
@@ -964,7 +967,6 @@ class updatePassword(RetrieveUpdateAPIView):
 class ImageUpload(APIView):
 	parser_classes = [MultiPartParser, FormParser]
 
-
 	def get(self, request, pk):
 		usr = UserProfile.objects.filter(user_id=pk)
 		if usr:
@@ -998,6 +1000,7 @@ class ImageUpload(APIView):
 			return Response({"status":status.HTTP_400_BAD_REQUEST, "msg1":"user not found"})
 		except Exception as e:
 			return Response({"status":status.HTTP_400_BAD_REQUEST, "msg1":"user not found"})
+
 
 
 		# serializer = ImageSerializer(data=request.data)

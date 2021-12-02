@@ -77,4 +77,5 @@ urlpatterns = [
     path('imageupload/<int:pk>', ImageUpload.as_view(), name='imageupload'),
 
 
+
 ] 
