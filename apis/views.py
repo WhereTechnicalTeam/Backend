@@ -712,7 +712,8 @@ def get_profile(request):
 
 @api_view(['GET', 'POST'])
 def v_code(request):
-	print(request.data['code'])
+	print(request.data)
+	#print(request.data['code'])
 
 	try:
 		query = verificationTbl.objects.get(code__contains=request.data['code'])

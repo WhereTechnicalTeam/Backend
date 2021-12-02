@@ -157,6 +157,21 @@ class UpdateUserProfileSerializer(serializers.ModelSerializer):
 
 
 
+class CodeSerializer(serializers.Serializer):
+    code = serializers.CharField(
+        label=_("code"),
+        max_length=128,
+        write_only=True
+    )
+
+    class Meta:
+        fields = ('code')
+
+
+
+
+
+
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
