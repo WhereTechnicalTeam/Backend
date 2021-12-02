@@ -712,35 +712,35 @@ def get_profile(request):
 
 @api_view(['POST'])
 def v_code(request):
-	print(request.data)
-	#print(request.data['code'])
+	if request.method == 'POST':
+		print(request.data)
 
-	try:
-		query = verificationTbl.objects.get(code__contains=request.data['code'])
-		print(query)
+		try:
+			query = verificationTbl.objects.get(code__contains=request.data['code'])
+			print(query)
 
-		if query:
-			if User.objects.get(email__contains=query.email):
-				query.status = 'used'
-				query.user_id = User.objects.get(email=query.email).id
-				query.save()
+			if query:
+				if User.objects.get(email__contains=query.email):
+					query.status = 'used'
+					query.user_id = User.objects.get(email=query.email).id
+					query.save()
 
-				prof = UserProfile.objects.get(user_id=query.user_id)
-				# print(prof)
-				prof.email_status='verified'
-				prof.status = 'approved'
-				prof.save()
-				print(prof.email_status)
-				# token, created = Token.objects.get_or_create(user=user)
-			# 	return Response({"status": status.HTTP_200_OK, "Token": token.key})
-				return Response({"status":status.HTTP_200_OK, "msg":"Verification code is valid. You may login."})
-			
-		else:
+					prof = UserProfile.objects.get(user_id=query.user_id)
+					# print(prof)
+					prof.email_status='verified'
+					prof.status = 'approved'
+					prof.save()
+					print(prof.email_status)
+					# token, created = Token.objects.get_or_create(user=user)
+				# 	return Response({"status": status.HTTP_200_OK, "Token": token.key})
+					return Response({"status":status.HTTP_200_OK, "msg":"Verification code is valid. You may login."})
+				
+			else:
+				return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"This verification code does not exist."})
+
+		except Exception as e:
+			print(e)
 			return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"This verification code does not exist."})
-
-	except Exception as e:
-		print(e)
-		return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"This verification code does not exist."})
 
 
 
@@ -748,19 +748,21 @@ def v_code(request):
 
 @api_view(['POST'])
 def send_code(request):
-	print(request.data['email'])
+	if request.method == 'POST':
 
-	created = verificationTbl.objects.create(email=request.data['email'], code=codes())
-	print(created)
-	try:
-		send_mail('Your Verifcation Code',
-			"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [request.data['email']],)
-		return Response({"status":status.HTTP_200_OK, "msg":"A verification code has been sent to your email"})
+		print(request.data['email'])
+
+		created = verificationTbl.objects.create(email=request.data['email'], code=codes())
+		print(created)
+		try:
+			send_mail('Your Verifcation Code',
+				"""Your verifcation code is """+created.code+""" .""", 'wheregeospatialnoreply@gmail.com', [request.data['email']],)
+			return Response({"status":status.HTTP_200_OK, "msg":"A verification code has been sent to your email"})
 
 
-	except Exception as e:
-		# print(e)
-		return Response({"status":status.HTTP_500_INTERNAL_SERVER_ERROR, "msg":"Could not send info to email, an error occured. Contact admin for verification."})
+		except Exception as e:
+			# print(e)
+			return Response({"status":status.HTTP_500_INTERNAL_SERVER_ERROR, "msg":"Could not send info to email, an error occured. Contact admin for verification."})
 
 
 
