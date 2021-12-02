@@ -710,7 +710,7 @@ def get_profile(request):
 
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def v_code(request):
 	print(request.data)
 	#print(request.data['code'])
@@ -746,7 +746,7 @@ def v_code(request):
 
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def send_code(request):
 	print(request.data['email'])
 
