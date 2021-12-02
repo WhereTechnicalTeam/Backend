@@ -710,7 +710,7 @@ def get_profile(request):
 
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def v_code(request):
 	if request.method == 'POST':
 		print(request.data)
@@ -742,6 +742,9 @@ def v_code(request):
 			print(e)
 			return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"This verification code does not exist."})
 
+	elif request.method == 'GET':
+		return Response({"msg":"Get still pending when it should be post."})
+
 
 
 
@@ -764,6 +767,9 @@ def send_code(request):
 			# print(e)
 			return Response({"status":status.HTTP_500_INTERNAL_SERVER_ERROR, "msg":"Could not send info to email, an error occured. Contact admin for verification."})
 
+	elif request.method == 'GET':
+		return Response({"msg":"Get still pending when it should be post."})
+		
 
 
 @api_view(['GET'])
