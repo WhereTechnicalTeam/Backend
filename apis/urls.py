@@ -77,5 +77,7 @@ urlpatterns = [
     path('imageupload/<int:pk>', ImageUpload.as_view(), name='imageupload'),
 
 
+    path('cci', CCICreate.as_view(), name='cci'),
+    #path('imageupload/<int:pk>', ImageUpload.as_view(), name='imageupload'),
 
 ] 

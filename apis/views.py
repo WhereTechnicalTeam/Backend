@@ -766,6 +766,13 @@ class SendUserCode(APIView):
 
 
 
+class CCICreate(CreateAPIView):	
+
+	def create(self, validated_data):
+		dt = validated_data.data
+		return Response({"status":dt})
+
+
 
 @api_view(['GET', 'POST'])
 def v_code(request):
