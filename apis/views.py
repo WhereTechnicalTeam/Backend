@@ -36,7 +36,7 @@ from .paginations import AlldataPagination
 
 @api_view(["GET"])
 def welcome(request):
-	return Response({'status': status.HTTP_200_OK, 'msg':'Welcome to FELTP APP'})
+	return Response({'status': status.HTTP_200_OK, 'msg':'Welcome to FELTP APP, yes'})
 
 
 #  this is to delete duplicates from the db
@@ -749,7 +749,7 @@ def v_code(request):
 
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def send_code(request):
 	if request.method == 'POST':
 
