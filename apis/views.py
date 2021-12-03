@@ -710,6 +710,8 @@ def get_profile(request):
 
 
 
+
+
 @api_view(['GET', 'POST'])
 def v_code(request):
 	if request.method == 'POST':
@@ -734,6 +736,9 @@ def v_code(request):
 					# token, created = Token.objects.get_or_create(user=user)
 				# 	return Response({"status": status.HTTP_200_OK, "Token": token.key})
 					return Response({"status":status.HTTP_200_OK, "msg":"Verification code is valid. You may login."})
+
+				else:
+					return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"User does not exist."})
 				
 			else:
 				return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"This verification code does not exist."})
