@@ -64,6 +64,7 @@ urlpatterns = [
 
     ###       new urls upon update
     path('verifyemail', views.get_profile, name='verifyemail'),
+    path('verifysignup', views.v_code_sign_up, name='verifysignup'),
     path('userPR', UserAndProfileCreate.as_view(), name='userPR'),
     path('useredit/<int:pk>/', UserAndProfileUpdate.as_view(), name='useredit'),
     path('verifycode', views.VerifyUserCode.as_view(), name='verifycode'),

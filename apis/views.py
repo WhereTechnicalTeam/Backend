@@ -561,35 +561,6 @@ def logout_user(request):
 
 
 
-@api_view(['POST'])
-def verify_code(request):
-	print(request.data['code'])
-	# print(request.data)
-
-	try:
-		query = verificationTbl.objects.get(code__contains=request.data['code'])
-		# print(query)
-
-		if query:
-			if User.objects.filter(email__contains=query.email):
-				query.status = 'used'
-				query.user_id = User.objects.get(email=query.email).id
-				query.save()
-
-				return Response({"msg":"Verification code is valid. You may login.", "status":status.HTTP_200_OK})
-			
-			else:
-				# print('here')
-				return Response({"msg":"Verification code is valid. You may sign up.", "status":status.HTTP_200_OK})
-
-		else:
-			return Response({"msg":"This verification code does not exist.", "status":status.HTTP_400_BAD_REQUEST})
-
-	except:
-		return Response({"msg":"This verification code does not exist.", "status":status.HTTP_400_BAD_REQUEST})
-
-
-
 {
 "email":"aabalekuusimon78@gmail.com",
 "password":"add123456"
@@ -770,28 +741,28 @@ class CCICreate(CreateAPIView):
 
 
 @api_view(['GET', 'POST'])
-def v_code(request):
+def v_code_sign_up(request):
 	if request.method == 'POST':
 		print(request.data)
 
 		query = verificationTbl.objects.filter(code__contains=request.data['code']).first()
 
 		if query:
-			usrr = User.objects.filter(email=query.email).first()
-			if usrr:
-				query.status = 'used'
-				query.user_id = User.objects.get(email=query.email).id
-				query.save()
+			# usrr = User.objects.filter(email=query.email).first()
+			# if usrr:
+			# 	query.status = 'used'
+			# 	query.user_id = User.objects.get(email=query.email).id
+			# 	query.save()
 
-				prof = UserProfile.objects.get(user_id=query.user_id)
-				prof.email_status='verified'
-				prof.status = 'approved'
-				prof.save()
-				print(prof.email_status)
-				return Response({"status":status.HTTP_200_OK, "msg":"Verification code is valid. You may login."})
+			# 	prof = UserProfile.objects.get(user_id=query.user_id)
+			# 	prof.email_status='verified'
+			# 	prof.status = 'approved'
+			# 	prof.save()
+			# 	print(prof.email_status)
+				return Response({"status":status.HTTP_200_OK, "msg":"Verification code is valid. You may sign up."})
 
-			else:
-				return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"User does not exist."})
+			# else:
+			# 	return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"User does not exist."})
 
 		else:
 			return Response({"status":status.HTTP_400_BAD_REQUEST, "msg":"This verification code does not exist."})
