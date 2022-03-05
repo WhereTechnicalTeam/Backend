@@ -18,9 +18,10 @@ a:focus {
 	outline: 0 solid;
 }
 
-img {
+#imgbrand {
 	max-width: 100%;
 	height: auto;
+	margin-top: -40px;
 }
 
 .fix {
@@ -613,11 +614,11 @@ h1 sup {
 	overflow: hidden;
 	margin: 0 20px 0 0;
 }
+
+
 .new-detail {
-	
-	
-	width: 400px;
-	height: 300px;
+	width: 150px;
+	height: 100px;
 	color: #fff;
 	float: left;
 	overflow: hidden;

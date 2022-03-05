@@ -32,7 +32,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#"><img src="img/gflep_logo.jpg" alt=""></a>
+        <a class="navbar-brand" href="#"><img id="imgbrand" src="/static/feltp/img/gflep_logo.jpg" alt=""></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
@@ -86,14 +86,13 @@
 
           <div class="news-content">
             <div class="new-detail">
-              <img src="/media/{{obj.picture1}}" alt="">
+              <img src="/media/{{obj.picture1}}" style="width:150px; height: 100px" onerror="this.onerror=null; this.src='/static/feltp/img/news.png'" alt="">
             </div>
+
             <div class="news-text">
               <h4>{{obj.title|safe}} </h4>
 
               <p style="font-size: 12px!important">{{obj.content|safe}}</p>
-              <p><!-- Button trigger modal -->
-</p>
               
             </div>
           </div>
