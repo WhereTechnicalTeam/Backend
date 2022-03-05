@@ -554,10 +554,12 @@ h1 sup {
 	width: 80%;
   margin: auto;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border: 1px solid;
   padding: 20px;
+  height: 600px;
+  overflow: auto;
 }
 
 .latest-news h3 {
@@ -604,10 +606,8 @@ h1 sup {
 
 
 .new-date {
-	
-	
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 100px;
 	color: #fff;
 	float: left;
 	overflow: hidden;
