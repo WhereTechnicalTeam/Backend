@@ -19,6 +19,7 @@
 	<link href="/static/feltp/css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="/static/feltp/dist/css/adminlte.min.css">  
+
 <style type="text/css">
   #example1_filter{
     width: fit-content;
@@ -28,8 +29,12 @@
   .small-bxo{
   	font-size: 15px;
   }
+
+
 </style>
+
 </head>
+
 <body>
   <!-- Navbar -->
   <header>
@@ -176,21 +181,29 @@
 					
 					<div class="news-content">
             {% for new in news %}
-						<div class="new-date">
-							<img src="/media/{{new.picture1}}" alt="">
-						</div>
-						<div class="news-text">
-							<h4>{{new.title|safe}} </h4>
+            <div>
+              <div class="new-date">
+                <img class="img" src="/media/{{new.picture1}}" onerror="this.onerror=null; this.src='/static/feltp/img/news.png'" style="background-image: url('/static/feltp/img/news.png')" alt="">
+              </div>
 
-							<p style="font-size: 12px!important">{{new.content|truncatewords:30|safe}}</p>
+              <div class="news-text">
+                <h4>{{new.title|safe}} </h4>
 
-							<a href="{% url 'newsfeed' new.id %}" class="btn text" style="color: #635f5f; font-size: 14px!important;">Read...</a>
+                <p style="font-size: 12px!important">
+                    {{new.content|truncatewords:30|safe}}
+                </p>
 
-							<p><!-- Button trigger modal --></p>
-							
-						</div>
+                <a href="{% url 'newsfeed' new.id %}" class="btn text" style="color: #635f5f; font-size: 14px!important;">Read...
+                </a>
+              </div>
+            </div>
+            <br>
+            <br>
+            <br>
+						
+            {% endfor %}
 					</div>
-					{% endfor %}
+					
 
 					</div>
 
