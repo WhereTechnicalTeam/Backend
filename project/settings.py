@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '79m_ux2jm!r@_7a5vp3i6^%eex4am!em-(-h-a6s)(5^zstsx('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('FELTP_DEBUG_MODE', True)
 
 ALLOWED_HOSTS = ['*']
 
@@ -140,7 +140,6 @@ DATABASES = {
 #             'PASSWORD': 'postgres1234',
 #         }
 #     }
-
 
 
 
