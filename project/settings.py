@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '79m_ux2jm!r@_7a5vp3i6^%eex4am!em-(-h-a6s)(5^zstsx('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('FELTP_DEBUG_MODE', True)
+DEBUG = os.environ.get('FELTP_DEBUG_MODE', False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -118,16 +118,16 @@ REST_FRAMEWORK = {
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ.get('FELTP_DB'),
-        'USER': os.environ.get('FELTP_DB_USER'),
-        'PASSWORD': os.environ.get('FELTP_DB_USER_PASSWORD'),
-        'HOST': os.environ.get('FELTP_DB_HOST'),
-        'PORT': os.environ.get('FELTP_DB_PORT'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': os.environ.get('FELTP_DB'),
+#         'USER': os.environ.get('FELTP_DB_USER'),
+#         'PASSWORD': os.environ.get('FELTP_DB_USER_PASSWORD'),
+#         'HOST': os.environ.get('FELTP_DB_HOST'),
+#         'PORT': os.environ.get('FELTP_DB_PORT'),
+#     }
+# }
 
 
 # DATABASES = {
@@ -141,6 +141,17 @@ DATABASES = {
 #         }
 #     }
 
+
+DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'HOST': 'wheregeospatial.com',
+            'PORT': '6432',
+            'NAME': 'feltp',
+            'USER': 'appuser',
+            'PASSWORD': 'EwpvKyq8aFse3TJ9',
+        }
+    }
 
 
 
